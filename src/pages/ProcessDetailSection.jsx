@@ -14,7 +14,7 @@ export default function ProcessDetailSection({ showBanner, hoveredProcessStep, s
         onTreatmentFinderClick={onTreatmentFinderClick}
       />
 
-      <div className="p-12" style={{paddingTop: '320px'}}>
+      <div className="p-12" style={{paddingTop: '370px'}}>
         <p className="text-lg mb-8 text-center max-w-4xl mx-auto text-white/70">
           Our comprehensive five-step approach to neurological rehabilitation:
         </p>

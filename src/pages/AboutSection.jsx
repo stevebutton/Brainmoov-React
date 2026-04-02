@@ -12,7 +12,7 @@ export default function AboutSection({ showBanner, hoveredSection, setHoveredSec
         onNavigate={onNavigate}
       />
 
-      <div className="p-12" style={{paddingTop: '120px'}}>
+      <div className="p-12" style={{paddingTop: '170px'}}>
         <p className="text-lg mb-8 text-center max-w-4xl mx-auto text-white/70">
           Explore different aspects of BrainMoove:
         </p>

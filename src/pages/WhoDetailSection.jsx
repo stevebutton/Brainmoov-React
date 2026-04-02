@@ -12,7 +12,7 @@ export default function WhoDetailSection({ showBanner, hoveredAudience, setHover
         onNavigate={onNavigate}
       />
 
-      <div className="p-12" style={{paddingTop: '120px'}}>
+      <div className="p-12" style={{paddingTop: '170px'}}>
         <p className="text-lg mb-8 max-w-3xl text-white/70">
           Select an audience to explore our specialized programs:
         </p>

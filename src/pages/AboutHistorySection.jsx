@@ -11,7 +11,7 @@ export default function AboutHistorySection({ showBanner, shouldAnimateBanner, o
         onNavigate={onNavigate}
       />
 
-      <div className="absolute left-0 right-0 bg-[#111111] border-b border-white/10 shadow-sm z-10" style={{top: '100px', height: '50px'}}>
+      <div className="absolute left-0 right-0 bg-[#111111] border-b border-white/10 shadow-sm z-10" style={{top: '150px', height: '50px'}}>
         <div className="flex items-center justify-center h-full gap-8 px-8">
           <button onClick={() => onNavigate('about')} className="text-sm font-medium text-white/70 hover:text-white hover:underline transition-all">What is BrainMoove?</button>
           <button onClick={() => onNavigate('about-philosophy')} className="text-sm font-medium text-white/70 hover:text-white hover:underline transition-all">Our Philosophy</button>
@@ -22,7 +22,7 @@ export default function AboutHistorySection({ showBanner, shouldAnimateBanner, o
         </div>
       </div>
 
-      <div className="p-12" style={{paddingTop: '170px'}}>
+      <div className="p-12" style={{paddingTop: '220px'}}>
         <div style={{width: '35%'}}>
           <div className="bg-[#1a1a1a] rounded-2xl p-8 border border-white/10 shadow-xl">
             <h2 className="text-2xl font-bold mb-6 text-white">History of BrainMoove</h2>

@@ -4,10 +4,10 @@ export default function Banner({ title, subtitle = null, showBanner, onLogoClick
   const { assets } = useAssets();
   return (
     <div
-      className={`absolute top-0 left-0 right-0 bg-[#111111] text-white px-8 z-20 ${showBanner && shouldAnimate ? 'animate-banner-in' : ''}`}
+      className={`absolute top-0 left-0 right-0 bg-white text-slate-900 px-8 z-20 ${showBanner && shouldAnimate ? 'animate-banner-in' : ''}`}
       style={{
         height: '100px',
-        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.4)',
+        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
         opacity: showBanner ? 1 : 0,
         transform: showBanner ? 'translateY(0)' : 'translateY(-100%)',
         transition: shouldAnimate ? undefined : 'none'
@@ -39,25 +39,25 @@ export default function Banner({ title, subtitle = null, showBanner, onLogoClick
             <div className="flex gap-6 mt-1">
               <button
                 onClick={() => onNavigate('about')}
-                className="text-sm font-medium text-white/70 hover:text-[#F26219] hover:underline transition-all"
+                className="text-sm font-medium text-slate-600 hover:text-[#F26219] hover:underline transition-all"
               >
                 What is BrainMoove?
               </button>
               <button
                 onClick={() => onNavigate('who-detail')}
-                className="text-sm font-medium text-white/70 hover:text-[#F26219] hover:underline transition-all"
+                className="text-sm font-medium text-slate-600 hover:text-[#F26219] hover:underline transition-all"
               >
                 Who We Treat
               </button>
               <button
                 onClick={() => onNavigate('what-detail')}
-                className="text-sm font-medium text-white/70 hover:text-[#F26219] hover:underline transition-all"
+                className="text-sm font-medium text-slate-600 hover:text-[#F26219] hover:underline transition-all"
               >
                 What We Treat
               </button>
               <button
                 onClick={() => onNavigate('process-detail')}
-                className="text-sm font-medium text-white/70 hover:text-[#F26219] hover:underline transition-all"
+                className="text-sm font-medium text-slate-600 hover:text-[#F26219] hover:underline transition-all"
               >
                 Our Treatment Process
               </button>

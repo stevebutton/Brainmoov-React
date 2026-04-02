@@ -85,11 +85,12 @@ export default function AudienceSection({
       />
 
       {/* Floating Content */}
-      <div className={`absolute inset-0 z-10 flex ${(selectedService || selectedTechService) ? 'pb-16' : 'pb-8'}`} style={{paddingTop: '100px'}}>
+      <div className={`absolute inset-0 z-10 flex ${(selectedService || selectedTechService) ? 'pb-20' : 'pb-8'}`} style={{paddingTop: '100px'}}>
         {/* Left Side - Service Menu */}
         <div
-          className={`px-8 py-6 overflow-auto relative z-20 w-auto ${showSubmenu ? 'animate-submenu-in' : ''}`}
+          className={`px-8 pb-6 overflow-auto relative z-20 w-auto ${showSubmenu ? 'animate-submenu-in' : ''}`}
           style={{
+            paddingTop: '44px',
             opacity: showSubmenu ? undefined : 0,
             transform: showSubmenu ? undefined : 'translateY(-100px)'
           }}
@@ -132,21 +133,7 @@ export default function AudienceSection({
                 : 'slideInDown 0.5s ease-out forwards'
             }}
           >
-            <div className="h-full bg-[#111111] shadow-2xl border-l-2 border-white/10 flex flex-col">
-              {/* Header */}
-              <div className="pt-6 pb-4 px-6 border-b border-white/10">
-                <h4
-                  key={selectedService.title}
-                  className="font-bold mb-1 animate-fade-slide-up leading-none text-white"
-                  style={{fontSize: '2rem'}}
-                >
-                  {selectedService.title}
-                </h4>
-                <div className="flex items-center gap-2 text-white/50 text-xs">
-                  <span>{carouselIndex + 1} / {selectedService.cards.length}</span>
-                </div>
-              </div>
-
+            <div className="h-full flex flex-col">
               {/* Carousel Content */}
               <div className="flex-1 relative overflow-hidden">
                 <div
@@ -156,12 +143,22 @@ export default function AudienceSection({
                   {selectedService.cards.map((card, idx) => (
                     <div key={idx} className="min-w-full h-full p-5 flex flex-col">
                       <div
-                        className="bg-[#1a1a1a] border-2 border-white/10 rounded-xl p-5 flex-1 overflow-auto shadow-xl ml-5"
-                        style={{backdropFilter: 'blur(48px)'}}
+                        className="border border-white/20 rounded-xl p-6 flex-1 overflow-auto shadow-xl"
+                        style={{backgroundColor: 'rgba(0,0,0,0.3)', backdropFilter: 'blur(12px)'}}
                       >
+                        <h4
+                          key={`service-${idx}-${selectedService.title}`}
+                          className="font-bold mb-1 animate-fade-slide-up leading-none text-white"
+                          style={{fontSize: '1.6rem'}}
+                        >
+                          {selectedService.title}
+                        </h4>
+                        <div className="text-white/40 text-xs mb-4">
+                          {carouselIndex + 1} / {selectedService.cards.length}
+                        </div>
                         <h5
                           key={`title-${idx}-${carouselIndex}`}
-                          className="text-lg font-bold text-white mb-3 animate-fade-in"
+                          className="text-base font-semibold text-[#F26219] mb-2 animate-fade-in"
                         >
                           {card.title}
                         </h5>
@@ -180,23 +177,23 @@ export default function AudienceSection({
                 {carouselIndex > 0 && (
                   <button
                     onClick={onCarouselPrev}
-                    className="absolute left-2 top-1/2 -translate-y-1/2 bg-[#222222] backdrop-blur-lg border-2 border-white/10 p-1.5 rounded-full shadow-xl hover:scale-110 transition-transform z-10"
+                    className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/40 backdrop-blur-lg border border-white/20 p-1.5 rounded-full shadow-xl hover:scale-110 transition-transform z-10"
                   >
-                    <ChevronLeft className="w-4 h-4 text-[#F26219]" />
+                    <ChevronLeft className="w-4 h-4 text-white" />
                   </button>
                 )}
                 {carouselIndex < selectedService.cards.length - 1 && (
                   <button
                     onClick={onCarouselNext}
-                    className="absolute right-2 top-1/2 -translate-y-1/2 bg-[#222222] backdrop-blur-lg border-2 border-white/10 p-1.5 rounded-full shadow-xl hover:scale-110 transition-transform z-10"
+                    className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/40 backdrop-blur-lg border border-white/20 p-1.5 rounded-full shadow-xl hover:scale-110 transition-transform z-10"
                   >
-                    <ChevronRight className="w-4 h-4 text-[#F26219]" />
+                    <ChevronRight className="w-4 h-4 text-white" />
                   </button>
                 )}
               </div>
 
               {/* Dot Indicators */}
-              <div className="flex justify-center gap-1.5 p-3 border-t border-white/10">
+              <div className="flex justify-center gap-1.5 py-3">
                 {selectedService.cards.map((_, idx) => (
                   <button
                     key={idx}
@@ -204,7 +201,7 @@ export default function AudienceSection({
                     className={`rounded-full transition-all ${
                       idx === carouselIndex
                         ? 'w-5 h-1.5 bg-[#F26219]'
-                        : 'w-1.5 h-1.5 bg-white/20 hover:bg-white/40'
+                        : 'w-1.5 h-1.5 bg-white/30 hover:bg-white/50'
                     }`}
                   />
                 ))}
@@ -216,22 +213,23 @@ export default function AudienceSection({
         {/* Footer Bar */}
         {(selectedService || selectedTechService) && (
           <div
-            className="absolute bottom-0 left-0 right-0 bg-[#111111] z-20"
+            className="absolute bottom-0 left-0 right-0 bg-white z-20"
             style={{
+              height: '80px',
               animation: 'slideInUp 0.4s ease-out forwards',
-              boxShadow: '0 -2px 8px rgba(0, 0, 0, 0.4)'
+              boxShadow: '0 -2px 8px rgba(0, 0, 0, 0.1)'
             }}
           >
-            <div className="px-8 py-3 flex items-center gap-6">
+            <div className="px-8 h-full flex items-center gap-6">
               <button
                 onClick={() => onNavigate('about-infrastructure')}
-                className="flex items-center gap-2 rounded-lg px-6 py-2 transition-all hover:scale-105 border shadow-md bg-[#1a1a1a] hover:bg-[#222222] border-white/10"
+                className="flex items-center gap-2 rounded-lg px-6 py-2 transition-all hover:scale-105 border shadow-sm bg-white hover:bg-slate-50 border-slate-200"
               >
-                <span className="text-xs font-medium text-white">Our Infrastructure</span>
+                <span className="text-xs font-medium text-slate-800">Our Infrastructure</span>
                 <Building2 className="w-4 h-4 text-[#F26219]" />
               </button>
 
-              <h4 className="text-xs font-semibold text-white/70 whitespace-nowrap">our treatment process</h4>
+              <h4 className="text-xs font-semibold text-slate-500 whitespace-nowrap">our treatment process</h4>
               <div className="flex justify-start gap-2 flex-1">
                 {technicalServices.map((techService) => {
                   const TechIcon = techService.icon;
@@ -240,14 +238,14 @@ export default function AudienceSection({
                     <button
                       key={techService.id}
                       onClick={() => onTechServiceSelect(techService)}
-                      className={`flex items-center gap-2 backdrop-blur-lg rounded-lg px-6 py-2 transition-all hover:scale-105 border shadow-md flex-1 justify-center ${
+                      className={`flex items-center gap-2 rounded-lg px-6 py-2 transition-all hover:scale-105 border shadow-sm flex-1 justify-center ${
                         isSelected
-                          ? 'bg-[#F26219]/20 border-[#F26219]/50 shadow-xl'
-                          : 'bg-[#1a1a1a] hover:bg-[#222222] border-white/10'
+                          ? 'bg-[#F26219] border-[#F26219] text-white'
+                          : 'bg-white hover:bg-slate-50 border-slate-200'
                       }`}
                     >
-                      <TechIcon className="w-4 h-4 text-[#F26219]" />
-                      <span className="text-xs font-medium text-white">{techService.title}</span>
+                      <TechIcon className={`w-4 h-4 ${isSelected ? 'text-white' : 'text-[#F26219]'}`} />
+                      <span className={`text-xs font-medium ${isSelected ? 'text-white' : 'text-slate-800'}`}>{techService.title}</span>
                     </button>
                   );
                 })}
