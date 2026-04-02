@@ -4,11 +4,9 @@ import { useAssets } from '../context/AssetContext';
 export default function IntroPage({ showNav, hoveredSection, setHoveredSection, onNavigate }) {
   const { assets } = useAssets();
   return (
-    <div className="relative w-full h-full bg-gradient-to-br from-slate-100 via-blue-50 to-slate-100 overflow-hidden">
-      <div className="absolute inset-0 opacity-30">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-400 rounded-full filter blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-cyan-400 rounded-full filter blur-3xl animate-pulse" style={{animationDelay: '1s'}}></div>
-      </div>
+    <div className="relative w-full h-full overflow-hidden bg-slate-900">
+      <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url(${assets['children-bg']})` }}></div>
+      <div className="absolute inset-0 bg-black/30"></div>
 
       <div className="relative z-10 h-full flex flex-col">
         {/* Header with Logo */}
