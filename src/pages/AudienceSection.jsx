@@ -58,20 +58,26 @@ export default function AudienceSection({
         className={`absolute transition-opacity duration-700 ${
           (selectedService || selectedTechService) ? 'opacity-0 pointer-events-none' : 'opacity-100'
         }`}
-        style={{top: '150px', left: '150px', right: 'auto', maxWidth: '800px', zIndex: 15}}
+        style={{
+          top: '150px', left: '150px', right: 'auto', maxWidth: '680px', zIndex: 15,
+          borderRadius: '12px',
+          border: '1px solid rgba(255,255,255,0.2)',
+          backgroundColor: 'rgba(0,0,0,0.3)',
+          backdropFilter: 'blur(6px)',
+          WebkitBackdropFilter: 'blur(6px)',
+          boxShadow: '0 4px 24px rgba(0,0,0,0.3)',
+        }}
       >
-        <div className="px-12">
-          <div className="bg-black/60 backdrop-blur-2xl border-2 border-white/10 rounded-3xl p-12 shadow-2xl">
-            <h3 className="text-4xl font-bold mb-6 text-left text-white">
-              {audience.title} Services
-            </h3>
-            <p className="text-xl leading-relaxed text-left text-white/70">
-              {audience.intro}
-            </p>
-            <p className="mt-8 text-lg font-medium text-left text-white">
-              Select a service to learn more
-            </p>
-          </div>
+        <div className="p-10">
+          <h3 className="text-4xl font-bold mb-6 text-left text-white">
+            {audience.title} Services
+          </h3>
+          <p className="text-xl leading-relaxed text-left text-white/70">
+            {audience.intro}
+          </p>
+          <p className="mt-8 text-lg font-medium text-left text-white">
+            Select a service to learn more
+          </p>
         </div>
       </div>
 
@@ -125,12 +131,22 @@ export default function AudienceSection({
         {/* Right Side - Carousel Panel */}
         {(selectedService || isClosingCards) && (
           <div
-            className="absolute left-[200px] bottom-20 w-[400px] z-10"
+            className="absolute z-10"
             style={{
-              top: '100px',
+              left: '220px',
+              top: '120px',
+              width: '360px',
+              bottom: '100px',
+              borderRadius: '12px',
+              border: '1px solid rgba(255,255,255,0.2)',
+              backgroundColor: 'rgba(0,0,0,0.3)',
+              backdropFilter: 'blur(6px)',
+              WebkitBackdropFilter: 'blur(6px)',
+              overflow: 'hidden',
+              boxShadow: '0 4px 24px rgba(0,0,0,0.3)',
               animation: isClosingCards
                 ? 'slideOutDown 2s ease-out forwards'
-                : 'slideInDown 0.5s ease-out forwards'
+                : 'fadeInPanel 0.5s ease-out forwards'
             }}
           >
             <div className="h-full flex flex-col">
@@ -141,10 +157,9 @@ export default function AudienceSection({
                   style={{ transform: `translateX(-${carouselIndex * 100}%)` }}
                 >
                   {selectedService.cards.map((card, idx) => (
-                    <div key={idx} className="min-w-full h-full p-5 flex flex-col">
+                    <div key={idx} className="min-w-full h-full flex flex-col">
                       <div
-                        className="border border-white/20 rounded-xl p-6 flex-1 overflow-auto shadow-xl"
-                        style={{backgroundColor: 'rgba(0,0,0,0.3)', backdropFilter: 'blur(12px)'}}
+                        className="p-6 flex-1 overflow-auto"
                       >
                         <h4
                           key={`service-${idx}-${selectedService.title}`}

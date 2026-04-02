@@ -14,7 +14,7 @@ export function AssetProvider({ children }) {
   const [assets, setAssets] = useState(DEFAULTS);
 
   useEffect(() => {
-    fetch('/asset-config.json')
+    fetch(`/asset-config.json?v=${Date.now()}`)
       .then(r => r.json())
       .then(config => setAssets({ ...DEFAULTS, ...config }))
       .catch(() => {});
