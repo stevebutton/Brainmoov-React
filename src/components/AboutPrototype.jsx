@@ -13,7 +13,7 @@ export default function AboutPrototype({ show, onClose }) {
 
       {/* Modal */}
       <div
-        className="relative bg-white rounded-3xl shadow-2xl max-w-4xl w-full mx-4"
+        className="relative bg-[#111111] rounded-3xl shadow-2xl max-w-4xl w-full mx-4"
         style={{
           animation: 'slideInDown 0.3s ease-out forwards',
           maxHeight: '90vh',
@@ -55,9 +55,9 @@ export default function AboutPrototype({ show, onClose }) {
         {/* Content */}
         <div className="p-8 overflow-y-auto" style={{maxHeight: 'calc(90vh - 100px)'}}>
           {/* Important Notice */}
-          <div className="bg-red-50 border-l-4 border-red-600 p-4 mb-6">
-            <h3 className="font-bold text-red-900 mb-2">Important: What This Is</h3>
-            <p className="text-sm text-red-800 leading-relaxed">
+          <div className="bg-red-900/20 border-l-4 border-red-600 p-4 mb-6">
+            <h3 className="font-bold text-red-400 mb-2">Important: What This Is</h3>
+            <p className="text-sm text-red-300 leading-relaxed">
               This is a <strong>STRUCTURAL PROTOTYPE</strong> demonstrating functionality, information architecture, and user journeys.
               The current visual implementation uses placeholder styling to illustrate the structure.
             </p>
@@ -65,58 +65,58 @@ export default function AboutPrototype({ show, onClose }) {
 
           {/* What Final Will Include */}
           <div className="mb-6">
-            <h3 className="text-lg font-bold text-slate-800 mb-3">The Final Production Website Will Feature:</h3>
-            <ul className="space-y-2 text-slate-700">
-              <li className="flex items-start"><span className="text-blue-600 mr-2">•</span><span>Full-screen photo backgrounds</span></li>
-              <li className="flex items-start"><span className="text-blue-600 mr-2">•</span><span>Video backgrounds for immersive experience</span></li>
-              <li className="flex items-start"><span className="text-blue-600 mr-2">•</span><span>Video interviews with BrainMoove specialists explaining services and treatments</span></li>
-              <li className="flex items-start"><span className="text-blue-600 mr-2">•</span><span>Professional photography</span></li>
-              <li className="flex items-start"><span className="text-blue-600 mr-2">•</span><span>Custom branded visual design</span></li>
-              <li className="flex items-start"><span className="text-blue-600 mr-2">•</span><span>Motion graphics and transitions</span></li>
+            <h3 className="text-lg font-bold text-white mb-3">The Final Production Website Will Feature:</h3>
+            <ul className="space-y-2 text-white/70">
+              <li className="flex items-start"><span className="text-[#F26219] mr-2">•</span><span className="text-white/70">Full-screen photo backgrounds</span></li>
+              <li className="flex items-start"><span className="text-[#F26219] mr-2">•</span><span className="text-white/70">Video backgrounds for immersive experience</span></li>
+              <li className="flex items-start"><span className="text-[#F26219] mr-2">•</span><span className="text-white/70">Video interviews with BrainMoove specialists explaining services and treatments</span></li>
+              <li className="flex items-start"><span className="text-[#F26219] mr-2">•</span><span className="text-white/70">Professional photography</span></li>
+              <li className="flex items-start"><span className="text-[#F26219] mr-2">•</span><span className="text-white/70">Custom branded visual design</span></li>
+              <li className="flex items-start"><span className="text-[#F26219] mr-2">•</span><span className="text-white/70">Motion graphics and transitions</span></li>
             </ul>
           </div>
 
           {/* What This Demonstrates */}
           <div className="mb-6">
-            <h3 className="text-lg font-bold text-slate-800 mb-3">What This Prototype Demonstrates:</h3>
-            <ul className="space-y-2 text-slate-700">
-              <li className="flex items-start"><span className="text-green-600 mr-2">✓</span><span>Complete information architecture and navigation structure</span></li>
-              <li className="flex items-start"><span className="text-green-600 mr-2">✓</span><span>User flows and journey mapping</span></li>
-              <li className="flex items-start"><span className="text-green-600 mr-2">✓</span><span>Interactive features (Treatment Finder, technology carousel, process steps)</span></li>
-              <li className="flex items-start"><span className="text-green-600 mr-2">✓</span><span>Content organization and hierarchy</span></li>
-              <li className="flex items-start"><span className="text-green-600 mr-2">✓</span><span>Virtual facility walkthrough capability</span></li>
-              <li className="flex items-start"><span className="text-green-600 mr-2">✓</span><span>Strategic placement of calls-to-action</span></li>
+            <h3 className="text-lg font-bold text-white mb-3">What This Prototype Demonstrates:</h3>
+            <ul className="space-y-2 text-white/70">
+              <li className="flex items-start"><span className="text-green-500 mr-2">✓</span><span className="text-white/70">Complete information architecture and navigation structure</span></li>
+              <li className="flex items-start"><span className="text-green-500 mr-2">✓</span><span className="text-white/70">User flows and journey mapping</span></li>
+              <li className="flex items-start"><span className="text-green-500 mr-2">✓</span><span className="text-white/70">Interactive features (Treatment Finder, technology carousel, process steps)</span></li>
+              <li className="flex items-start"><span className="text-green-500 mr-2">✓</span><span className="text-white/70">Content organization and hierarchy</span></li>
+              <li className="flex items-start"><span className="text-green-500 mr-2">✓</span><span className="text-white/70">Virtual facility walkthrough capability</span></li>
+              <li className="flex items-start"><span className="text-green-500 mr-2">✓</span><span className="text-white/70">Strategic placement of calls-to-action</span></li>
             </ul>
           </div>
 
           {/* Key Objectives */}
           <div className="mb-6">
-            <h3 className="text-lg font-bold text-slate-800 mb-3">Key Objectives Validated:</h3>
+            <h3 className="text-lg font-bold text-white mb-3">Key Objectives Validated:</h3>
             <div className="space-y-4">
               <div>
-                <h4 className="font-semibold text-slate-800 mb-1">1. Virtual Facility Walkthrough</h4>
-                <p className="text-sm text-slate-700">
+                <h4 className="font-semibold text-white mb-1">1. Virtual Facility Walkthrough</h4>
+                <p className="text-sm text-white/70">
                   Reduces staff time spent on physical facility tours by providing comprehensive virtual walkthrough.
                   Visitors can familiarize themselves with technologies and processes before consultation,
                   making in-person meetings more focused and productive.
                 </p>
               </div>
               <div>
-                <h4 className="font-semibold text-slate-800 mb-1">2. Treatment Finder Decision Support</h4>
-                <p className="text-sm text-slate-700">
+                <h4 className="font-semibold text-white mb-1">2. Treatment Finder Decision Support</h4>
+                <p className="text-sm text-white/70">
                   Helps visitors clarify available treatment options and what they may want to concentrate on
                   in follow-up conversations. Prepares both visitor and staff for more productive consultation discussions.
                 </p>
               </div>
               <div>
-                <h4 className="font-semibold text-slate-800 mb-1">3. Audience Segmentation</h4>
-                <p className="text-sm text-slate-700">
+                <h4 className="font-semibold text-white mb-1">3. Audience Segmentation</h4>
+                <p className="text-sm text-white/70">
                   Addresses unique needs of three distinct audiences (children, adults, seniors) within one cohesive site structure.
                 </p>
               </div>
               <div>
-                <h4 className="font-semibold text-slate-800 mb-1">4. Service Clarity</h4>
-                <p className="text-sm text-slate-700">
+                <h4 className="font-semibold text-white mb-1">4. Service Clarity</h4>
+                <p className="text-sm text-white/70">
                   Communicates the five-step treatment process clearly through interactive elements and progressive disclosure.
                 </p>
               </div>
@@ -124,9 +124,9 @@ export default function AboutPrototype({ show, onClose }) {
           </div>
 
           {/* Next Steps */}
-          <div className="bg-blue-50 border-l-4 border-blue-600 p-4 mb-6">
-            <h3 className="font-bold text-blue-900 mb-2">Next Phase</h3>
-            <p className="text-sm text-blue-800 leading-relaxed">
+          <div className="bg-blue-900/20 border-l-4 border-blue-500 p-4 mb-6">
+            <h3 className="font-bold text-blue-300 mb-2">Next Phase</h3>
+            <p className="text-sm text-blue-200/80 leading-relaxed">
               This prototype successfully validates the user experience and navigation structure.
               The next phase is <strong>professional visual design</strong> and <strong>multimedia content production</strong>,
               including photography, video interviews with specialists, and custom branding.
@@ -134,11 +134,11 @@ export default function AboutPrototype({ show, onClose }) {
           </div>
 
           {/* Status */}
-          <div className="text-center pt-4 border-t">
-            <p className="text-sm text-slate-600">
+          <div className="text-center pt-4 border-t border-white/10">
+            <p className="text-sm text-white/50">
               <strong>Status:</strong> Structural prototype complete and ready for visual design phase
             </p>
-            <p className="text-xs text-slate-500 mt-1">Version 1.0 | February 12, 2026</p>
+            <p className="text-xs text-white/30 mt-1">Version 1.0 | February 12, 2026</p>
           </div>
         </div>
       </div>

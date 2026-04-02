@@ -691,7 +691,7 @@ export default function App() {
       {/* Floating About Prototype Button */}
       <button
         onClick={() => setShowAboutPrototype(true)}
-        className="fixed bottom-6 right-6 bg-slate-800 hover:bg-slate-700 text-white px-4 py-3 rounded-xl shadow-lg transition-all hover:scale-105 flex items-center gap-2 z-40"
+        className="fixed bottom-6 right-6 bg-[#1a1a1a] hover:bg-[#222222] text-white px-4 py-3 rounded-xl shadow-lg transition-all hover:scale-105 flex items-center gap-2 z-40"
         style={{ fontSize: '14px', color: '#ffffff' }}
       >
         <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24" style={{ stroke: '#ffffff' }}>

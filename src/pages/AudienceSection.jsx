@@ -36,12 +36,12 @@ export default function AudienceSection({
       >
         {isPlaying && (
           <div className="absolute inset-0 flex items-center justify-center bg-white/20 backdrop-blur-sm">
-            <div className="text-center z-10 bg-white/50 backdrop-blur-xl border-2 border-white/80 rounded-2xl p-8 shadow-2xl">
-              <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mb-4 mx-auto"></div>
-              <p className="text-slate-800 text-lg mb-2 font-semibold">Video Playing: {audience.videoTitle}</p>
+            <div className="text-center z-10 bg-black/50 backdrop-blur-xl border-2 border-white/10 rounded-2xl p-8 shadow-2xl">
+              <div className="w-16 h-16 border-4 border-[#F26219] border-t-transparent rounded-full animate-spin mb-4 mx-auto"></div>
+              <p className="text-white text-lg mb-2 font-semibold">Video Playing: {audience.videoTitle}</p>
               <button
                 onClick={() => toggleVideo(audience.id)}
-                className="mt-2 text-blue-600 hover:text-blue-700 underline text-sm font-medium"
+                className="mt-2 text-[#F26219] hover:text-[#d4521a] underline text-sm font-medium"
               >
                 Pause Video
               </button>
@@ -51,7 +51,7 @@ export default function AudienceSection({
       </div>
 
       {/* Overlay gradient */}
-      <div className="absolute inset-0 bg-gradient-to-b from-white/30 via-white/20 to-white/40"></div>
+      <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/30 to-black/60"></div>
 
       {/* Intro Text Overlay */}
       <div
@@ -61,14 +61,14 @@ export default function AudienceSection({
         style={{top: '150px', left: '150px', right: 'auto', maxWidth: '800px', zIndex: 15}}
       >
         <div className="px-12">
-          <div className="bg-white/40 backdrop-blur-2xl border-2 border-white/60 rounded-3xl p-12 shadow-2xl">
-            <h3 className="text-4xl font-bold mb-6 text-left">
+          <div className="bg-black/60 backdrop-blur-2xl border-2 border-white/10 rounded-3xl p-12 shadow-2xl">
+            <h3 className="text-4xl font-bold mb-6 text-left text-white">
               {audience.title} Services
             </h3>
-            <p className="text-xl leading-relaxed text-left">
+            <p className="text-xl leading-relaxed text-left text-white/70">
               {audience.intro}
             </p>
-            <p className="mt-8 text-lg font-medium text-left">
+            <p className="mt-8 text-lg font-medium text-left text-white">
               Select a service to learn more
             </p>
           </div>
@@ -94,7 +94,7 @@ export default function AudienceSection({
             transform: showSubmenu ? undefined : 'translateY(-100px)'
           }}
         >
-          <h3 className="text-xl font-bold text-slate-800 mb-4">our services</h3>
+          <h3 className="text-xl font-bold text-white mb-4">our services</h3>
           <div className="flex flex-col gap-2">
             {audience.services.map((service) => {
               const ServiceIcon = service.icon;
@@ -105,15 +105,15 @@ export default function AudienceSection({
                   onClick={() => onServiceSelect(service)}
                   className={`group relative backdrop-blur-xl rounded-lg p-3 transition-all hover:scale-105 border-2 flex items-center gap-3 w-[160px] shadow-lg ${
                     isSelected
-                      ? 'bg-white/60 border-white/80 shadow-2xl'
-                      : 'bg-white/40 border-white/60 hover:bg-white/50 hover:border-white/70 hover:shadow-xl'
+                      ? 'bg-[#F26219]/20 border-[#F26219]/50 shadow-2xl'
+                      : 'bg-[#1a1a1a] border-white/10 hover:bg-[#222222] hover:border-white/20 hover:shadow-xl'
                   }`}
                 >
                   <ServiceIcon className={`w-5 h-5 flex-shrink-0 transition-colors ${
-                    isSelected ? 'text-blue-600' : 'text-slate-600 group-hover:text-blue-600'
+                    isSelected ? 'text-[#F26219]' : 'text-white/50 group-hover:text-[#F26219]'
                   }`} />
                   <h4 className={`text-xs font-semibold text-left leading-tight ${
-                    isSelected ? 'text-slate-900' : 'text-slate-700'
+                    isSelected ? 'text-white' : 'text-white/70'
                   }`}>{service.title}</h4>
                 </button>
               );
@@ -132,17 +132,17 @@ export default function AudienceSection({
                 : 'slideInDown 0.5s ease-out forwards'
             }}
           >
-            <div className="h-full bg-white/40 backdrop-blur-2xl shadow-2xl border-l-2 border-white/60 flex flex-col">
+            <div className="h-full bg-[#111111] shadow-2xl border-l-2 border-white/10 flex flex-col">
               {/* Header */}
-              <div className="pt-6 pb-4 px-6 border-b border-white/40">
+              <div className="pt-6 pb-4 px-6 border-b border-white/10">
                 <h4
                   key={selectedService.title}
-                  className="font-bold mb-1 animate-fade-slide-up leading-none"
+                  className="font-bold mb-1 animate-fade-slide-up leading-none text-white"
                   style={{fontSize: '2rem'}}
                 >
                   {selectedService.title}
                 </h4>
-                <div className="flex items-center gap-2 text-slate-600 text-xs">
+                <div className="flex items-center gap-2 text-white/50 text-xs">
                   <span>{carouselIndex + 1} / {selectedService.cards.length}</span>
                 </div>
               </div>
@@ -156,18 +156,18 @@ export default function AudienceSection({
                   {selectedService.cards.map((card, idx) => (
                     <div key={idx} className="min-w-full h-full p-5 flex flex-col">
                       <div
-                        className="bg-white/70 border-2 border-white/80 rounded-xl p-5 flex-1 overflow-auto shadow-xl ml-5"
+                        className="bg-[#1a1a1a] border-2 border-white/10 rounded-xl p-5 flex-1 overflow-auto shadow-xl ml-5"
                         style={{backdropFilter: 'blur(48px)'}}
                       >
                         <h5
                           key={`title-${idx}-${carouselIndex}`}
-                          className="text-lg font-bold text-slate-800 mb-3 animate-fade-in"
+                          className="text-lg font-bold text-white mb-3 animate-fade-in"
                         >
                           {card.title}
                         </h5>
                         <p
                           key={`desc-${idx}-${carouselIndex}`}
-                          className="text-slate-700 text-sm leading-relaxed animate-fade-in-delay"
+                          className="text-white/70 text-sm leading-relaxed animate-fade-in-delay"
                         >
                           {card.description}
                         </p>
@@ -180,31 +180,31 @@ export default function AudienceSection({
                 {carouselIndex > 0 && (
                   <button
                     onClick={onCarouselPrev}
-                    className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/60 backdrop-blur-lg border-2 border-white/80 p-1.5 rounded-full shadow-xl hover:scale-110 transition-transform z-10"
+                    className="absolute left-2 top-1/2 -translate-y-1/2 bg-[#222222] backdrop-blur-lg border-2 border-white/10 p-1.5 rounded-full shadow-xl hover:scale-110 transition-transform z-10"
                   >
-                    <ChevronLeft className="w-4 h-4 text-blue-600" />
+                    <ChevronLeft className="w-4 h-4 text-[#F26219]" />
                   </button>
                 )}
                 {carouselIndex < selectedService.cards.length - 1 && (
                   <button
                     onClick={onCarouselNext}
-                    className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/60 backdrop-blur-lg border-2 border-white/80 p-1.5 rounded-full shadow-xl hover:scale-110 transition-transform z-10"
+                    className="absolute right-2 top-1/2 -translate-y-1/2 bg-[#222222] backdrop-blur-lg border-2 border-white/10 p-1.5 rounded-full shadow-xl hover:scale-110 transition-transform z-10"
                   >
-                    <ChevronRight className="w-4 h-4 text-blue-600" />
+                    <ChevronRight className="w-4 h-4 text-[#F26219]" />
                   </button>
                 )}
               </div>
 
               {/* Dot Indicators */}
-              <div className="flex justify-center gap-1.5 p-3 border-t border-white/40">
+              <div className="flex justify-center gap-1.5 p-3 border-t border-white/10">
                 {selectedService.cards.map((_, idx) => (
                   <button
                     key={idx}
                     onClick={() => setCarouselIndex(idx)}
                     className={`rounded-full transition-all ${
                       idx === carouselIndex
-                        ? 'w-5 h-1.5 bg-blue-600'
-                        : 'w-1.5 h-1.5 bg-slate-400 hover:bg-slate-600'
+                        ? 'w-5 h-1.5 bg-[#F26219]'
+                        : 'w-1.5 h-1.5 bg-white/20 hover:bg-white/40'
                     }`}
                   />
                 ))}
@@ -216,22 +216,22 @@ export default function AudienceSection({
         {/* Footer Bar */}
         {(selectedService || selectedTechService) && (
           <div
-            className="absolute bottom-0 left-0 right-0 bg-white backdrop-blur-2xl z-20"
+            className="absolute bottom-0 left-0 right-0 bg-[#111111] z-20"
             style={{
               animation: 'slideInUp 0.4s ease-out forwards',
-              boxShadow: '0 -2px 8px rgba(0, 0, 0, 0.1)'
+              boxShadow: '0 -2px 8px rgba(0, 0, 0, 0.4)'
             }}
           >
             <div className="px-8 py-3 flex items-center gap-6">
               <button
                 onClick={() => onNavigate('about-infrastructure')}
-                className="flex items-center gap-2 backdrop-blur-lg rounded-lg px-6 py-2 transition-all hover:scale-105 border shadow-md bg-white/50 hover:bg-white/70 border-white/60"
+                className="flex items-center gap-2 rounded-lg px-6 py-2 transition-all hover:scale-105 border shadow-md bg-[#1a1a1a] hover:bg-[#222222] border-white/10"
               >
-                <span className="text-xs font-medium text-slate-800">Our Infrastructure</span>
-                <Building2 className="w-4 h-4 text-blue-600" />
+                <span className="text-xs font-medium text-white">Our Infrastructure</span>
+                <Building2 className="w-4 h-4 text-[#F26219]" />
               </button>
 
-              <h4 className="text-xs font-semibold text-slate-700 whitespace-nowrap">our treatment process</h4>
+              <h4 className="text-xs font-semibold text-white/70 whitespace-nowrap">our treatment process</h4>
               <div className="flex justify-start gap-2 flex-1">
                 {technicalServices.map((techService) => {
                   const TechIcon = techService.icon;
@@ -242,12 +242,12 @@ export default function AudienceSection({
                       onClick={() => onTechServiceSelect(techService)}
                       className={`flex items-center gap-2 backdrop-blur-lg rounded-lg px-6 py-2 transition-all hover:scale-105 border shadow-md flex-1 justify-center ${
                         isSelected
-                          ? 'bg-white/70 border-white/80 shadow-xl'
-                          : 'bg-white/50 hover:bg-white/70 border-white/60'
+                          ? 'bg-[#F26219]/20 border-[#F26219]/50 shadow-xl'
+                          : 'bg-[#1a1a1a] hover:bg-[#222222] border-white/10'
                       }`}
                     >
-                      <TechIcon className="w-4 h-4 text-blue-600" />
-                      <span className="text-xs font-medium text-slate-800">{techService.title}</span>
+                      <TechIcon className="w-4 h-4 text-[#F26219]" />
+                      <span className="text-xs font-medium text-white">{techService.title}</span>
                     </button>
                   );
                 })}
@@ -260,7 +260,7 @@ export default function AudienceSection({
         {(selectedTechService || isClosingVideo) && (
           <div
             key={selectedTechService?.id || 'closing'}
-            className="absolute right-0 top-0 bottom-0 w-1/2 bg-white shadow-2xl border-l-2 border-white/60"
+            className="absolute right-0 top-0 bottom-0 w-1/2 bg-[#111111] shadow-2xl border-l-2 border-white/10"
             style={{
               animation: isClosingVideo
                 ? 'slideOutToRight 1.5s ease-out forwards'
@@ -272,21 +272,21 @@ export default function AudienceSection({
           >
             <div className="h-full flex flex-col">
               {/* Video Panel Header */}
-              <div className="bg-white/40 backdrop-blur-2xl border-b-2 border-white/60 py-4 px-8">
+              <div className="bg-[#1a1a1a] border-b-2 border-white/10 py-4 px-8">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
                     {(() => {
                       const techService = isClosingVideo ? lastTechService : selectedTechService;
                       const TechIcon = techService?.icon;
-                      return TechIcon ? <TechIcon className="w-6 h-6 text-blue-600" /> : null;
+                      return TechIcon ? <TechIcon className="w-6 h-6 text-[#F26219]" /> : null;
                     })()}
-                    <h3 className="text-xl font-bold text-slate-800">
+                    <h3 className="text-xl font-bold text-white">
                       {isClosingVideo ? lastTechService?.title : selectedTechService?.title}
                     </h3>
                   </div>
                   <button
                     onClick={() => onTechServiceSelect(null)}
-                    className="bg-white/50 hover:bg-white/70 backdrop-blur-lg px-4 py-2 rounded-lg transition-all border border-white/60 text-slate-800 font-medium text-sm"
+                    className="bg-[#2a2a2a] hover:bg-[#333333] px-4 py-2 rounded-lg transition-all border border-white/10 text-white font-medium text-sm"
                   >
                     Close ✕
                   </button>
@@ -303,15 +303,15 @@ export default function AudienceSection({
                 <div className="absolute inset-0 bg-black/20"></div>
 
                 <div className="absolute left-0 right-0 flex justify-center z-10 px-8" style={{bottom: '82px'}}>
-                  <div className="bg-white/50 backdrop-blur-lg border border-white/60 rounded-xl p-4 shadow-lg flex items-center gap-4">
-                    <svg className="w-10 h-10 flex-shrink-0" fill="rgb(71, 85, 105)" stroke="none" viewBox="0 0 24 24">
+                  <div className="bg-black/50 backdrop-blur-lg border border-white/10 rounded-xl p-4 shadow-lg flex items-center gap-4">
+                    <svg className="w-10 h-10 flex-shrink-0" fill="#ffffff" stroke="none" viewBox="0 0 24 24">
                       <polygon points="5 3 19 12 5 21 5 3"></polygon>
                     </svg>
                     <div className="flex flex-col">
-                      <p className="text-base font-semibold">
+                      <p className="text-base font-semibold text-white">
                         {isClosingVideo ? lastTechService?.title : selectedTechService?.title}
                       </p>
-                      <p className="text-base font-semibold">
+                      <p className="text-base font-semibold text-white">
                         Video Interview describing Process
                       </p>
                     </div>

@@ -70,7 +70,7 @@ ${recommendations.recommendedTechnologies.join('\n')}
 
       {/* Modal */}
       <div
-        className="relative bg-white rounded-3xl shadow-2xl max-w-2xl w-full mx-4"
+        className="relative bg-[#111111] rounded-3xl shadow-2xl max-w-2xl w-full mx-4"
         style={{
           animation: 'slideInDown 0.3s ease-out forwards',
           maxHeight: '90vh',
@@ -117,50 +117,50 @@ ${recommendations.recommendedTechnologies.join('\n')}
                 className="mx-auto mb-6"
                 style={{ width: '150px', height: '107px', objectFit: 'contain' }}
               />
-              <h2 className="text-3xl font-bold text-slate-800 mb-3">BrainMoove: a personalised tour</h2>
-              <p className="text-xl text-slate-600 mb-6">
+              <h2 className="text-3xl font-bold text-white mb-3">BrainMoove: a personalised tour</h2>
+              <p className="text-xl text-white/70 mb-6">
                 treatments right for you
               </p>
-              <p className="text-lg text-slate-600 mb-8 max-w-2xl mx-auto leading-relaxed">
+              <p className="text-lg text-white/70 mb-8 max-w-2xl mx-auto leading-relaxed">
                 Answer 4 questions about your situation. We'll show you which services and technologies
                 apply to your needs, with videos and a treatment timeline.
               </p>
 
-              <div className="bg-gradient-to-r from-purple-50 to-blue-50 border-2 border-purple-200 rounded-2xl p-8 mb-8 max-w-2xl mx-auto">
-                <h3 className="font-bold text-slate-800 mb-6 text-xl">What you'll see:</h3>
+              <div className="bg-[#1a1a1a] border-2 border-white/10 rounded-2xl p-8 mb-8 max-w-2xl mx-auto">
+                <h3 className="font-bold text-white mb-6 text-xl">What you'll see:</h3>
                 <div className="space-y-4 text-left">
                   <div className="flex items-start gap-4">
                     <div className="text-3xl">📋</div>
                     <div>
-                      <div className="font-bold text-slate-800 text-lg">Treatment Plan</div>
-                      <div className="text-slate-600">Services and technologies based on your responses</div>
+                      <div className="font-bold text-white text-lg">Treatment Plan</div>
+                      <div className="text-white/70">Services and technologies based on your responses</div>
                     </div>
                   </div>
                   <div className="flex items-start gap-4">
                     <div className="text-3xl">🎥</div>
                     <div>
-                      <div className="font-bold text-slate-800 text-lg">Video Explanations</div>
-                      <div className="text-slate-600">Specialists explain each service</div>
+                      <div className="font-bold text-white text-lg">Video Explanations</div>
+                      <div className="text-white/70">Specialists explain each service</div>
                     </div>
                   </div>
                   <div className="flex items-start gap-4">
                     <div className="text-3xl">🔬</div>
                     <div>
-                      <div className="font-bold text-slate-800 text-lg">Technology Demonstrations</div>
-                      <div className="text-slate-600">How the equipment works</div>
+                      <div className="font-bold text-white text-lg">Technology Demonstrations</div>
+                      <div className="text-white/70">How the equipment works</div>
                     </div>
                   </div>
                   <div className="flex items-start gap-4">
                     <div className="text-3xl">📅</div>
                     <div>
-                      <div className="font-bold text-slate-800 text-lg">Treatment Timeline</div>
-                      <div className="text-slate-600">Week-by-week overview</div>
+                      <div className="font-bold text-white text-lg">Treatment Timeline</div>
+                      <div className="text-white/70">Week-by-week overview</div>
                     </div>
                   </div>
                 </div>
               </div>
 
-              <div className="flex items-center justify-center gap-6 text-sm text-slate-500 mb-8">
+              <div className="flex items-center justify-center gap-6 text-sm text-white/50 mb-8">
                 <div className="flex items-center gap-2">
                   <span className="text-lg">⏱️</span>
                   <span>2 minutes</span>
@@ -179,8 +179,8 @@ ${recommendations.recommendedTechnologies.join('\n')}
               </button>
 
               {/* Disclaimer */}
-              <div className="mt-8 bg-blue-50 border border-blue-200 rounded-lg p-4 max-w-2xl mx-auto">
-                <p className="text-xs text-slate-600 leading-relaxed">
+              <div className="mt-8 bg-[#1a1a1a] border border-white/10 rounded-lg p-4 max-w-2xl mx-auto">
+                <p className="text-xs text-white/50 leading-relaxed">
                   <strong>Note:</strong> This tool helps you understand available treatment options and is the first step toward a focused conversation with our team.
                   Results are not a diagnosis or binding commitment.
                 </p>
@@ -191,8 +191,8 @@ ${recommendations.recommendedTechnologies.join('\n')}
           {/* Step 1: Audience */}
           {questionnaireStep === 1 && (
             <div>
-              <h3 className="text-xl font-bold text-slate-800 mb-4">Who is this treatment for?</h3>
-              <p className="text-slate-600 mb-6">Select the age group that best applies</p>
+              <h3 className="text-xl font-bold text-white mb-4">Who is this treatment for?</h3>
+              <p className="text-white/70 mb-6">Select the age group that best applies</p>
 
               <div className="space-y-3">
                 <button
@@ -200,15 +200,15 @@ ${recommendations.recommendedTechnologies.join('\n')}
                     setQuestionnaireAnswers({ ...questionnaireAnswers, audience: 'child' });
                     setQuestionnaireStep(2);
                   }}
-                  className="w-full bg-white hover:bg-blue-50 border-2 border-slate-200 hover:border-blue-500 rounded-xl p-6 transition-all text-left group"
+                  className="w-full bg-[#1a1a1a] hover:bg-[#222222] border-2 border-white/10 hover:border-[#F26219]/50 rounded-xl p-6 transition-all text-left group"
                 >
                   <div className="flex items-center gap-4">
-                    <div className="bg-blue-100 group-hover:bg-blue-500 rounded-full p-3 transition-colors">
-                      <Users className="w-6 h-6 text-blue-600 group-hover:text-white" />
+                    <div className="bg-[#F26219]/20 group-hover:bg-[#F26219] rounded-full p-3 transition-colors">
+                      <Users className="w-6 h-6 text-[#F26219] group-hover:text-white" />
                     </div>
                     <div>
-                      <div className="font-semibold text-slate-800">Child or Teen (0-17 years)</div>
-                      <div className="text-sm text-slate-600">Developmental support and early intervention</div>
+                      <div className="font-semibold text-white">Child or Teen (0-17 years)</div>
+                      <div className="text-sm text-white/70">Developmental support and early intervention</div>
                     </div>
                   </div>
                 </button>
@@ -218,15 +218,15 @@ ${recommendations.recommendedTechnologies.join('\n')}
                     setQuestionnaireAnswers({ ...questionnaireAnswers, audience: 'adult' });
                     setQuestionnaireStep(2);
                   }}
-                  className="w-full bg-white hover:bg-blue-50 border-2 border-slate-200 hover:border-blue-500 rounded-xl p-6 transition-all text-left group"
+                  className="w-full bg-[#1a1a1a] hover:bg-[#222222] border-2 border-white/10 hover:border-[#F26219]/50 rounded-xl p-6 transition-all text-left group"
                 >
                   <div className="flex items-center gap-4">
-                    <div className="bg-blue-100 group-hover:bg-blue-500 rounded-full p-3 transition-colors">
-                      <Users className="w-6 h-6 text-blue-600 group-hover:text-white" />
+                    <div className="bg-[#F26219]/20 group-hover:bg-[#F26219] rounded-full p-3 transition-colors">
+                      <Users className="w-6 h-6 text-[#F26219] group-hover:text-white" />
                     </div>
                     <div>
-                      <div className="font-semibold text-slate-800">Adult (18-64 years)</div>
-                      <div className="text-sm text-slate-600">Recovery, optimization, and symptom management</div>
+                      <div className="font-semibold text-white">Adult (18-64 years)</div>
+                      <div className="text-sm text-white/70">Recovery, optimization, and symptom management</div>
                     </div>
                   </div>
                 </button>
@@ -236,15 +236,15 @@ ${recommendations.recommendedTechnologies.join('\n')}
                     setQuestionnaireAnswers({ ...questionnaireAnswers, audience: 'senior' });
                     setQuestionnaireStep(2);
                   }}
-                  className="w-full bg-white hover:bg-blue-50 border-2 border-slate-200 hover:border-blue-500 rounded-xl p-6 transition-all text-left group"
+                  className="w-full bg-[#1a1a1a] hover:bg-[#222222] border-2 border-white/10 hover:border-[#F26219]/50 rounded-xl p-6 transition-all text-left group"
                 >
                   <div className="flex items-center gap-4">
-                    <div className="bg-blue-100 group-hover:bg-blue-500 rounded-full p-3 transition-colors">
-                      <Users className="w-6 h-6 text-blue-600 group-hover:text-white" />
+                    <div className="bg-[#F26219]/20 group-hover:bg-[#F26219] rounded-full p-3 transition-colors">
+                      <Users className="w-6 h-6 text-[#F26219] group-hover:text-white" />
                     </div>
                     <div>
-                      <div className="font-semibold text-slate-800">Senior (65+ years)</div>
-                      <div className="text-sm text-slate-600">Healthy aging and fall prevention</div>
+                      <div className="font-semibold text-white">Senior (65+ years)</div>
+                      <div className="text-sm text-white/70">Healthy aging and fall prevention</div>
                     </div>
                   </div>
                 </button>
@@ -255,8 +255,8 @@ ${recommendations.recommendedTechnologies.join('\n')}
           {/* Step 2: Reason */}
           {questionnaireStep === 2 && (
             <div>
-              <h3 className="text-xl font-bold text-slate-800 mb-4">What brings you here today?</h3>
-              <p className="text-slate-600 mb-6">Select the option that best describes your situation</p>
+              <h3 className="text-xl font-bold text-white mb-4">What brings you here today?</h3>
+              <p className="text-white/70 mb-6">Select the option that best describes your situation</p>
 
               <div className="space-y-3">
                 <button
@@ -264,10 +264,10 @@ ${recommendations.recommendedTechnologies.join('\n')}
                     setQuestionnaireAnswers({ ...questionnaireAnswers, reason: 'diagnosed' });
                     setQuestionnaireStep(3);
                   }}
-                  className="w-full bg-white hover:bg-blue-50 border-2 border-slate-200 hover:border-blue-500 rounded-xl p-5 transition-all text-left"
+                  className="w-full bg-[#1a1a1a] hover:bg-[#222222] border-2 border-white/10 hover:border-[#F26219]/50 rounded-xl p-5 transition-all text-left"
                 >
-                  <div className="font-semibold text-slate-800 mb-1">📋 I have a diagnosed condition</div>
-                  <div className="text-sm text-slate-600">You've received a medical diagnosis</div>
+                  <div className="font-semibold text-white mb-1">📋 I have a diagnosed condition</div>
+                  <div className="text-sm text-white/70">You've received a medical diagnosis</div>
                 </button>
 
                 <button
@@ -275,10 +275,10 @@ ${recommendations.recommendedTechnologies.join('\n')}
                     setQuestionnaireAnswers({ ...questionnaireAnswers, reason: 'symptoms' });
                     setQuestionnaireStep(3);
                   }}
-                  className="w-full bg-white hover:bg-blue-50 border-2 border-slate-200 hover:border-blue-500 rounded-xl p-5 transition-all text-left"
+                  className="w-full bg-[#1a1a1a] hover:bg-[#222222] border-2 border-white/10 hover:border-[#F26219]/50 rounded-xl p-5 transition-all text-left"
                 >
-                  <div className="font-semibold text-slate-800 mb-1">🔍 I have symptoms but no diagnosis</div>
-                  <div className="text-sm text-slate-600">Experiencing issues without clear answers</div>
+                  <div className="font-semibold text-white mb-1">🔍 I have symptoms but no diagnosis</div>
+                  <div className="text-sm text-white/70">Experiencing issues without clear answers</div>
                 </button>
 
                 <button
@@ -286,10 +286,10 @@ ${recommendations.recommendedTechnologies.join('\n')}
                     setQuestionnaireAnswers({ ...questionnaireAnswers, reason: 'prevention' });
                     setQuestionnaireStep(3);
                   }}
-                  className="w-full bg-white hover:bg-blue-50 border-2 border-slate-200 hover:border-blue-500 rounded-xl p-5 transition-all text-left"
+                  className="w-full bg-[#1a1a1a] hover:bg-[#222222] border-2 border-white/10 hover:border-[#F26219]/50 rounded-xl p-5 transition-all text-left"
                 >
-                  <div className="font-semibold text-slate-800 mb-1">💪 Prevention and optimization</div>
-                  <div className="text-sm text-slate-600">Proactive health and performance</div>
+                  <div className="font-semibold text-white mb-1">💪 Prevention and optimization</div>
+                  <div className="text-sm text-white/70">Proactive health and performance</div>
                 </button>
 
                 <button
@@ -297,16 +297,16 @@ ${recommendations.recommendedTechnologies.join('\n')}
                     setQuestionnaireAnswers({ ...questionnaireAnswers, reason: 'injury' });
                     setQuestionnaireStep(3);
                   }}
-                  className="w-full bg-white hover:bg-blue-50 border-2 border-slate-200 hover:border-blue-500 rounded-xl p-5 transition-all text-left"
+                  className="w-full bg-[#1a1a1a] hover:bg-[#222222] border-2 border-white/10 hover:border-[#F26219]/50 rounded-xl p-5 transition-all text-left"
                 >
-                  <div className="font-semibold text-slate-800 mb-1">⚡ Post-injury recovery</div>
-                  <div className="text-sm text-slate-600">Recovering from brain or head injury</div>
+                  <div className="font-semibold text-white mb-1">⚡ Post-injury recovery</div>
+                  <div className="text-sm text-white/70">Recovering from brain or head injury</div>
                 </button>
               </div>
 
               <button
                 onClick={() => setQuestionnaireStep(1)}
-                className="mt-6 text-blue-600 hover:text-blue-700 font-medium flex items-center gap-1"
+                className="mt-6 text-white/50 hover:text-white font-medium flex items-center gap-1"
               >
                 <ChevronRight className="w-4 h-4 rotate-180" />
                 Back
@@ -317,8 +317,8 @@ ${recommendations.recommendedTechnologies.join('\n')}
           {/* Step 3: Symptoms */}
           {questionnaireStep === 3 && (
             <div>
-              <h3 className="text-xl font-bold text-slate-800 mb-4">What symptoms or challenges are you experiencing?</h3>
-              <p className="text-slate-600 mb-6">Select all that apply (you can choose multiple)</p>
+              <h3 className="text-xl font-bold text-white mb-4">What symptoms or challenges are you experiencing?</h3>
+              <p className="text-white/70 mb-6">Select all that apply (you can choose multiple)</p>
 
               <div className="space-y-2">
                 {[
@@ -336,8 +336,8 @@ ${recommendations.recommendedTechnologies.join('\n')}
                     key={symptom.id}
                     className={`flex items-center gap-3 p-4 rounded-lg border-2 cursor-pointer transition-all ${
                       questionnaireAnswers.symptoms.includes(symptom.id)
-                        ? 'bg-blue-50 border-blue-500'
-                        : 'bg-white border-slate-200 hover:border-blue-300'
+                        ? 'bg-[#F26219]/10 border-[#F26219]'
+                        : 'bg-[#1a1a1a] border-white/10 hover:border-[#F26219]/50'
                     }`}
                   >
                     <input
@@ -352,7 +352,7 @@ ${recommendations.recommendedTechnologies.join('\n')}
                       className="w-5 h-5"
                     />
                     <span className="text-xl">{symptom.icon}</span>
-                    <span className="text-slate-800">{symptom.label}</span>
+                    <span className="text-white">{symptom.label}</span>
                   </label>
                 ))}
               </div>
@@ -360,14 +360,14 @@ ${recommendations.recommendedTechnologies.join('\n')}
               <div className="flex items-center justify-between mt-6">
                 <button
                   onClick={() => setQuestionnaireStep(2)}
-                  className="text-blue-600 hover:text-blue-700 font-medium flex items-center gap-1"
+                  className="text-white/50 hover:text-white font-medium flex items-center gap-1"
                 >
                   <ChevronRight className="w-4 h-4 rotate-180" />
                   Back
                 </button>
                 <button
                   onClick={() => setQuestionnaireStep(4)}
-                  className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-lg transition-all flex items-center gap-1"
+                  className="bg-[#F26219] hover:bg-[#d4521a] text-white font-semibold px-6 py-3 rounded-lg transition-all flex items-center gap-1"
                 >
                   Continue
                   <ChevronRight className="w-4 h-4" />
@@ -379,8 +379,8 @@ ${recommendations.recommendedTechnologies.join('\n')}
           {/* Step 4: Goals */}
           {questionnaireStep === 4 && (
             <div>
-              <h3 className="text-xl font-bold text-slate-800 mb-4">What are your primary goals?</h3>
-              <p className="text-slate-600 mb-6">Select all that apply</p>
+              <h3 className="text-xl font-bold text-white mb-4">What are your primary goals?</h3>
+              <p className="text-white/70 mb-6">Select all that apply</p>
 
               <div className="space-y-2">
                 {[
@@ -395,8 +395,8 @@ ${recommendations.recommendedTechnologies.join('\n')}
                     key={goal.id}
                     className={`flex items-center gap-3 p-4 rounded-lg border-2 cursor-pointer transition-all ${
                       questionnaireAnswers.goals.includes(goal.id)
-                        ? 'bg-blue-50 border-blue-500'
-                        : 'bg-white border-slate-200 hover:border-blue-300'
+                        ? 'bg-[#F26219]/10 border-[#F26219]'
+                        : 'bg-[#1a1a1a] border-white/10 hover:border-[#F26219]/50'
                     }`}
                   >
                     <input
@@ -411,7 +411,7 @@ ${recommendations.recommendedTechnologies.join('\n')}
                       className="w-5 h-5"
                     />
                     <span className="text-xl">{goal.icon}</span>
-                    <span className="text-slate-800">{goal.label}</span>
+                    <span className="text-white">{goal.label}</span>
                   </label>
                 ))}
               </div>
@@ -419,14 +419,14 @@ ${recommendations.recommendedTechnologies.join('\n')}
               <div className="flex items-center justify-between mt-6">
                 <button
                   onClick={() => setQuestionnaireStep(3)}
-                  className="text-blue-600 hover:text-blue-700 font-medium flex items-center gap-1"
+                  className="text-white/50 hover:text-white font-medium flex items-center gap-1"
                 >
                   <ChevronRight className="w-4 h-4 rotate-180" />
                   Back
                 </button>
                 <button
                   onClick={() => setQuestionnaireStep(5)}
-                  className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-lg transition-all flex items-center gap-1"
+                  className="bg-[#F26219] hover:bg-[#d4521a] text-white font-semibold px-6 py-3 rounded-lg transition-all flex items-center gap-1"
                 >
                   See My Results
                   <ChevronRight className="w-4 h-4" />
@@ -442,32 +442,32 @@ ${recommendations.recommendedTechnologies.join('\n')}
               <div>
                 <div className="text-center mb-8">
                   <div className="text-5xl mb-4">🎯</div>
-                  <h3 className="text-2xl font-bold text-slate-800 mb-2">Your Personalized Treatment Plan</h3>
-                  <p className="text-slate-600">Based on your responses, here's what we recommend</p>
+                  <h3 className="text-2xl font-bold text-white mb-2">Your Personalized Treatment Plan</h3>
+                  <p className="text-white/70">Based on your responses, here's what we recommend</p>
                 </div>
 
                 {/* Primary Recommendation */}
-                <div className="bg-gradient-to-r from-blue-50 to-cyan-50 border-2 border-blue-200 rounded-xl p-6 mb-6">
-                  <h4 className="text-lg font-bold text-slate-800 mb-2">{recommendations.primaryMessage}</h4>
-                  <p className="text-slate-700">
+                <div className="bg-[#1a1a1a] border-2 border-white/10 rounded-xl p-6 mb-6">
+                  <h4 className="text-lg font-bold text-white mb-2">{recommendations.primaryMessage}</h4>
+                  <p className="text-white/70">
                     A comprehensive {recommendations.audienceNote} program addressing {recommendations.symptomsText} with focus on {recommendations.goalsText}.
                   </p>
                 </div>
 
                 {/* Recommended Services */}
                 <div className="mb-6">
-                  <h4 className="font-bold text-slate-800 mb-3">Recommended Services:</h4>
+                  <h4 className="font-bold text-white mb-3">Recommended Services:</h4>
                   <div className="grid grid-cols-2 gap-3">
                     {recommendations.recommendedServices.map(serviceId => {
                       const service = technicalServices.find(s => s.id === serviceId);
                       if (!service) return null;
                       const ServiceIcon = service.icon;
                       return (
-                        <div key={serviceId} className="bg-white border border-slate-200 rounded-lg p-4 flex items-center gap-3">
-                          <div className="bg-blue-100 rounded-full p-2">
-                            <ServiceIcon className="w-5 h-5 text-blue-600" />
+                        <div key={serviceId} className="bg-[#1a1a1a] border border-white/10 rounded-lg p-4 flex items-center gap-3">
+                          <div className="bg-[#F26219]/20 rounded-full p-2">
+                            <ServiceIcon className="w-5 h-5 text-[#F26219]" />
                           </div>
-                          <span className="text-sm font-medium text-slate-800">{service.title}</span>
+                          <span className="text-sm font-medium text-white">{service.title}</span>
                         </div>
                       );
                     })}
@@ -476,18 +476,18 @@ ${recommendations.recommendedTechnologies.join('\n')}
 
                 {/* Recommended Technologies */}
                 <div className="mb-6">
-                  <h4 className="font-bold text-slate-800 mb-3">Recommended Technologies:</h4>
+                  <h4 className="font-bold text-white mb-3">Recommended Technologies:</h4>
                   <div className="grid grid-cols-2 gap-3">
                     {recommendations.recommendedTechnologies.map(techId => {
                       const tech = machinesData.find(m => m.id === techId);
                       if (!tech) return null;
                       const TechIcon = tech.icon;
                       return (
-                        <div key={techId} className="bg-white border border-slate-200 rounded-lg p-4 flex items-center gap-3">
-                          <div className="bg-cyan-100 rounded-full p-2">
-                            <TechIcon className="w-5 h-5 text-cyan-600" />
+                        <div key={techId} className="bg-[#1a1a1a] border border-white/10 rounded-lg p-4 flex items-center gap-3">
+                          <div className="bg-[#F26219]/20 rounded-full p-2">
+                            <TechIcon className="w-5 h-5 text-[#F26219]" />
                           </div>
-                          <span className="text-sm font-medium text-slate-800">{tech.title}</span>
+                          <span className="text-sm font-medium text-white">{tech.title}</span>
                         </div>
                       );
                     })}
@@ -495,9 +495,9 @@ ${recommendations.recommendedTechnologies.join('\n')}
                 </div>
 
                 {/* Why These Recommendations */}
-                <div className="bg-slate-50 border border-slate-200 rounded-lg p-4 mb-6">
-                  <h4 className="font-bold text-slate-800 mb-2 text-sm">Why these recommendations?</h4>
-                  <p className="text-sm text-slate-700 leading-relaxed">
+                <div className="bg-[#1a1a1a] border border-white/10 rounded-lg p-4 mb-6">
+                  <h4 className="font-bold text-white mb-2 text-sm">Why these recommendations?</h4>
+                  <p className="text-sm text-white/70 leading-relaxed">
                     Based on your {questionnaireAnswers.audience === 'child' ? "child's" : questionnaireAnswers.audience === 'senior' ? 'senior' : ''} symptoms and goals,
                     this combination of services and technologies provides comprehensive support. Our {recommendations.audienceNote} protocols
                     are specifically designed to address the challenges you described.
@@ -505,9 +505,9 @@ ${recommendations.recommendedTechnologies.join('\n')}
                 </div>
 
                 {/* Disclaimer */}
-                <div className="bg-blue-50 border-l-4 border-blue-600 rounded-lg p-4 mb-6">
-                  <p className="text-sm text-slate-700 leading-relaxed">
-                    <strong className="text-blue-800">Important:</strong> These recommendations help you understand your options and prepare for a meaningful conversation with our specialists.
+                <div className="bg-[#1a1a1a] border-l-4 border-[#F26219] rounded-lg p-4 mb-6">
+                  <p className="text-sm text-white/70 leading-relaxed">
+                    <strong className="text-[#F26219]">Important:</strong> These recommendations help you understand your options and prepare for a meaningful conversation with our specialists.
                     They are not a diagnosis or binding commitment. Your personalized treatment plan will be developed during your consultation.
                   </p>
                 </div>
@@ -526,21 +526,21 @@ ${recommendations.recommendedTechnologies.join('\n')}
 
                   <button
                     onClick={() => alert('Consultation booking system coming soon! For now, please call us directly.')}
-                    className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-4 rounded-xl transition-all hover:scale-105"
+                    className="w-full bg-[#F26219] hover:bg-[#d4521a] text-white font-semibold px-6 py-4 rounded-xl transition-all hover:scale-105"
                   >
                     📅 Book Free Consultation
                   </button>
 
                   <button
                     onClick={() => handleDownload(recommendations)}
-                    className="w-full bg-white hover:bg-slate-50 border-2 border-slate-300 text-slate-800 font-semibold px-6 py-3 rounded-xl transition-all"
+                    className="w-full bg-[#1a1a1a] hover:bg-[#222222] border-2 border-white/10 text-white font-semibold px-6 py-3 rounded-xl transition-all"
                   >
                     💾 Download Results
                   </button>
 
                   <button
                     onClick={handleEmail}
-                    className="w-full bg-white hover:bg-slate-50 border-2 border-slate-300 text-slate-800 font-semibold px-6 py-3 rounded-xl transition-all"
+                    className="w-full bg-[#1a1a1a] hover:bg-[#222222] border-2 border-white/10 text-white font-semibold px-6 py-3 rounded-xl transition-all"
                   >
                     📧 Email Results to Me
                   </button>
@@ -551,7 +551,7 @@ ${recommendations.recommendedTechnologies.join('\n')}
                     onReset();
                     onClose();
                   }}
-                  className="w-full mt-4 text-slate-600 hover:text-slate-800 font-medium"
+                  className="w-full mt-4 text-white/50 hover:text-white font-medium"
                 >
                   ← Start Over
                 </button>

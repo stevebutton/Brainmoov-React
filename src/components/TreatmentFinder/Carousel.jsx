@@ -123,7 +123,7 @@ export default function Carousel({
       ></div>
 
       <div
-        className="relative bg-white rounded-3xl shadow-2xl w-full mx-4"
+        className="relative bg-[#111111] rounded-3xl shadow-2xl w-full mx-4"
         style={{ maxWidth: '900px', maxHeight: '90vh' }}
       >
         <div className="bg-gradient-to-r from-purple-600 to-blue-600 text-white p-6 rounded-t-3xl">
@@ -156,9 +156,9 @@ export default function Carousel({
                 className="mx-auto mb-6"
                 style={{ width: '150px', height: '107px', objectFit: 'contain' }}
               />
-              <h3 className="text-3xl font-bold text-slate-800 mb-3">{currentSlideData.title}</h3>
-              <p className="text-lg text-purple-600 mb-4 font-semibold">{currentSlideData.subtitle}</p>
-              <p className="text-slate-700 max-w-2xl mx-auto text-lg">{currentSlideData.content}</p>
+              <h3 className="text-3xl font-bold text-white mb-3">{currentSlideData.title}</h3>
+              <p className="text-lg text-purple-400 mb-4 font-semibold">{currentSlideData.subtitle}</p>
+              <p className="text-white/70 max-w-2xl mx-auto text-lg">{currentSlideData.content}</p>
             </div>
           )}
 
@@ -171,13 +171,13 @@ export default function Carousel({
                   className="mx-auto mb-4"
                   style={{ width: '120px', height: '85px', objectFit: 'contain' }}
                 />
-                <h3 className="text-2xl font-bold text-slate-800 mb-2">{currentSlideData.title}</h3>
+                <h3 className="text-2xl font-bold text-white mb-2">{currentSlideData.title}</h3>
               </div>
               <div className="space-y-4 max-w-xl mx-auto">
                 {currentSlideData.items.map((item, idx) => (
-                  <div key={idx} className="bg-gradient-to-r from-blue-50 to-purple-50 border-2 border-blue-200 rounded-xl p-5">
-                    <div className="text-sm font-bold text-blue-800 mb-1">{item.label}</div>
-                    <div className="text-slate-800 text-lg">{item.value}</div>
+                  <div key={idx} className="bg-[#1a1a1a] border-2 border-white/10 rounded-xl p-5">
+                    <div className="text-sm font-bold text-purple-400 mb-1">{item.label}</div>
+                    <div className="text-white text-lg">{item.value}</div>
                   </div>
                 ))}
               </div>
@@ -193,18 +193,18 @@ export default function Carousel({
                   className="mx-auto mb-4"
                   style={{ width: '100px', height: '71px', objectFit: 'contain' }}
                 />
-                <h3 className="text-2xl font-bold text-slate-800 mb-2">{currentSlideData.title}</h3>
-                <p className="text-purple-600 font-semibold">{currentSlideData.subtitle}</p>
+                <h3 className="text-2xl font-bold text-white mb-2">{currentSlideData.title}</h3>
+                <p className="text-purple-400 font-semibold">{currentSlideData.subtitle}</p>
               </div>
 
-              <div className="bg-gradient-to-br from-slate-100 to-slate-200 rounded-2xl p-12 mb-6 text-center border-2 border-slate-300">
+              <div className="bg-[#1a1a1a] rounded-2xl p-12 mb-6 text-center border-2 border-white/10">
                 <div className="text-5xl mb-3">🎥</div>
-                <p className="text-slate-700 font-bold mb-2 text-lg">Specialist Video Explanation</p>
-                <p className="text-slate-600 mb-4">Raphaël Royer explains {currentSlideData.title.toLowerCase()}</p>
+                <p className="text-white font-bold mb-2 text-lg">Specialist Video Explanation</p>
+                <p className="text-white/70 mb-4">Raphaël Royer explains {currentSlideData.title.toLowerCase()}</p>
               </div>
 
               <div className="max-w-2xl mx-auto">
-                <p className="text-slate-700 text-lg mb-4 leading-relaxed">{currentSlideData.description}</p>
+                <p className="text-white/70 text-lg mb-4 leading-relaxed">{currentSlideData.description}</p>
               </div>
             </div>
           )}
@@ -218,18 +218,18 @@ export default function Carousel({
                   className="mx-auto mb-4"
                   style={{ width: '100px', height: '71px', objectFit: 'contain' }}
                 />
-                <h3 className="text-2xl font-bold text-slate-800 mb-2">{currentSlideData.title}</h3>
-                <p className="text-purple-600 font-semibold">{currentSlideData.subtitle}</p>
+                <h3 className="text-2xl font-bold text-white mb-2">{currentSlideData.title}</h3>
+                <p className="text-purple-400 font-semibold">{currentSlideData.subtitle}</p>
               </div>
 
-              <div className="bg-gradient-to-br from-cyan-50 to-blue-50 rounded-2xl p-12 mb-6 text-center border-2 border-cyan-300">
+              <div className="bg-[#1a1a1a] rounded-2xl p-12 mb-6 text-center border-2 border-white/10">
                 <div className="text-5xl mb-3">🎬</div>
-                <p className="text-slate-700 font-bold mb-2 text-lg">Technology Demonstration</p>
-                <p className="text-slate-600 mb-4">See {currentSlideData.title} in action</p>
+                <p className="text-white font-bold mb-2 text-lg">Technology Demonstration</p>
+                <p className="text-white/70 mb-4">See {currentSlideData.title} in action</p>
               </div>
 
               <div className="max-w-2xl mx-auto">
-                <p className="text-slate-700 text-lg mb-4 leading-relaxed">{currentSlideData.description}</p>
+                <p className="text-white/70 text-lg mb-4 leading-relaxed">{currentSlideData.description}</p>
               </div>
             </div>
           )}
@@ -243,8 +243,8 @@ export default function Carousel({
                   className="mx-auto mb-4"
                   style={{ width: '120px', height: '85px', objectFit: 'contain' }}
                 />
-                <h3 className="text-2xl font-bold text-slate-800 mb-2">{currentSlideData.title}</h3>
-                <p className="text-slate-600">{currentSlideData.subtitle}</p>
+                <h3 className="text-2xl font-bold text-white mb-2">{currentSlideData.title}</h3>
+                <p className="text-white/70">{currentSlideData.subtitle}</p>
               </div>
 
               <div className="max-w-2xl mx-auto">
@@ -254,10 +254,10 @@ export default function Carousel({
                       <div className="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-purple-600 to-blue-600 text-white rounded-full flex items-center justify-center font-bold text-lg">
                         {idx + 1}
                       </div>
-                      <div className="flex-1 bg-white border-2 border-slate-200 rounded-xl p-4">
-                        <div className="text-xs font-bold text-purple-600 mb-1 uppercase tracking-wide">{phase.week}</div>
-                        <div className="font-bold text-slate-800 text-lg mb-1">{phase.activity}</div>
-                        <div className="text-slate-600">{phase.description}</div>
+                      <div className="flex-1 bg-[#1a1a1a] border-2 border-white/10 rounded-xl p-4">
+                        <div className="text-xs font-bold text-purple-400 mb-1 uppercase tracking-wide">{phase.week}</div>
+                        <div className="font-bold text-white text-lg mb-1">{phase.activity}</div>
+                        <div className="text-white/70">{phase.description}</div>
                       </div>
                     </div>
                   ))}
@@ -274,10 +274,10 @@ export default function Carousel({
                 className="mx-auto mb-6"
                 style={{ width: '150px', height: '107px', objectFit: 'contain' }}
               />
-              <h3 className="text-3xl font-bold text-slate-800 mb-4">{currentSlideData.title}</h3>
-              <div className="bg-gradient-to-r from-purple-50 to-blue-50 border-2 border-purple-200 rounded-2xl p-6 mb-6 max-w-2xl mx-auto">
-                <h4 className="text-xl font-bold text-slate-800 mb-2">{currentSlideData.subtitle}</h4>
-                <p className="text-slate-700 text-lg">{currentSlideData.summary}</p>
+              <h3 className="text-3xl font-bold text-white mb-4">{currentSlideData.title}</h3>
+              <div className="bg-[#1a1a1a] border-2 border-white/10 rounded-2xl p-6 mb-6 max-w-2xl mx-auto">
+                <h4 className="text-xl font-bold text-white mb-2">{currentSlideData.subtitle}</h4>
+                <p className="text-white/70 text-lg">{currentSlideData.summary}</p>
               </div>
 
               <div className="space-y-3 max-w-md mx-auto">
@@ -293,7 +293,7 @@ export default function Carousel({
                 </button>
                 <button
                   onClick={onClose}
-                  className="w-full bg-white hover:bg-slate-50 text-slate-800 font-semibold py-3 px-6 rounded-xl border-2 border-slate-300"
+                  className="w-full bg-[#1a1a1a] hover:bg-[#222222] text-white font-semibold py-3 px-6 rounded-xl border-2 border-white/10"
                 >
                   Return to Summary
                 </button>
@@ -302,12 +302,12 @@ export default function Carousel({
           )}
         </div>
 
-        <div className="flex items-center justify-between px-8 py-5 border-t-2 border-slate-200 bg-slate-50 rounded-b-3xl">
+        <div className="flex items-center justify-between px-8 py-5 border-t-2 border-white/10 bg-[#1a1a1a] rounded-b-3xl">
           <button
             onClick={() => setCurrentSlide(Math.max(0, currentSlide - 1))}
             disabled={currentSlide === 0}
             className={`flex items-center gap-2 px-5 py-2.5 rounded-lg font-semibold transition-all ${
-              currentSlide === 0 ? 'text-slate-400 cursor-not-allowed' : 'text-slate-700 hover:bg-white hover:shadow'
+              currentSlide === 0 ? 'text-white/30 cursor-not-allowed' : 'text-white/70 hover:bg-[#222222] hover:shadow'
             }`}
           >
             <ChevronLeft className="w-5 h-5" />
@@ -320,7 +320,7 @@ export default function Carousel({
                 key={idx}
                 onClick={() => setCurrentSlide(idx)}
                 className={`transition-all rounded-full ${
-                  idx === currentSlide ? 'bg-purple-600 w-8 h-3' : 'bg-slate-300 hover:bg-slate-400 w-3 h-3'
+                  idx === currentSlide ? 'bg-[#F26219] w-8 h-3' : 'bg-white/20 hover:bg-white/40 w-3 h-3'
                 }`}
               ></button>
             ))}
@@ -330,7 +330,7 @@ export default function Carousel({
             onClick={() => setCurrentSlide(Math.min(totalSlides - 1, currentSlide + 1))}
             disabled={currentSlide === totalSlides - 1}
             className={`flex items-center gap-2 px-5 py-2.5 rounded-lg font-semibold transition-all ${
-              currentSlide === totalSlides - 1 ? 'text-slate-400 cursor-not-allowed' : 'text-slate-700 hover:bg-white hover:shadow'
+              currentSlide === totalSlides - 1 ? 'text-white/30 cursor-not-allowed' : 'text-white/70 hover:bg-[#222222] hover:shadow'
             }`}
           >
             Next

@@ -4,10 +4,10 @@ export default function Banner({ title, subtitle = null, showBanner, onLogoClick
   const { assets } = useAssets();
   return (
     <div
-      className={`absolute top-0 left-0 right-0 bg-white backdrop-blur-2xl text-slate-800 px-8 z-20 ${showBanner && shouldAnimate ? 'animate-banner-in' : ''}`}
+      className={`absolute top-0 left-0 right-0 bg-[#111111] text-white px-8 z-20 ${showBanner && shouldAnimate ? 'animate-banner-in' : ''}`}
       style={{
         height: '100px',
-        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.4)',
         opacity: showBanner ? 1 : 0,
         transform: showBanner ? 'translateY(0)' : 'translateY(-100%)',
         transition: shouldAnimate ? undefined : 'none'
@@ -39,25 +39,25 @@ export default function Banner({ title, subtitle = null, showBanner, onLogoClick
             <div className="flex gap-6 mt-1">
               <button
                 onClick={() => onNavigate('about')}
-                className="text-sm font-medium hover:underline transition-all"
+                className="text-sm font-medium text-white/70 hover:text-[#F26219] hover:underline transition-all"
               >
                 What is BrainMoove?
               </button>
               <button
                 onClick={() => onNavigate('who-detail')}
-                className="text-sm font-medium hover:underline transition-all"
+                className="text-sm font-medium text-white/70 hover:text-[#F26219] hover:underline transition-all"
               >
                 Who We Treat
               </button>
               <button
                 onClick={() => onNavigate('what-detail')}
-                className="text-sm font-medium hover:underline transition-all"
+                className="text-sm font-medium text-white/70 hover:text-[#F26219] hover:underline transition-all"
               >
                 What We Treat
               </button>
               <button
                 onClick={() => onNavigate('process-detail')}
-                className="text-sm font-medium hover:underline transition-all"
+                className="text-sm font-medium text-white/70 hover:text-[#F26219] hover:underline transition-all"
               >
                 Our Treatment Process
               </button>
@@ -70,16 +70,16 @@ export default function Banner({ title, subtitle = null, showBanner, onLogoClick
           {showTreatmentFinder && onTreatmentFinderClick ? (
             <button
               onClick={onTreatmentFinderClick}
-              className="flex items-center gap-2 bg-gradient-to-r from-purple-100 via-blue-100 to-cyan-100 hover:from-purple-200 hover:via-blue-200 hover:to-cyan-200 border border-blue-300 rounded-xl px-4 py-2 transition-all hover:scale-105 shadow-md"
+              className="flex items-center gap-2 bg-[#F26219] hover:bg-[#d4521a] rounded-xl px-4 py-2 transition-all hover:scale-105 shadow-md"
             >
-              <div className="bg-blue-600 rounded-full p-1.5">
+              <div className="rounded-full p-1.5">
                 <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24" style={{stroke: '#ffffff'}}>
                   <circle cx="12" cy="12" r="10"></circle>
                   <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
                   <line x1="12" y1="17" x2="12.01" y2="17"></line>
                 </svg>
               </div>
-              <span className="text-sm font-semibold text-slate-800 whitespace-nowrap">Treatment Finder</span>
+              <span className="text-sm font-semibold text-white whitespace-nowrap">Treatment Finder</span>
             </button>
           ) : subtitle ? (
             <div key={subtitle} className="animate-fade-slide-right">
