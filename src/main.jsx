@@ -12,9 +12,6 @@ if (isAssetManager) {
   root.style.width = '100%'
   root.style.height = 'auto'
   root.style.overflow = 'visible'
-  root.style.borderRadius = '0'
-  root.style.boxShadow = 'none'
-  document.body.style.alignItems = 'flex-start'
 }
 
 ReactDOM.createRoot(document.getElementById('root')).render(
