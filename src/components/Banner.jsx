@@ -1,10 +1,10 @@
 import { useAssets } from '../context/AssetContext';
 
-export default function Banner({ title, subtitle = null, showBanner, onLogoClick, onNavigate, shouldAnimate = true, showTreatmentFinder = false, onTreatmentFinderClick = null }) {
+export default function Banner({ title, subtitle = null, showBanner, onLogoClick, onNavigate, shouldAnimate = true, showTreatmentFinder = false, onTreatmentFinderClick = null, showTitle = true }) {
   const { assets } = useAssets();
   return (
     <div
-      className={`absolute top-0 left-0 right-0 bg-white text-slate-900 px-8 z-20 ${showBanner && shouldAnimate ? 'animate-banner-in' : ''}`}
+      className={`absolute top-0 left-0 right-0 bg-white text-slate-900 pl-[166px] pr-8 z-20 ${showBanner && shouldAnimate ? 'animate-banner-in' : ''}`}
       style={{
         height: '100px',
         boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
@@ -30,34 +30,42 @@ export default function Banner({ title, subtitle = null, showBanner, onLogoClick
         {/* Center - Title and Navigation */}
         <div className="flex-1 flex flex-col items-start" style={{paddingTop: '14px', paddingLeft: '20px'}}>
           {/* Section Title */}
-          <div key={title} className="animate-fade-slide-down">
-            <h2 className="text-3xl font-bold whitespace-nowrap">{title}</h2>
-          </div>
+          {showTitle && (
+            <div key={title} className="animate-fade-slide-down">
+              <h2 className="text-3xl font-bold whitespace-nowrap">{title}</h2>
+            </div>
+          )}
 
           {/* Navigation Menu - Below Title */}
           {onNavigate && (
-            <div className="flex gap-6 mt-1">
+            <div className="flex gap-2 mt-2">
               <button
                 onClick={() => onNavigate('about')}
-                className="text-sm font-medium text-slate-600 hover:text-[#F26219] hover:underline transition-all"
+                className="text-sm font-semibold text-slate-700 bg-slate-100 hover:bg-[#F26219] hover:text-white rounded-full px-4 py-1.5 transition-all whitespace-nowrap"
               >
                 What is BrainMoove?
               </button>
               <button
                 onClick={() => onNavigate('who-detail')}
-                className="text-sm font-medium text-slate-600 hover:text-[#F26219] hover:underline transition-all"
+                className="text-sm font-semibold text-slate-700 bg-slate-100 hover:bg-[#F26219] hover:text-white rounded-full px-4 py-1.5 transition-all whitespace-nowrap"
               >
                 Who We Treat
               </button>
               <button
                 onClick={() => onNavigate('what-detail')}
-                className="text-sm font-medium text-slate-600 hover:text-[#F26219] hover:underline transition-all"
+                className="text-sm font-semibold text-slate-700 bg-slate-100 hover:bg-[#F26219] hover:text-white rounded-full px-4 py-1.5 transition-all whitespace-nowrap"
               >
                 What We Treat
               </button>
               <button
+                onClick={() => onNavigate('about-infrastructure')}
+                className="text-sm font-semibold text-slate-700 bg-slate-100 hover:bg-[#F26219] hover:text-white rounded-full px-4 py-1.5 transition-all whitespace-nowrap"
+              >
+                Our Infrastructure
+              </button>
+              <button
                 onClick={() => onNavigate('process-detail')}
-                className="text-sm font-medium text-slate-600 hover:text-[#F26219] hover:underline transition-all"
+                className="text-sm font-semibold text-slate-700 bg-slate-100 hover:bg-[#F26219] hover:text-white rounded-full px-4 py-1.5 transition-all whitespace-nowrap"
               >
                 Our Treatment Process
               </button>

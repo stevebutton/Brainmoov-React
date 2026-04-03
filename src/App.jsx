@@ -18,7 +18,7 @@ import Carousel from './components/TreatmentFinder/Carousel';
 const audiences = [
   {
     id: 'children',
-    title: 'PROGRAMME ENFANTS & NOURRISSONS',
+    title: 'Programme Enfants & Nourrissons',
     icon: Heart,
     color: 'from-blue-500 to-cyan-500',
     intro: 'We specialize in helping children overcome developmental challenges and reach their full potential. Our evidence-based functional neurology approach addresses the root causes of learning, attention, and coordination difficulties, providing your child with the foundation they need to thrive academically, socially, and physically.',
@@ -79,7 +79,7 @@ const audiences = [
   },
   {
     id: 'adults',
-    title: 'PROGRAMME ADULTES & SPORTIFS',
+    title: 'Programme Adultes & Sportifs',
     icon: Brain,
     color: 'from-purple-500 to-pink-500',
     intro: "Life doesn't stop for neurological challenges. Whether you're recovering from a concussion, managing chronic pain, or dealing with balance issues, our functional neurology approach helps restore your quality of life. We focus on understanding and treating the underlying neurological dysfunction to help you return to the activities and relationships that matter most.",
@@ -140,7 +140,7 @@ const audiences = [
   },
   {
     id: 'seniors',
-    title: 'PROGRAMME SENIORS',
+    title: 'Programme Seniors',
     icon: Activity,
     color: 'from-green-500 to-emerald-500',
     intro: "Aging well means maintaining your independence, confidence, and engagement with life. Our specialized programs help you stay active, reduce fall risk, and manage age-related neurological changes. We combine the latest neuroscience with compassionate care to help you maintain the lifestyle you've earned.",

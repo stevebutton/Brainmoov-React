@@ -1,4 +1,4 @@
-import { ChevronLeft, ChevronRight, Building2 } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import Banner from '../components/Banner';
 import { technicalServices } from '../data/index';
 import { useAssets } from '../context/AssetContext';
@@ -53,13 +53,21 @@ export default function AudienceSection({
       {/* Overlay gradient */}
       <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/30 to-black/60"></div>
 
+      {/* Section Title - Right Side */}
+      <div
+        className="absolute"
+        style={{ top: '139px', left: '304px', right: '48px', zIndex: 20 }}
+      >
+        <h2 className="text-3xl font-bold text-white leading-tight">{audience.title}</h2>
+      </div>
+
       {/* Intro Text Overlay */}
       <div
         className={`absolute transition-opacity duration-700 ${
           (selectedService || selectedTechService) ? 'opacity-0 pointer-events-none' : 'opacity-100'
         }`}
         style={{
-          top: '150px', left: '150px', right: 'auto', maxWidth: '680px', zIndex: 15,
+          top: '150px', left: 'calc(50% - 340px)', width: '680px', zIndex: 15,
           borderRadius: '12px',
           border: '1px solid rgba(255,255,255,0.2)',
           backgroundColor: 'rgba(0,0,0,0.3)',
@@ -84,25 +92,39 @@ export default function AudienceSection({
       {/* Banner */}
       <Banner
         title={audience.title}
-        subtitle={selectedTechService?.title}
         showBanner={showBanner}
         onLogoClick={() => onNavigate('intro')}
         onNavigate={onNavigate}
+        showTitle={false}
       />
 
       {/* Floating Content */}
       <div className={`absolute inset-0 z-10 flex ${(selectedService || selectedTechService) ? 'pb-20' : 'pb-8'}`} style={{paddingTop: '100px'}}>
         {/* Left Side - Service Menu */}
+        {/* "our services" label - aligned with title */}
         <div
-          className={`px-8 pb-6 overflow-auto relative z-20 w-auto ${showSubmenu ? 'animate-submenu-in' : ''}`}
+          className={`absolute px-8 z-20 ${showSubmenu ? 'animate-submenu-in' : ''}`}
           style={{
-            paddingTop: '44px',
+            top: '144px',
+            width: '304px',
             opacity: showSubmenu ? undefined : 0,
             transform: showSubmenu ? undefined : 'translateY(-100px)'
           }}
         >
-          <h3 className="text-xl font-bold text-white mb-4">our services</h3>
-          <div className="flex flex-col gap-2">
+          <h3 className="text-xl font-bold text-white text-right">our services</h3>
+        </div>
+
+        {/* Buttons - vertically centered with carousel panel */}
+        <div
+          className={`absolute flex flex-col justify-center px-8 z-20 w-auto ${showSubmenu ? 'animate-submenu-in' : ''}`}
+          style={{
+            top: '200px',
+            bottom: '100px',
+            opacity: showSubmenu ? undefined : 0,
+            transform: showSubmenu ? undefined : 'translateY(-100px)'
+          }}
+        >
+          <div className="flex flex-col gap-2 items-end">
             {audience.services.map((service) => {
               const ServiceIcon = service.icon;
               const isSelected = selectedService?.id === service.id;
@@ -110,18 +132,18 @@ export default function AudienceSection({
                 <button
                   key={service.id}
                   onClick={() => onServiceSelect(service)}
-                  className={`group relative backdrop-blur-xl rounded-lg p-3 transition-all hover:scale-105 border-2 flex items-center gap-3 w-[240px] shadow-lg ${
+                  className={`group relative backdrop-blur-xl rounded-2xl p-3 transition-all hover:scale-105 border-2 flex items-center justify-between gap-3 w-[240px] shadow-lg ${
                     isSelected
                       ? 'bg-[#F26219]/20 border-[#F26219]/50 shadow-2xl'
-                      : 'bg-[#1a1a1a] border-white/10 hover:bg-[#222222] hover:border-white/20 hover:shadow-xl'
+                      : 'bg-black/30 border-white/10 hover:bg-black/50 hover:border-white/20 hover:shadow-xl'
                   }`}
                 >
+                  <h4 className={`flex-1 text-xs font-semibold text-right leading-tight ${
+                    isSelected ? 'text-white' : 'text-white/70'
+                  }`}>{service.title}</h4>
                   <ServiceIcon className={`w-5 h-5 flex-shrink-0 transition-colors ${
                     isSelected ? 'text-[#F26219]' : 'text-white/50 group-hover:text-[#F26219]'
                   }`} />
-                  <h4 className={`text-xs font-semibold text-left leading-tight ${
-                    isSelected ? 'text-white' : 'text-white/70'
-                  }`}>{service.title}</h4>
                 </button>
               );
             })}
@@ -134,7 +156,7 @@ export default function AudienceSection({
             className="absolute z-10"
             style={{
               left: '300px',
-              top: '120px',
+              top: '200px',
               width: '340px',
               bottom: '100px',
               borderRadius: '12px',
@@ -235,32 +257,25 @@ export default function AudienceSection({
               boxShadow: '0 -2px 8px rgba(0, 0, 0, 0.1)'
             }}
           >
-            <div className="px-8 h-full flex items-center gap-6">
-              <button
-                onClick={() => onNavigate('about-infrastructure')}
-                className="flex items-center gap-2 rounded-lg px-6 py-2 transition-all hover:scale-105 border shadow-sm bg-white hover:bg-slate-50 border-slate-200"
-              >
-                <span className="text-xs font-medium text-slate-800">Our Infrastructure</span>
-                <Building2 className="w-4 h-4 text-[#F26219]" />
-              </button>
-
-              <h4 className="text-xs font-semibold text-slate-500 whitespace-nowrap">our treatment process</h4>
-              <div className="flex justify-start gap-2 flex-1">
-                {technicalServices.map((techService) => {
-                  const TechIcon = techService.icon;
+            <div className="h-full flex items-center">
+              <div className="flex items-center justify-end" style={{width: '304px', paddingRight: '32px'}}>
+                <h3 className="text-xl font-bold text-slate-900 whitespace-nowrap">our treatment process</h3>
+              </div>
+              <div className="self-stretch flex items-stretch">
+                {technicalServices.map((techService, index) => {
                   const isSelected = selectedTechService?.id === techService.id;
                   return (
                     <button
                       key={techService.id}
                       onClick={() => onTechServiceSelect(techService)}
-                      className={`flex items-center gap-2 rounded-lg px-6 py-2 transition-all hover:scale-105 border shadow-sm flex-1 justify-center ${
+                      className={`group flex items-center gap-3 px-6 border transition-colors justify-center ${
                         isSelected
-                          ? 'bg-[#F26219] border-[#F26219] text-white'
-                          : 'bg-white hover:bg-slate-50 border-slate-200'
+                          ? 'bg-[#F26219] border-[#F26219]'
+                          : 'bg-white border-black/10 hover:bg-black hover:border-black'
                       }`}
                     >
-                      <TechIcon className={`w-4 h-4 ${isSelected ? 'text-white' : 'text-[#F26219]'}`} />
-                      <span className={`text-xs font-medium ${isSelected ? 'text-white' : 'text-slate-800'}`}>{techService.title}</span>
+                      <span className="w-8 h-8 rounded-full bg-[#F26219]/50 group-hover:bg-[#F26219] flex items-center justify-center text-base font-bold text-white flex-shrink-0 transition-colors">{index + 1}</span>
+                      <span className={`text-sm font-semibold text-left transition-colors ${isSelected ? 'text-white' : 'text-slate-800 group-hover:text-white'}`}>{techService.title}</span>
                     </button>
                   );
                 })}
