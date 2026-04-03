@@ -110,7 +110,7 @@ export default function AudienceSection({
                 <button
                   key={service.id}
                   onClick={() => onServiceSelect(service)}
-                  className={`group relative backdrop-blur-xl rounded-lg p-3 transition-all hover:scale-105 border-2 flex items-center gap-3 w-[160px] shadow-lg ${
+                  className={`group relative backdrop-blur-xl rounded-lg p-3 transition-all hover:scale-105 border-2 flex items-center gap-3 w-[240px] shadow-lg ${
                     isSelected
                       ? 'bg-[#F26219]/20 border-[#F26219]/50 shadow-2xl'
                       : 'bg-[#1a1a1a] border-white/10 hover:bg-[#222222] hover:border-white/20 hover:shadow-xl'
@@ -133,9 +133,9 @@ export default function AudienceSection({
           <div
             className="absolute z-10"
             style={{
-              left: '220px',
+              left: '300px',
               top: '120px',
-              width: '360px',
+              width: '340px',
               bottom: '100px',
               borderRadius: '12px',
               border: '1px solid rgba(255,255,255,0.2)',
