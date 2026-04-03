@@ -10,10 +10,28 @@ const isAssetManager = path === '/assets'
 const isTreatmentFinder = path === '/treatment-finder'
 
 if (isAssetManager) {
+  // Reset root to full-page scrollable layout for the asset manager
   const root = document.getElementById('root')
+  root.style.position = 'relative'
+  root.style.top = 'auto'
+  root.style.left = 'auto'
+  root.style.transform = 'none'
   root.style.width = '100%'
   root.style.height = 'auto'
   root.style.overflow = 'visible'
+  document.body.style.overflow = 'auto'
+  document.body.style.height = 'auto'
+} else {
+  // Scale the 1280×720 canvas to fit the current viewport, maintaining aspect ratio
+  const updateScale = () => {
+    const scale = Math.min(
+      window.innerWidth / 1280,
+      window.innerHeight / 720
+    )
+    document.documentElement.style.setProperty('--scale', scale)
+  }
+  updateScale()
+  window.addEventListener('resize', updateScale)
 }
 
 function Root() {
