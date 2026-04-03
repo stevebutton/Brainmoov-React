@@ -14,7 +14,6 @@ import ProcessDetailSection from './pages/ProcessDetailSection';
 import AudienceSection from './pages/AudienceSection';
 import TreatmentFinder from './components/TreatmentFinder/index';
 import Carousel from './components/TreatmentFinder/Carousel';
-import AboutPrototype from './components/AboutPrototype';
 
 const audiences = [
   {
@@ -232,7 +231,6 @@ export default function App() {
   const [shouldAnimateBanner, setShouldAnimateBanner] = useState(true);
   const [selectedMachine, setSelectedMachine] = useState(0);
   const [showQuestionnaire, setShowQuestionnaire] = useState(false);
-  const [showAboutPrototype, setShowAboutPrototype] = useState(false);
   const [showCarousel, setShowCarousel] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [questionnaireStep, setQuestionnaireStep] = useState(0);
@@ -713,25 +711,6 @@ export default function App() {
         questionnaireAnswers={questionnaireAnswers}
       />
 
-      {/* About Prototype Modal */}
-      <AboutPrototype
-        show={showAboutPrototype}
-        onClose={() => setShowAboutPrototype(false)}
-      />
-
-      {/* Floating About Prototype Button */}
-      <button
-        onClick={() => setShowAboutPrototype(true)}
-        className="fixed bottom-6 right-6 bg-[#1a1a1a] hover:bg-[#222222] text-white px-4 py-3 rounded-xl shadow-lg transition-all hover:scale-105 flex items-center gap-2 z-40"
-        style={{ fontSize: '14px', color: '#ffffff' }}
-      >
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24" style={{ stroke: '#ffffff' }}>
-          <circle cx="12" cy="12" r="10"></circle>
-          <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
-          <line x1="12" y1="17" x2="12.01" y2="17"></line>
-        </svg>
-        <span style={{ color: '#ffffff' }}>About This Prototype</span>
-      </button>
     </div>
   );
 }
