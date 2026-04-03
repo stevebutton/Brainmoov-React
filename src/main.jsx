@@ -5,7 +5,9 @@ import AssetManager from './pages/AssetManager.jsx'
 import { AssetProvider } from './context/AssetContext.jsx'
 import './index.css'
 
-const isAssetManager = window.location.pathname === '/assets'
+const path = window.location.pathname
+const isAssetManager = path === '/assets'
+const isTreatmentFinder = path === '/treatment-finder'
 
 if (isAssetManager) {
   const root = document.getElementById('root')
@@ -14,10 +16,16 @@ if (isAssetManager) {
   root.style.overflow = 'visible'
 }
 
+function Root() {
+  if (isAssetManager) return <AssetManager />
+  if (isTreatmentFinder) return <App initialSection="treatment-finder" />
+  return <App />
+}
+
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <AssetProvider>
-      {isAssetManager ? <AssetManager /> : <App />}
+      <Root />
     </AssetProvider>
   </React.StrictMode>,
 )

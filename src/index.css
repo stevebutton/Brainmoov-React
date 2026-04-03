@@ -3,6 +3,10 @@
 @tailwind utilities;
 
 * {
+  font-family: 'Montserrat', sans-serif;
+}
+
+p {
   font-family: 'Inter', sans-serif;
 }
 

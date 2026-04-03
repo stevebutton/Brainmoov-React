@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Heart, Brain, Activity, Sparkles, Target, Zap, Shield, Users } from 'lucide-react';
 import { useAssets } from './context/AssetContext';
 import IntroPage from './pages/IntroPage';
@@ -202,9 +202,20 @@ const audiences = [
   }
 ];
 
+const VALID_SECTIONS = new Set([
+  'intro', 'children', 'adults', 'seniors',
+  'about', 'about-philosophy', 'about-objectives', 'about-team', 'about-infrastructure', 'about-history',
+  'who-detail', 'what-detail', 'process-detail'
+]);
+
+function getInitialView() {
+  const section = new URLSearchParams(window.location.search).get('section');
+  return VALID_SECTIONS.has(section) ? section : 'intro';
+}
+
 export default function App() {
   const { assets } = useAssets();
-  const [currentView, setCurrentView] = useState('intro');
+  const [currentView, setCurrentView] = useState(getInitialView);
   const [showNav, setShowNav] = useState(false);
   const [videoPlaying, setVideoPlaying] = useState({});
   const [transitioning, setTransitioning] = useState(false);
@@ -238,6 +249,21 @@ export default function App() {
   const [hoveredAudience, setHoveredAudience] = useState(null);
   const [hoveredProcessStep, setHoveredProcessStep] = useState(null);
   const [selectedProcessVideo, setSelectedProcessVideo] = useState(null);
+
+  // Keep a ref to handleViewChange so the message listener never goes stale
+  const navigateRef = useRef(null);
+  useEffect(() => { navigateRef.current = handleViewChange; });
+
+  // Inbound: Framer → React  (postMessage from parent page)
+  useEffect(() => {
+    const handler = (event) => {
+      if (event.data?.type === 'brainmoove:navigate' && VALID_SECTIONS.has(event.data.section)) {
+        navigateRef.current?.(event.data.section);
+      }
+    };
+    window.addEventListener('message', handler);
+    return () => window.removeEventListener('message', handler);
+  }, []);
 
   useEffect(() => {
     if (currentView === 'intro') {
@@ -282,6 +308,11 @@ export default function App() {
   }, [currentView, previousView]);
 
   const handleViewChange = (newView) => {
+    // Outbound: React → Framer  (notify parent page of section change)
+    if (window.parent !== window) {
+      window.parent.postMessage({ type: 'brainmoove:sectionChange', section: newView }, '*');
+    }
+
     const hasVideoOpen = selectedTechService !== null;
     const hasCardsOpen = selectedService !== null;
 
