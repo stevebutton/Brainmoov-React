@@ -21,6 +21,8 @@ if (isStandalonePage) {
   root.style.width = '100%'
   root.style.height = 'auto'
   root.style.overflow = 'visible'
+  document.documentElement.style.overflow = 'auto'
+  document.documentElement.style.height = 'auto'
   document.body.style.overflow = 'auto'
   document.body.style.height = 'auto'
 } else {

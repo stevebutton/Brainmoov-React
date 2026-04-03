@@ -156,11 +156,8 @@ export default function TreatmentFinderApp() {
         <div className="bg-[#111111] border-b border-white/10 sticky top-0 z-10">
           <div className="max-w-2xl mx-auto px-6 py-4">
             <div className="flex items-center justify-between mb-3">
-              <img src={assets.logo} alt="BrainMoove" style={{ width: '90px', height: '64px', objectFit: 'contain' }} />
-              <div className="text-right">
-                <div className="text-sm font-semibold text-white">Your Personalized Journey</div>
-                <div className="text-xs text-white/50">Slide {currentSlide + 1} of {total}</div>
-              </div>
+              <div className="text-sm font-semibold text-white">Your Personalized Journey</div>
+              <div className="text-xs text-white/50">Slide {currentSlide + 1} of {total}</div>
             </div>
             <div className="w-full bg-white/10 rounded-full h-1.5">
               <div className="bg-[#F26219] h-1.5 rounded-full transition-all duration-300" style={{ width: `${((currentSlide + 1) / total) * 100}%` }} />
@@ -273,22 +270,17 @@ export default function TreatmentFinderApp() {
 
   return (
     <div className="min-h-screen bg-[#0f0f0f] text-white">
-      {/* Header */}
-      <div className="bg-[#111111] border-b border-white/10 sticky top-0 z-10">
-        <div className="max-w-2xl mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            <img src={assets.logo} alt="BrainMoove" style={{ width: '90px', height: '64px', objectFit: 'contain' }} />
-            {step > 0 && step < 5 && (
-              <div className="flex-1 ml-6">
-                <div className="text-xs text-white/50 mb-1">Step {step} of 4</div>
-                <div className="w-full bg-white/10 rounded-full h-1.5">
-                  <div className="bg-[#F26219] h-1.5 rounded-full transition-all duration-300" style={{ width: `${(step / 4) * 100}%` }} />
-                </div>
-              </div>
-            )}
+      {/* Header — progress only, hidden on landing and results */}
+      {step > 0 && step < 5 && (
+        <div className="bg-[#111111] border-b border-white/10 sticky top-0 z-10">
+          <div className="max-w-2xl mx-auto px-6 py-4">
+            <div className="text-xs text-white/50 mb-1">Step {step} of 4</div>
+            <div className="w-full bg-white/10 rounded-full h-1.5">
+              <div className="bg-[#F26219] h-1.5 rounded-full transition-all duration-300" style={{ width: `${(step / 4) * 100}%` }} />
+            </div>
           </div>
         </div>
-      </div>
+      )}
 
       {/* Content */}
       <div className="max-w-2xl mx-auto px-6 py-10">
