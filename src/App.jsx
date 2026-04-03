@@ -252,6 +252,17 @@ export default function App() {
   const navigateRef = useRef(null);
   useEffect(() => { navigateRef.current = handleViewChange; });
 
+  // BroadcastChannel — Treatment Finder → Main App
+  useEffect(() => {
+    const channel = new BroadcastChannel('brainmoove');
+    channel.onmessage = (e) => {
+      if (e.data?.type === 'tf:audienceSelected' && e.data.audience) {
+        navigateRef.current?.(e.data.audience);
+      }
+    };
+    return () => channel.close();
+  }, []);
+
   // Inbound: Framer → React  (postMessage from parent page)
   useEffect(() => {
     const handler = (event) => {

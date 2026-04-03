@@ -2,15 +2,17 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import AssetManager from './pages/AssetManager.jsx'
+import TreatmentFinderApp from './pages/TreatmentFinderApp.jsx'
 import { AssetProvider } from './context/AssetContext.jsx'
 import './index.css'
 
 const path = window.location.pathname
 const isAssetManager = path === '/assets'
 const isTreatmentFinder = path === '/treatment-finder'
+const isStandalonePage = isAssetManager || isTreatmentFinder
 
-if (isAssetManager) {
-  // Reset root to full-page scrollable layout for the asset manager
+if (isStandalonePage) {
+  // Reset root to full-page scrollable layout for standalone pages
   const root = document.getElementById('root')
   root.style.position = 'relative'
   root.style.top = 'auto'
@@ -36,7 +38,7 @@ if (isAssetManager) {
 
 function Root() {
   if (isAssetManager) return <AssetManager />
-  if (isTreatmentFinder) return <App initialSection="treatment-finder" />
+  if (isTreatmentFinder) return <TreatmentFinderApp />
   return <App />
 }
 
