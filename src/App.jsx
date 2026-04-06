@@ -526,8 +526,21 @@ export default function App() {
   const detailSections = ['about', 'about-philosophy', 'about-objectives', 'about-team', 'about-infrastructure', 'about-history', 'who-detail', 'what-detail', 'process-detail'];
   const aboutSubsections = ['about-philosophy', 'about-objectives', 'about-team', 'about-infrastructure', 'about-history'];
 
+  const audienceIds = new Set(['children', 'adults', 'seniors']);
+  const showAudienceVideo = audienceIds.has(currentView) || audienceIds.has(previousView);
+
   return (
     <div className="w-full h-full overflow-hidden relative">
+      {/* Shared video background for audience sections */}
+      {showAudienceVideo && (
+        <video
+          autoPlay loop muted playsInline
+          className="absolute inset-0 w-full h-full object-cover"
+          style={{ zIndex: 5 }}
+          src="https://framerusercontent.com/assets/jrWGlp5543cfh5lgSa2fRvMssQ.mp4"
+        />
+      )}
+
       {/* Intro screen - always visible, always rendered */}
       <div className="absolute inset-0" style={{ zIndex: 1 }}>
         <IntroPage

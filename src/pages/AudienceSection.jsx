@@ -29,11 +29,8 @@ export default function AudienceSection({
 
   return (
     <div className="w-full h-full relative">
-      {/* Video Background */}
-      <div
-        className="absolute inset-0 bg-slate-900 bg-cover bg-center"
-        style={{ backgroundImage: `url(${audience.backgroundImage})` }}
-      >
+      {/* Background (transparent — video renders behind at app level) */}
+      <div className="absolute inset-0">
         {isPlaying && (
           <div className="absolute inset-0 flex items-center justify-center bg-white/20 backdrop-blur-sm">
             <div className="text-center z-10 bg-black/50 backdrop-blur-xl border-2 border-white/10 rounded-2xl p-8 shadow-2xl">
@@ -50,8 +47,6 @@ export default function AudienceSection({
         )}
       </div>
 
-      {/* Overlay gradient */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/30 to-black/60"></div>
 
       {/* Section Title - Right Side */}
       <div
