@@ -7,14 +7,6 @@ export default function ProcessDetailSection({ showBanner, hoveredProcessStep, s
 
   return (
     <div className="w-full h-full relative">
-      {/* Background */}
-      <div
-        className="absolute inset-0 bg-slate-900 bg-cover bg-center"
-        style={{ backgroundImage: `url(${assets['process-bg'] || 'https://images.unsplash.com/photo-1559757175-5700dde675bc?w=1280&h=800&fit=crop&q=80'})` }}
-      />
-
-      {/* Overlay gradient */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/30 to-black/60" />
 
 
       <div className="relative z-10 px-16" style={{ paddingTop: '390px' }}>
@@ -54,7 +46,7 @@ export default function ProcessDetailSection({ showBanner, hoveredProcessStep, s
                     >
                       <div className="p-5">
                         <div className="flex items-center justify-between mb-3">
-                          <h4 className="text-sm font-semibold text-white">{service.title}</h4>
+                          <h4 className="text-sm font-light text-white">{service.title}</h4>
                           <button
                             onClick={(e) => { e.stopPropagation(); setSelectedProcessVideo(null); }}
                             className="text-white/70 hover:text-white transition-colors"

@@ -3,7 +3,7 @@ import { Lightbulb, Target, Users, Building2, Clock } from 'lucide-react';
 
 export default function AboutSection({ showBanner, hoveredSection, setHoveredSection, onNavigate }) {
   return (
-    <div className="w-full h-full relative bg-[#0f0f0f]">
+    <div className="w-full h-full relative">
 
       <div className="p-12" style={{paddingTop: '170px'}}>
         <p className="text-lg mb-8 text-center max-w-4xl mx-auto text-white/70">
@@ -28,7 +28,7 @@ export default function AboutSection({ showBanner, hoveredSection, setHoveredSec
                 </div>
               </div>
               <div className="flex items-center justify-center gap-2">
-                <h3 className="text-base font-semibold text-center leading-tight text-white">Our Philosophy</h3>
+                <h3 className="text-base font-light text-center leading-tight text-white">Our Philosophy</h3>
               </div>
             </div>
 
@@ -70,7 +70,7 @@ export default function AboutSection({ showBanner, hoveredSection, setHoveredSec
                 </div>
               </div>
               <div className="flex items-center justify-center gap-2">
-                <h3 className="text-base font-semibold text-center leading-tight text-white">Our Objectives</h3>
+                <h3 className="text-base font-light text-center leading-tight text-white">Our Objectives</h3>
               </div>
             </div>
 
@@ -112,7 +112,7 @@ export default function AboutSection({ showBanner, hoveredSection, setHoveredSec
                 </div>
               </div>
               <div className="flex items-center justify-center gap-2">
-                <h3 className="text-base font-semibold text-center leading-tight text-white">Our Team</h3>
+                <h3 className="text-base font-light text-center leading-tight text-white">Our Team</h3>
               </div>
             </div>
 
@@ -154,7 +154,7 @@ export default function AboutSection({ showBanner, hoveredSection, setHoveredSec
                 </div>
               </div>
               <div className="flex items-center justify-center gap-2">
-                <h3 className="text-base font-semibold text-center leading-tight text-white">Our Infrastructure</h3>
+                <h3 className="text-base font-light text-center leading-tight text-white">Our Infrastructure</h3>
               </div>
             </div>
 
@@ -196,7 +196,7 @@ export default function AboutSection({ showBanner, hoveredSection, setHoveredSec
                 </div>
               </div>
               <div className="flex items-center justify-center gap-2">
-                <h3 className="text-base font-semibold text-center leading-tight text-white">History of BrainMoove</h3>
+                <h3 className="text-base font-light text-center leading-tight text-white">History of BrainMoove</h3>
               </div>
             </div>
 

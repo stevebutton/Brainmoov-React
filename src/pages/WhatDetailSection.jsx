@@ -5,7 +5,7 @@ export default function WhatDetailSection({ showBanner, hoveredCategory, setHove
   const categoryIcons = [Activity, Zap, Brain, Sparkles];
 
   return (
-    <div className="w-full h-full relative bg-[#0f0f0f]">
+    <div className="w-full h-full relative">
 
       <div className="p-12" style={{paddingTop: '170px'}}>
         <p className="text-lg mb-8 text-center max-w-4xl mx-auto text-white/70">
@@ -30,7 +30,7 @@ export default function WhatDetailSection({ showBanner, hoveredCategory, setHove
                     </div>
                   </div>
                   <div className="flex items-center justify-center gap-2">
-                    <h3 className="text-base font-semibold text-center leading-tight text-white">{category.category}</h3>
+                    <h3 className="text-base font-light text-center leading-tight text-white">{category.category}</h3>
                   </div>
                 </div>
 
@@ -72,7 +72,7 @@ export default function WhatDetailSection({ showBanner, hoveredCategory, setHove
                 </div>
               </div>
               <div className="flex flex-col items-center justify-center gap-2">
-                <h3 className="text-base font-semibold text-center leading-tight text-white">Not Sure Where to Start?</h3>
+                <h3 className="text-base font-light text-center leading-tight text-white">Not Sure Where to Start?</h3>
                 <p className="text-white/70 text-sm font-semibold text-center mt-2">Start Treatment Finder</p>
               </div>
             </div>

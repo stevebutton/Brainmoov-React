@@ -1,7 +1,7 @@
 
 export default function AboutObjectivesSection({ showBanner, shouldAnimateBanner, onNavigate }) {
   return (
-    <div className="w-full h-full relative bg-[#0f0f0f]">
+    <div className="w-full h-full relative">
 
       <div className="absolute left-0 right-0 bg-[#111111] border-b border-white/10 shadow-sm z-10" style={{top: '150px', height: '50px'}}>
         <div className="flex items-center justify-center h-full gap-8 px-8">
@@ -17,7 +17,7 @@ export default function AboutObjectivesSection({ showBanner, shouldAnimateBanner
       <div className="p-12" style={{paddingTop: '220px'}}>
         <div style={{width: '35%'}}>
           <div className="bg-[#1a1a1a] rounded-2xl p-8 border border-white/10 shadow-xl">
-            <h2 className="text-2xl font-bold mb-6 text-white">Our Objectives</h2>
+            <h2 className="text-2xl font-light mb-6 text-white">Our Objectives</h2>
             <p className="text-lg leading-relaxed mb-4 text-white/70">
               [Detailed content about BrainMoove's objectives will go here...]
             </p>

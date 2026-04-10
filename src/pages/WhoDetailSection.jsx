@@ -3,7 +3,7 @@ import { audiences } from '../data/index';
 
 export default function WhoDetailSection({ showBanner, hoveredAudience, setHoveredAudience, onNavigate }) {
   return (
-    <div className="w-full h-full relative bg-[#0f0f0f]">
+    <div className="w-full h-full relative">
 
       <div className="p-12" style={{paddingTop: '170px'}}>
         <p className="text-lg mb-8 max-w-3xl text-white/70">
@@ -27,7 +27,7 @@ export default function WhoDetailSection({ showBanner, hoveredAudience, setHover
                 >
                   <div className="flex items-center justify-center gap-3">
                     <Icon className="w-8 h-8 transition-colors flex-shrink-0 text-white" style={{stroke: '#ffffff'}} />
-                    <h3 className="text-lg font-semibold text-white">{audience.title}</h3>
+                    <h3 className="text-lg font-light text-white">{audience.title}</h3>
                   </div>
                 </div>
 

@@ -4,9 +4,7 @@ import { useAssets } from '../context/AssetContext';
 export default function IntroPage({ showNav, hoveredSection, setHoveredSection, onNavigate }) {
   const { assets } = useAssets();
   return (
-    <div className="relative w-full h-full overflow-hidden bg-slate-900">
-      <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url(${assets['children-bg']})` }}></div>
-      <div className="absolute inset-0 bg-black/30"></div>
+    <div className="relative w-full h-full overflow-hidden">
 
       <div className="relative z-10 h-full flex flex-col">
         {/* Four Main Buttons */}

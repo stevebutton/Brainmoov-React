@@ -1,4 +1,4 @@
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, X } from 'lucide-react';
 import { technicalServices } from '../data/index';
 import { useAssets } from '../context/AssetContext';
 
@@ -52,7 +52,7 @@ export default function AudienceSection({
         className="absolute"
         style={{ top: '139px', left: '304px', right: '48px', zIndex: 20 }}
       >
-        <h2 className="text-3xl font-bold text-white leading-tight">{audience.title}</h2>
+        <h2 className="text-3xl font-light text-white leading-tight">{audience.title}</h2>
       </div>
 
       {/* Intro Text Overlay */}
@@ -171,8 +171,7 @@ export default function AudienceSection({
                       >
                         <h4
                           key={`service-${idx}-${selectedService.title}`}
-                          className="font-bold mb-1 animate-fade-slide-up leading-none text-white"
-                          style={{fontSize: '1.6rem'}}
+                          className="text-lg font-light mb-1 animate-fade-slide-up leading-none text-white"
                         >
                           {selectedService.title}
                         </h4>
@@ -274,61 +273,49 @@ export default function AudienceSection({
         {(selectedTechService || isClosingVideo) && (
           <div
             key={selectedTechService?.id || 'closing'}
-            className="absolute right-0 top-0 bottom-0 w-1/2 bg-[#111111] shadow-2xl border-l-2 border-white/10"
+            className="absolute overflow-hidden"
             style={{
+              right: '48px',
+              top: '200px',
+              width: '340px',
+              bottom: '100px',
+              borderRadius: '12px',
+              border: '1px solid rgba(255,255,255,0.2)',
+              backgroundColor: 'rgba(0,0,0,0.3)',
+              backdropFilter: 'blur(6px)',
+              WebkitBackdropFilter: 'blur(6px)',
+              boxShadow: '0 4px 24px rgba(0,0,0,0.3)',
               animation: isClosingVideo
                 ? 'slideOutToRight 1.5s ease-out forwards'
-                : isFirstVideoOpen
-                  ? 'slideInFromRight 2s ease-out forwards'
-                  : 'dissolveIn 1s ease-out forwards',
+                : 'slideInDown 0.6s ease-out forwards',
               zIndex: 15
             }}
           >
-            <div className="h-full flex flex-col">
-              {/* Video Panel Header */}
-              <div className="bg-[#1a1a1a] border-b-2 border-white/10 py-4 px-8">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    {(() => {
-                      const techService = isClosingVideo ? lastTechService : selectedTechService;
-                      const TechIcon = techService?.icon;
-                      return TechIcon ? <TechIcon className="w-6 h-6 text-[#F26219]" /> : null;
-                    })()}
-                    <h3 className="text-xl font-bold text-white">
-                      {isClosingVideo ? lastTechService?.title : selectedTechService?.title}
-                    </h3>
-                  </div>
-                  <button
-                    onClick={() => onTechServiceSelect(null)}
-                    className="bg-[#2a2a2a] hover:bg-[#333333] px-4 py-2 rounded-lg transition-all border border-white/10 text-white font-medium text-sm"
-                  >
-                    Close ✕
-                  </button>
-                </div>
+            <div className="h-full flex flex-col p-5">
+              <div className="flex items-center justify-between mb-3">
+                <h4 className="text-lg font-light leading-none text-white">
+                  {isClosingVideo ? lastTechService?.title : selectedTechService?.title}
+                </h4>
+                <button
+                  onClick={() => onTechServiceSelect(null)}
+                  className="text-white/70 hover:text-white transition-colors"
+                >
+                  <X className="w-4 h-4" />
+                </button>
               </div>
-
-              {/* Video Content Area */}
               <div
-                className="flex-1 flex items-center justify-center bg-cover bg-center relative"
-                style={{
-                  backgroundImage: `url(${assets['interview-bg']})`
-                }}
+                className="flex-1 rounded-lg overflow-hidden relative"
+                style={{ backgroundImage: `url(${assets['interview-bg']})`, backgroundSize: 'cover', backgroundPosition: 'center top' }}
               >
-                <div className="absolute inset-0 bg-black/20"></div>
-
-                <div className="absolute left-0 right-0 flex justify-center z-10 px-8" style={{bottom: '82px'}}>
-                  <div className="bg-black/50 backdrop-blur-lg border border-white/10 rounded-xl p-4 shadow-lg flex items-center gap-4">
-                    <svg className="w-10 h-10 flex-shrink-0" fill="#ffffff" stroke="none" viewBox="0 0 24 24">
-                      <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                <div className="absolute inset-0 bg-black/20" />
+                <div className="absolute inset-0 flex items-end justify-start p-3">
+                  <div className="flex items-center gap-2 bg-black/40 backdrop-blur-sm rounded-lg px-3 py-2">
+                    <svg className="w-5 h-5 flex-shrink-0" fill="#F26219" stroke="none" viewBox="0 0 24 24">
+                      <polygon points="5 3 19 12 5 21 5 3" />
                     </svg>
-                    <div className="flex flex-col">
-                      <p className="text-base font-semibold text-white">
-                        {isClosingVideo ? lastTechService?.title : selectedTechService?.title}
-                      </p>
-                      <p className="text-base font-semibold text-white">
-                        Video Interview describing Process
-                      </p>
-                    </div>
+                    <p className="text-xs font-medium text-white">
+                      {isClosingVideo ? lastTechService?.title : selectedTechService?.title} — Video Overview
+                    </p>
                   </div>
                 </div>
               </div>

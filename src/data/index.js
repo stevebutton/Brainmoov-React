@@ -216,38 +216,38 @@ export const conditionsData = [
 export const machines = [
   {
     title: "Technology and Equipment",
-    description: "Functional neurology, indeed, sometimes requires in its general process using some high-technology devices, reliable and accurate."
+    cards: [{ title: "Overview", description: "Functional neurology, indeed, sometimes requires in its general process using some high-technology devices, reliable and accurate." }]
   },
   {
     title: "Gyrostim",
-    description: "Decades of clinical and laboratory research have demonstrated the physiological and neurological benefits resulting from an appropriate vestibular stimulation, one of the most important ones in the nervous system. Recent data tell us that accurate and targeted stimulations of the vestibular system can help some symptoms related to conditions as diverse as concussions, traumatic brain injuries, autism, Parkinson and Alzheimer diseases, cerebral palsy and several other neurological disorders."
+    cards: [{ title: "Overview", description: "Decades of clinical and laboratory research have demonstrated the physiological and neurological benefits resulting from an appropriate vestibular stimulation, one of the most important ones in the nervous system. Recent data tell us that accurate and targeted stimulations of the vestibular system can help some symptoms related to conditions as diverse as concussions, traumatic brain injuries, autism, Parkinson and Alzheimer diseases, cerebral palsy and several other neurological disorders." }]
   },
   {
     title: "Vibramoov",
-    description: "The Vibramoov system applies Functional Proprioceptive Stimulation to preserve the sensory and motor functions of the patient even when movement is impossible. A number of electromechanical actuators are placed as shown in the adjacent images. Programmed sequences stimulate the nervous system with sensory information which is identical to that which occurs in normal movement."
+    cards: [{ title: "Overview", description: "The Vibramoov system applies Functional Proprioceptive Stimulation to preserve the sensory and motor functions of the patient even when movement is impossible. A number of electromechanical actuators are placed as shown in the adjacent images. Programmed sequences stimulate the nervous system with sensory information which is identical to that which occurs in normal movement." }]
   },
   {
     title: "Force Platform",
-    description: "Fall incidents are the main causes of visits to the emergency department with a prevalence in the under-16 age group (football, hockey, gymnastics, etc.) and in the 65+ age group. They are common and dangerous, but predictable. Most of those at risk do not know it and are often asymptomatic until it is too late. Health experts are unanimous: routine tests, evaluation and treatment are absolutely necessary for the prevention of falls."
+    cards: [{ title: "Overview", description: "Fall incidents are the main causes of visits to the emergency department with a prevalence in the under-16 age group (football, hockey, gymnastics, etc.) and in the 65+ age group. They are common and dangerous, but predictable. Most of those at risk do not know it and are often asymptomatic until it is too late. Health experts are unanimous: routine tests, evaluation and treatment are absolutely necessary for the prevention of falls." }]
   },
   {
     title: "Interactive Metronome",
-    description: "The interactive metronome is a treatment which improves the timing and speed of the messages between different areas of the brain. Thanks to the improvement of these two crucial aspects, the central nervous system becomes much more efficient and can considerably improve several malfunctions, like attention deficit disorder/hyperactivity, autism, dyslexia, impaired memory, motor skill disorders, cranial traumas, etc."
+    cards: [{ title: "Overview", description: "The interactive metronome is a treatment which improves the timing and speed of the messages between different areas of the brain. Thanks to the improvement of these two crucial aspects, the central nervous system becomes much more efficient and can considerably improve several malfunctions, like attention deficit disorder/hyperactivity, autism, dyslexia, impaired memory, motor skill disorders, cranial traumas, etc." }]
   },
   {
     title: "TOVA",
-    description: "The overall balance (which can last between 1 and 2 hours) is complemented by the TOVA (Test of Variables of Attention). It is so far the only objective tool to quantify attention deficiency."
+    cards: [{ title: "Overview", description: "The overall balance (which can last between 1 and 2 hours) is complemented by the TOVA (Test of Variables of Attention). It is so far the only objective tool to quantify attention deficiency." }]
   },
   {
     title: "VNG",
-    description: "The videonystagmography is a technique allowing a very accurate exploration of oculomotor functions. Via these, it is possible to obtain information both about the functioning of the vestibular system and the brain function. This device provides an aid in the diagnosis of neurological and psychiatric diseases, such as parkinsonian syndromes, multiple sclerosis, or reading disorders. The process is not painful, does not require the use of any drug and takes only a few minutes to be executed. The data collected by the practitioner provide invaluable input and are very useful in the development of the treatment plan."
+    cards: [{ title: "Overview", description: "The videonystagmography is a technique allowing a very accurate exploration of oculomotor functions. Via these, it is possible to obtain information both about the functioning of the vestibular system and the brain function. This device provides an aid in the diagnosis of neurological and psychiatric diseases, such as parkinsonian syndromes, multiple sclerosis, or reading disorders. The process is not painful, does not require the use of any drug and takes only a few minutes to be executed. The data collected by the practitioner provide invaluable input and are very useful in the development of the treatment plan." }]
   },
   {
     title: "Brainport",
-    description: "The BrainPort is an improvement on the first visuotactile sensory substitution system created by Paul-Bach-Y-Rita in 1963. It is used at the center CRNFC in St-Malo as part of the rehabilitation of some balance disorders."
+    cards: [{ title: "Overview", description: "The BrainPort is an improvement on the first visuotactile sensory substitution system created by Paul-Bach-Y-Rita in 1963. It is used at the center CRNFC in St-Malo as part of the rehabilitation of some balance disorders." }]
   },
   {
     title: "NeuroFeedBack",
-    description: "Neurofeedback (NF), also called neurobiofeedback, is a type of biofeedback that uses real-time display of brain activity, notably via electroencephalography (EEG) and the measurement of slow brain waves. Visualizing this activity allows the patient to learn and self-regulate in managing certain emotions and improving concentration. This method is non-invasive and drug-free."
+    cards: [{ title: "Overview", description: "Neurofeedback (NF), also called neurobiofeedback, is a type of biofeedback that uses real-time display of brain activity, notably via electroencephalography (EEG) and the measurement of slow brain waves. Visualizing this activity allows the patient to learn and self-regulate in managing certain emotions and improving concentration. This method is non-invasive and drug-free." }]
   }
 ];
