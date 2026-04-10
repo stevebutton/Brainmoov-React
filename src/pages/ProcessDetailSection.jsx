@@ -1,5 +1,4 @@
 import { X } from 'lucide-react';
-import Banner from '../components/Banner';
 import { technicalServices } from '../data/index';
 import { useAssets } from '../context/AssetContext';
 
@@ -17,14 +16,6 @@ export default function ProcessDetailSection({ showBanner, hoveredProcessStep, s
       {/* Overlay gradient */}
       <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/30 to-black/60" />
 
-      <Banner
-        title="Our Treatment Process"
-        showBanner={showBanner}
-        onLogoClick={() => onNavigate('intro')}
-        onNavigate={onNavigate}
-        showTreatmentFinder={true}
-        onTreatmentFinderClick={onTreatmentFinderClick}
-      />
 
       <div className="relative z-10 px-16" style={{ paddingTop: '390px' }}>
         <p className="text-lg mb-10 text-center max-w-4xl mx-auto text-white/70">

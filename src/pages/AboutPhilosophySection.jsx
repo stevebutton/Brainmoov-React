@@ -1,15 +1,7 @@
-import Banner from '../components/Banner';
 
 export default function AboutPhilosophySection({ showBanner, shouldAnimateBanner, onNavigate }) {
   return (
     <div className="w-full h-full relative bg-[#0f0f0f]">
-      <Banner
-        title="Our Philosophy"
-        showBanner={showBanner}
-        shouldAnimate={shouldAnimateBanner}
-        onLogoClick={() => onNavigate('intro')}
-        onNavigate={onNavigate}
-      />
 
       <div className="absolute left-0 right-0 bg-[#111111] border-b border-white/10 shadow-sm z-10" style={{top: '150px', height: '50px'}}>
         <div className="flex items-center justify-center h-full gap-8 px-8">

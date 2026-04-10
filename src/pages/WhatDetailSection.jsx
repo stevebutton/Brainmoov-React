@@ -1,5 +1,4 @@
 import { Activity, Zap, Brain, Sparkles } from 'lucide-react';
-import Banner from '../components/Banner';
 import { conditionsData } from '../data/index';
 
 export default function WhatDetailSection({ showBanner, hoveredCategory, setHoveredCategory, onNavigate, onTreatmentFinderClick }) {
@@ -7,12 +6,6 @@ export default function WhatDetailSection({ showBanner, hoveredCategory, setHove
 
   return (
     <div className="w-full h-full relative bg-[#0f0f0f]">
-      <Banner
-        title="What We Treat"
-        showBanner={showBanner}
-        onLogoClick={() => onNavigate('intro')}
-        onNavigate={onNavigate}
-      />
 
       <div className="p-12" style={{paddingTop: '170px'}}>
         <p className="text-lg mb-8 text-center max-w-4xl mx-auto text-white/70">

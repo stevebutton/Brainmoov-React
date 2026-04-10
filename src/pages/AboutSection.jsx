@@ -1,16 +1,9 @@
 import { ChevronRight } from 'lucide-react';
 import { Lightbulb, Target, Users, Building2, Clock } from 'lucide-react';
-import Banner from '../components/Banner';
 
 export default function AboutSection({ showBanner, hoveredSection, setHoveredSection, onNavigate }) {
   return (
     <div className="w-full h-full relative bg-[#0f0f0f]">
-      <Banner
-        title="What is BrainMoove?"
-        showBanner={showBanner}
-        onLogoClick={() => onNavigate('intro')}
-        onNavigate={onNavigate}
-      />
 
       <div className="p-12" style={{paddingTop: '170px'}}>
         <p className="text-lg mb-8 text-center max-w-4xl mx-auto text-white/70">

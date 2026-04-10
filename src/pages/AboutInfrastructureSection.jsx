@@ -1,4 +1,3 @@
-import Banner from '../components/Banner';
 import { machines } from '../data/index';
 import { useAssets } from '../context/AssetContext';
 
@@ -16,17 +15,6 @@ export default function AboutInfrastructureSection({ showBanner, shouldAnimateBa
       {/* Overlay gradient */}
       <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/30 to-black/60" />
 
-      {/* Banner */}
-      <Banner
-        title="Our Infrastructure"
-        showBanner={showBanner}
-        shouldAnimate={shouldAnimateBanner}
-        onLogoClick={() => onNavigate('intro')}
-        onNavigate={onNavigate}
-        showTreatmentFinder={true}
-        onTreatmentFinderClick={onTreatmentFinderClick}
-        showTitle={false}
-      />
 
       {/* Section Title */}
       <div className="absolute" style={{ top: '112px', left: '48px', zIndex: 20 }}>

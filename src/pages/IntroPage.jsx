@@ -9,18 +9,6 @@ export default function IntroPage({ showNav, hoveredSection, setHoveredSection, 
       <div className="absolute inset-0 bg-black/30"></div>
 
       <div className="relative z-10 h-full flex flex-col">
-        {/* Header with Logo */}
-        <div className="pt-8 pb-6">
-          <div className="max-w-6xl mx-auto px-8 text-center">
-            <div className="animate-fade-in bg-black/50 backdrop-blur-xl rounded-3xl p-4 border border-white/10 shadow-2xl inline-block">
-              <img src={assets.logo} alt="BrainMoov Logo" className="mx-auto" style={{width: '113px', height: '80px'}} />
-              <h1 className="text-3xl font-bold text-white mt-2">
-                Functional Brain<br/>Rehabilitation Center
-              </h1>
-            </div>
-          </div>
-        </div>
-
         {/* Four Main Buttons */}
         <div className={`flex-1 flex flex-col items-center justify-start px-8 pt-4 transform transition-all duration-1000 ${showNav ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
           <div className="w-full max-w-6xl">

@@ -1,5 +1,4 @@
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import Banner from '../components/Banner';
 import { technicalServices } from '../data/index';
 import { useAssets } from '../context/AssetContext';
 
@@ -84,14 +83,6 @@ export default function AudienceSection({
         </div>
       </div>
 
-      {/* Banner */}
-      <Banner
-        title={audience.title}
-        showBanner={showBanner}
-        onLogoClick={() => onNavigate('intro')}
-        onNavigate={onNavigate}
-        showTitle={false}
-      />
 
       {/* Floating Content */}
       <div className={`absolute inset-0 z-10 flex ${(selectedService || selectedTechService) ? 'pb-20' : 'pb-8'}`} style={{paddingTop: '100px'}}>

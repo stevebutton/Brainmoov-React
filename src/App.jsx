@@ -12,6 +12,7 @@ import WhoDetailSection from './pages/WhoDetailSection';
 import WhatDetailSection from './pages/WhatDetailSection';
 import ProcessDetailSection from './pages/ProcessDetailSection';
 import AudienceSection from './pages/AudienceSection';
+import Banner from './components/Banner';
 import TreatmentFinder from './components/TreatmentFinder/index';
 import Carousel from './components/TreatmentFinder/Carousel';
 
@@ -539,6 +540,13 @@ export default function App() {
           style={{ zIndex: 5 }}
           src="https://framerusercontent.com/assets/jrWGlp5543cfh5lgSa2fRvMssQ.mp4"
         />
+      )}
+
+      {/* Persistent banner — always on top, never transitions */}
+      {currentView !== 'intro' && (
+        <div className="absolute top-0 left-0 right-0" style={{ zIndex: 30 }}>
+          <Banner onNavigate={handleViewChange} />
+        </div>
       )}
 
       {/* Intro screen - always visible, always rendered */}
