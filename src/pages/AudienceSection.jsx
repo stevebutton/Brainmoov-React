@@ -50,9 +50,9 @@ export default function AudienceSection({
       {/* Section Title - Right Side */}
       <div
         className="absolute"
-        style={{ top: '139px', left: '304px', right: '48px', zIndex: 20 }}
+        style={{ top: '139px', left: '204px', right: '48px', zIndex: 20 }}
       >
-        <h2 className="text-3xl font-light text-white leading-tight">{audience.title}</h2>
+        <h2 className="text-3xl font-normal text-white leading-tight">{audience.title}</h2>
       </div>
 
       {/* Intro Text Overlay */}
@@ -87,30 +87,17 @@ export default function AudienceSection({
       {/* Floating Content */}
       <div className={`absolute inset-0 z-10 flex ${(selectedService || selectedTechService) ? 'pb-20' : 'pb-8'}`} style={{paddingTop: '100px'}}>
         {/* Left Side - Service Menu */}
-        {/* "our services" label - aligned with title */}
+        {/* Buttons + label - vertically centered */}
         <div
-          className={`absolute px-8 z-20 ${showSubmenu ? 'animate-submenu-in' : ''}`}
+          className={`absolute flex flex-col justify-start px-8 z-20 w-auto ${showSubmenu ? 'animate-submenu-in' : ''}`}
           style={{
-            top: '144px',
-            width: '304px',
-            opacity: showSubmenu ? undefined : 0,
-            transform: showSubmenu ? undefined : 'translateY(-100px)'
-          }}
-        >
-          <h3 className="text-xl font-bold text-white text-right">our services</h3>
-        </div>
-
-        {/* Buttons - vertically centered with carousel panel */}
-        <div
-          className={`absolute flex flex-col justify-center px-8 z-20 w-auto ${showSubmenu ? 'animate-submenu-in' : ''}`}
-          style={{
-            top: '200px',
-            bottom: '100px',
+            top: '224px',
             opacity: showSubmenu ? undefined : 0,
             transform: showSubmenu ? undefined : 'translateY(-100px)'
           }}
         >
           <div className="flex flex-col gap-2 items-end">
+            <h3 className="text-xl font-light text-white text-right mb-2 leading-none">Our Services</h3>
             {audience.services.map((service) => {
               const ServiceIcon = service.icon;
               const isSelected = selectedService?.id === service.id;
@@ -147,9 +134,9 @@ export default function AudienceSection({
               bottom: '100px',
               borderRadius: '12px',
               border: '1px solid rgba(255,255,255,0.2)',
-              backgroundColor: 'rgba(0,0,0,0.3)',
-              backdropFilter: 'blur(6px)',
-              WebkitBackdropFilter: 'blur(6px)',
+              backgroundColor: 'rgba(255,255,255,0.15)',
+              backdropFilter: 'blur(16px)',
+              WebkitBackdropFilter: 'blur(16px)',
               overflow: 'hidden',
               boxShadow: '0 4px 24px rgba(0,0,0,0.3)',
               animation: isClosingCards
@@ -171,7 +158,7 @@ export default function AudienceSection({
                       >
                         <h4
                           key={`service-${idx}-${selectedService.title}`}
-                          className="text-lg font-light mb-1 animate-fade-slide-up leading-none text-white"
+                          className="text-xl font-light mb-1 animate-fade-slide-up leading-none text-white"
                         >
                           {selectedService.title}
                         </h4>
@@ -275,15 +262,15 @@ export default function AudienceSection({
             key={selectedTechService?.id || 'closing'}
             className="absolute overflow-hidden"
             style={{
-              right: '48px',
-              top: '200px',
-              width: '340px',
-              bottom: '100px',
+              right: '38px',
+              top: '120px',
+              width: '415px',
+              bottom: '88px',
               borderRadius: '12px',
               border: '1px solid rgba(255,255,255,0.2)',
-              backgroundColor: 'rgba(0,0,0,0.3)',
-              backdropFilter: 'blur(6px)',
-              WebkitBackdropFilter: 'blur(6px)',
+              backgroundColor: 'rgba(255,255,255,0.15)',
+              backdropFilter: 'blur(16px)',
+              WebkitBackdropFilter: 'blur(16px)',
               boxShadow: '0 4px 24px rgba(0,0,0,0.3)',
               animation: isClosingVideo
                 ? 'slideOutToRight 1.5s ease-out forwards'

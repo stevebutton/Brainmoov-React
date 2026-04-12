@@ -535,7 +535,7 @@ export default function App() {
         autoPlay loop muted playsInline
         className="absolute inset-0 w-full h-full object-cover"
         style={{ zIndex: 0 }}
-        src="https://framerusercontent.com/assets/jrWGlp5543cfh5lgSa2fRvMssQ.mp4"
+        src="https://framerusercontent.com/assets/3XEgSgX9TsI7iOuZo0UlSAbALI.mp4"
       />
 
       {/* Persistent banner — always on top, never transitions */}
