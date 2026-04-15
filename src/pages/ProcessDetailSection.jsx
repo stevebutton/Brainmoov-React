@@ -37,9 +37,9 @@ export default function ProcessDetailSection({ showBanner, hoveredProcessStep, s
                       style={{
                         bottom: 'calc(100% + 16px)',
                         width: '300px',
-                        backgroundColor: 'rgba(0,0,0,0.2)',
-                        backdropFilter: 'blur(12px)',
-                        WebkitBackdropFilter: 'blur(12px)',
+                        backgroundColor: 'rgba(255,255,255,0.15)',
+                        backdropFilter: 'blur(16px)',
+                        WebkitBackdropFilter: 'blur(16px)',
                         animation: 'slideInDown 0.6s ease-out forwards',
                         zIndex: 30
                       }}
@@ -88,9 +88,9 @@ export default function ProcessDetailSection({ showBanner, hoveredProcessStep, s
                       className="absolute left-0 top-full mt-3 rounded-2xl border border-white/20 shadow-2xl overflow-hidden"
                       style={{
                         width: '240px',
-                        backgroundColor: 'rgba(0,0,0,0.2)',
-                        backdropFilter: 'blur(12px)',
-                        WebkitBackdropFilter: 'blur(12px)',
+                        backgroundColor: 'rgba(255,255,255,0.15)',
+                        backdropFilter: 'blur(16px)',
+                        WebkitBackdropFilter: 'blur(16px)',
                         animation: 'slideInDown 0.4s ease-out forwards',
                         zIndex: 20
                       }}

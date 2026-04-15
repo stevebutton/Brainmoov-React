@@ -530,11 +530,18 @@ export default function App() {
 
   return (
     <div className="w-full h-full overflow-hidden relative">
-      {/* Global video background */}
+      {/* Intro video — visible on landing screen */}
       <video
         autoPlay loop muted playsInline
-        className="absolute inset-0 w-full h-full object-cover"
-        style={{ zIndex: 0 }}
+        className="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000"
+        style={{ zIndex: 0, opacity: currentView === 'intro' ? 1 : 0 }}
+        src="https://framerusercontent.com/assets/BeYOgbtkAlBNo1myfAoLabX1Zc.mp4"
+      />
+      {/* Main video — visible for all other sections */}
+      <video
+        autoPlay loop muted playsInline
+        className="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000"
+        style={{ zIndex: 0, opacity: currentView === 'intro' ? 0 : 1 }}
         src="https://framerusercontent.com/assets/3XEgSgX9TsI7iOuZo0UlSAbALI.mp4"
       />
 

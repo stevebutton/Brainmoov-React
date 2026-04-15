@@ -47,34 +47,28 @@ export default function AudienceSection({
       </div>
 
 
-      {/* Section Title - Right Side */}
-      <div
-        className="absolute"
-        style={{ top: '139px', left: '204px', right: '48px', zIndex: 20 }}
-      >
-        <h2 className="text-3xl font-normal text-white leading-tight">{audience.title}</h2>
-      </div>
+      {/* Section Title - only visible after a button is clicked */}
+      {(selectedService || selectedTechService) && (
+        <div
+          className="absolute"
+          style={{ top: '139px', left: '204px', right: '48px', zIndex: 20 }}
+        >
+          <h2 className="text-3xl font-normal text-white leading-tight">{audience.title}</h2>
+        </div>
+      )}
 
       {/* Intro Text Overlay */}
       <div
         className={`absolute transition-opacity duration-700 ${
           (selectedService || selectedTechService) ? 'opacity-0 pointer-events-none' : 'opacity-100'
         }`}
-        style={{
-          top: '150px', left: 'calc(50% - 340px)', width: '680px', zIndex: 15,
-          borderRadius: '12px',
-          border: '1px solid rgba(255,255,255,0.2)',
-          backgroundColor: 'rgba(0,0,0,0.3)',
-          backdropFilter: 'blur(6px)',
-          WebkitBackdropFilter: 'blur(6px)',
-          boxShadow: '0 4px 24px rgba(0,0,0,0.3)',
-        }}
+        style={{ top: '150px', left: 'calc(50% - 340px)', width: '680px', zIndex: 15 }}
       >
         <div className="p-10">
           <h3 className="text-4xl font-bold mb-6 text-left text-white">
             {audience.title} Services
           </h3>
-          <p className="text-xl leading-relaxed text-left text-white/70">
+          <p className="text-xl leading-snug text-left text-white/70">
             {audience.intro}
           </p>
           <p className="mt-8 text-lg font-medium text-left text-white">

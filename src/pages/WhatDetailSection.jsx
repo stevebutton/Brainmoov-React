@@ -23,7 +23,7 @@ export default function WhatDetailSection({ showBanner, hoveredCategory, setHove
                 onMouseLeave={() => setHoveredCategory(null)}
                 style={{ width: '220px' }}
               >
-                <div className="bg-[#1a1a1a] px-6 py-6 transition-all duration-300 hover:bg-[#222222] cursor-pointer">
+                <div className="px-6 py-6 transition-all duration-300 hover:bg-white/20 cursor-pointer" style={{backgroundColor: 'rgba(255,255,255,0.15)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)'}}>
                   <div className="flex items-center justify-center mb-3">
                     <div className="bg-black text-white rounded-full w-20 h-20 flex items-center justify-center">
                       <Icon className="w-10 h-10 text-white" style={{stroke: '#ffffff'}} />
@@ -36,7 +36,8 @@ export default function WhatDetailSection({ showBanner, hoveredCategory, setHove
 
                 {hoveredCategory === idx && (
                   <div
-                    className="bg-[#1a1a1a] overflow-hidden"
+                    className="overflow-hidden"
+                    style={{backgroundColor: 'rgba(255,255,255,0.15)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)'}}
                     style={{ animation: 'slideInDownWithBg 0.6s ease-in forwards', opacity: 0 }}
                   >
                     <div className="p-4 border-t border-white/5">
@@ -61,7 +62,7 @@ export default function WhatDetailSection({ showBanner, hoveredCategory, setHove
             style={{ width: '220px' }}
             onClick={onTreatmentFinderClick}
           >
-            <div className="bg-[#1a1a1a] px-6 py-6 transition-all duration-300 hover:bg-[#222222]">
+            <div className="px-6 py-6 transition-all duration-300 hover:bg-white/20" style={{backgroundColor: 'rgba(255,255,255,0.15)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)'}}>
               <div className="flex items-center justify-center mb-3">
                 <div className="bg-[#F26219] text-white rounded-full w-20 h-20 flex items-center justify-center">
                   <svg className="w-10 h-10" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24" style={{stroke: '#ffffff'}}>

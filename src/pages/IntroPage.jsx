@@ -1,163 +1,95 @@
 import { ChevronRight } from 'lucide-react';
-import { useAssets } from '../context/AssetContext';
+
+const panels = [
+  {
+    id: 'about',
+    title: 'What is BrainMoove?',
+    nav: 'about',
+    desc: 'A specialized rehabilitation center bridging neuroscience and clinical care through evidence-based functional neurology. We restore and optimize brain function across all ages with targeted, non-invasive interventions.'
+  },
+  {
+    id: 'who',
+    title: 'Who We Treat',
+    nav: 'who-detail',
+    desc: 'Specialized care for children and infants facing developmental challenges, adults and athletes seeking performance optimization, and seniors maintaining cognitive function.'
+  },
+  {
+    id: 'what',
+    title: 'What We Treat',
+    nav: 'what-detail',
+    desc: 'Neurodevelopmental challenges like ADHD and autism, acquired brain injuries including concussions and TBI, neurological diseases such as Parkinson\'s and MS, plus performance enhancement goals.'
+  },
+  {
+    id: 'process',
+    title: 'Our Treatment Process',
+    nav: 'process-detail',
+    desc: 'Begins with in-depth assessment and advanced neurological testing to identify dysfunction. We develop personalized treatment plans, monitor progress throughout, and provide ongoing follow-up care for lasting results.'
+  },
+];
 
 export default function IntroPage({ showNav, hoveredSection, setHoveredSection, onNavigate }) {
-  const { assets } = useAssets();
   return (
     <div className="relative w-full h-full overflow-hidden">
-
-      <div className="relative z-10 h-full flex flex-col">
-        {/* Four Main Buttons */}
-        <div className={`flex-1 flex flex-col items-center justify-start px-8 pt-4 transform transition-all duration-1000 ${showNav ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
-          <div className="w-full max-w-6xl">
-            <div className="flex justify-center gap-2.5 items-start">
-              {/* Button 1: What is BrainMoove */}
-              <div
-                className="relative overflow-hidden rounded-2xl border border-white/10 shadow-2xl"
-                onMouseEnter={() => setHoveredSection('about')}
-                onMouseLeave={() => setHoveredSection(null)}
-                style={{ width: '295px' }}
-              >
+      <div className="relative z-10 h-full flex items-center justify-center px-8" style={{paddingTop: '80px'}}>
+        <div
+          className={`w-full max-w-6xl transform transition-all duration-1000 ${showNav ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}
+        >
+          <div className="flex justify-center gap-2.5">
+            {panels.map((panel) => {
+              const isHovered = hoveredSection === panel.id;
+              return (
                 <div
-                  className="bg-black/50 backdrop-blur-xl px-8 py-6 transition-all duration-300 hover:bg-black/70 cursor-pointer"
-                  onClick={() => onNavigate('about')}
+                  key={panel.id}
+                  className="relative overflow-hidden rounded-2xl border border-white/20 shadow-2xl cursor-pointer"
+                  onMouseEnter={() => setHoveredSection(panel.id)}
+                  onMouseLeave={() => setHoveredSection(null)}
+                  onClick={() => onNavigate(panel.nav)}
+                  style={{
+                    width: '295px',
+                    height: '340px',
+                    backgroundColor: isHovered ? 'rgba(0,0,0,0.25)' : 'rgba(255,255,255,0.15)',
+                    backdropFilter: 'blur(16px)',
+                    WebkitBackdropFilter: 'blur(16px)',
+                    transition: 'background-color 0.4s ease',
+                  }}
                 >
-                  <h2 className="text-lg font-bold text-center text-white">What is BrainMoove?</h2>
-                </div>
-
-                {hoveredSection === 'about' && (
+                  {/* Title — centers at rest, animates up on hover */}
                   <div
-                    className="bg-[#1a1a1a] overflow-hidden"
-                    style={{ animation: 'slideInDownWithBg 0.6s ease-in forwards', opacity: 0 }}
+                    style={{
+                      position: 'absolute',
+                      left: '32px',
+                      right: '32px',
+                      top: '50%',
+                      transform: isHovered ? 'translateY(calc(-50% - 70px))' : 'translateY(-50%)',
+                      transition: 'transform 0.4s ease',
+                    }}
                   >
-                    <div className="p-6 border-t border-white/10">
-                      <p className="leading-snug mb-4">
-                        A specialized rehabilitation center bridging neuroscience and clinical care through evidence-based functional neurology.
-                        We restore and optimize brain function across all ages with targeted, non-invasive interventions.
-                      </p>
-                      <button
-                        onClick={() => onNavigate('about')}
-                        className="text-sm font-medium text-[#F26219] flex items-center gap-1 transition-colors hover:underline"
-                      >
-                        <span>Find out more</span>
-                        <ChevronRight className="w-4 h-4" />
-                      </button>
-                    </div>
+                    <h2 className="text-4xl font-semibold text-left text-white leading-none">{panel.title}</h2>
                   </div>
-                )}
-              </div>
 
-              {/* Button 2: Who We Treat */}
-              <div
-                className="relative overflow-hidden rounded-2xl border border-white/10 shadow-2xl"
-                onMouseEnter={() => setHoveredSection('who')}
-                onMouseLeave={() => setHoveredSection(null)}
-                style={{ width: '295px' }}
-              >
-                <div
-                  className="bg-black/50 backdrop-blur-xl px-8 py-6 transition-all duration-300 hover:bg-black/70 cursor-pointer"
-                  onClick={() => onNavigate('who-detail')}
-                >
-                  <h2 className="text-lg font-bold text-center text-white">Who We Treat</h2>
-                </div>
-
-                {hoveredSection === 'who' && (
+                  {/* Description — fades in on hover */}
                   <div
-                    className="bg-[#1a1a1a] overflow-hidden"
-                    style={{ animation: 'slideInDownWithBg 0.6s ease-in forwards', opacity: 0 }}
+                    style={{
+                      position: 'absolute',
+                      left: '32px',
+                      right: '32px',
+                      top: 'calc(50% - 24px)',
+                      opacity: isHovered ? 1 : 0,
+                      transition: 'opacity 0.3s ease 0.15s',
+                    }}
                   >
-                    <div className="p-6 border-t border-white/10">
-                      <p className="leading-snug mb-4">
-                        Specialized care for children and infants facing developmental challenges, adults and athletes
-                        seeking performance optimization, and seniors maintaining cognitive function. Programs address
-                        unique neurological needs at each life stage.
-                      </p>
-                      <button
-                        onClick={() => onNavigate('who-detail')}
-                        className="text-sm font-medium text-[#F26219] flex items-center gap-1 transition-colors hover:underline"
-                      >
-                        <span>Find out more</span>
-                        <ChevronRight className="w-4 h-4" />
-                      </button>
-                    </div>
+                    <p className="text-sm text-white/70 leading-snug mb-4">{panel.desc}</p>
+                    <button
+                      className="text-sm font-medium text-[#F26219] flex items-center gap-1 hover:underline"
+                      onClick={(e) => { e.stopPropagation(); onNavigate(panel.nav); }}
+                    >
+                      <span>Find out more</span>
+                      <ChevronRight className="w-4 h-4" />
+                    </button>
                   </div>
-                )}
-              </div>
-
-              {/* Button 3: What We Treat */}
-              <div
-                className="relative overflow-hidden rounded-2xl border border-white/10 shadow-2xl"
-                onMouseEnter={() => setHoveredSection('what')}
-                onMouseLeave={() => setHoveredSection(null)}
-                style={{ width: '295px' }}
-              >
-                <div
-                  className="bg-black/50 backdrop-blur-xl px-8 py-6 transition-all duration-300 hover:bg-black/70 cursor-pointer"
-                  onClick={() => onNavigate('what-detail')}
-                >
-                  <h2 className="text-lg font-bold text-center text-white">What We Treat</h2>
                 </div>
-
-                {hoveredSection === 'what' && (
-                  <div
-                    className="bg-[#1a1a1a] overflow-hidden"
-                    style={{ animation: 'slideInDownWithBg 0.6s ease-in forwards', opacity: 0 }}
-                  >
-                    <div className="p-6 border-t border-white/10">
-                      <p className="leading-snug mb-4">
-                        Neurodevelopmental challenges like ADHD and autism, acquired brain injuries including concussions
-                        and TBI, neurological diseases such as Parkinson's and MS, plus performance enhancement goals.
-                        Personalized interventions restore optimal brain function.
-                      </p>
-                      <button
-                        onClick={() => onNavigate('what-detail')}
-                        className="text-sm font-medium text-[#F26219] flex items-center gap-1 transition-colors hover:underline"
-                      >
-                        <span>Find out more</span>
-                        <ChevronRight className="w-4 h-4" />
-                      </button>
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              {/* Button 4: Our Treatment Process */}
-              <div
-                className="relative overflow-hidden rounded-2xl border border-white/10 shadow-2xl"
-                onMouseEnter={() => setHoveredSection('process')}
-                onMouseLeave={() => setHoveredSection(null)}
-                style={{ width: '295px' }}
-              >
-                <div
-                  className="bg-black/50 backdrop-blur-xl px-8 py-6 transition-all duration-300 hover:bg-black/70 cursor-pointer"
-                  onClick={() => onNavigate('process-detail')}
-                >
-                  <h2 className="text-lg font-bold text-center text-white">Our Treatment Process</h2>
-                </div>
-
-                {hoveredSection === 'process' && (
-                  <div
-                    className="bg-[#1a1a1a] overflow-hidden"
-                    style={{ animation: 'slideInDownWithBg 0.6s ease-in forwards', opacity: 0 }}
-                  >
-                    <div className="p-6 border-t border-white/10">
-                      <p className="leading-snug mb-4">
-                        Begins with in-depth assessment and advanced neurological testing to identify dysfunction.
-                        We develop personalized treatment plans, monitor progress throughout, and provide ongoing
-                        follow-up care for lasting results.
-                      </p>
-                      <button
-                        onClick={() => onNavigate('process-detail')}
-                        className="text-sm font-medium text-[#F26219] flex items-center gap-1 transition-colors hover:underline"
-                      >
-                        <span>Find out more</span>
-                        <ChevronRight className="w-4 h-4" />
-                      </button>
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
+              );
+            })}
           </div>
         </div>
       </div>
