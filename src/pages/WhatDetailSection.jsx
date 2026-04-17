@@ -1,84 +1,76 @@
 import { Activity, Zap, Brain, Sparkles } from 'lucide-react';
 import { conditionsData } from '../data/index';
 
-export default function WhatDetailSection({ showBanner, hoveredCategory, setHoveredCategory, onNavigate, onTreatmentFinderClick }) {
-  const categoryIcons = [Activity, Zap, Brain, Sparkles];
+const categoryIcons = [Activity, Zap, Brain, Sparkles];
 
+export default function WhatDetailSection({ showBanner, hoveredCategory, setHoveredCategory, onNavigate, onTreatmentFinderClick }) {
   return (
     <div className="w-full h-full relative">
-
       <div className="p-12" style={{paddingTop: '170px'}}>
-        <p className="text-lg mb-8 text-center max-w-4xl mx-auto text-white/70">
-          Explore conditions by category:
-        </p>
 
-        <div className="flex justify-center gap-2.5 items-start">
+        <div className="flex justify-center gap-2.5">
           {conditionsData.map((category, idx) => {
+            const isHovered = hoveredCategory === idx;
             const Icon = categoryIcons[idx];
             return (
               <div
                 key={idx}
-                className="relative overflow-hidden rounded-2xl border border-white/10 shadow-2xl"
+                className="relative overflow-hidden rounded-2xl border border-white/20 shadow-2xl cursor-pointer"
                 onMouseEnter={() => setHoveredCategory(idx)}
                 onMouseLeave={() => setHoveredCategory(null)}
-                style={{ width: '220px' }}
+                style={{
+                  width: '295px',
+                  height: '340px',
+                  backgroundColor: isHovered ? 'rgba(0,0,0,0.35)' : 'rgba(255,255,255,0.15)',
+                  backdropFilter: 'blur(16px)',
+                  WebkitBackdropFilter: 'blur(16px)',
+                  transition: 'background-color 0.4s ease',
+                }}
               >
-                <div className="px-6 py-6 transition-all duration-300 hover:bg-white/20 cursor-pointer" style={{backgroundColor: 'rgba(255,255,255,0.15)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)'}}>
-                  <div className="flex items-center justify-center mb-3">
-                    <div className="bg-black text-white rounded-full w-20 h-20 flex items-center justify-center">
-                      <Icon className="w-10 h-10 text-white" style={{stroke: '#ffffff'}} />
-                    </div>
-                  </div>
-                  <div className="flex items-center justify-center gap-2">
-                    <h3 className="text-base font-light text-center leading-tight text-white">{category.category}</h3>
-                  </div>
+                {/* Title — centered at rest, animates up on hover */}
+                <div
+                  style={{
+                    position: 'absolute',
+                    left: '24px',
+                    right: '24px',
+                    top: '50%',
+                    transform: isHovered ? 'translateY(calc(-50% - 70px))' : 'translateY(-50%)',
+                    transition: 'transform 0.4s ease',
+                  }}
+                >
+                  <Icon className="w-8 h-8 text-white mb-3" />
+                  <h3 className="text-2xl font-semibold text-left text-white leading-tight">{category.category}</h3>
                 </div>
 
-                {hoveredCategory === idx && (
-                  <div
-                    className="overflow-hidden"
-                    style={{backgroundColor: 'rgba(255,255,255,0.15)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)'}}
-                    style={{ animation: 'slideInDownWithBg 0.6s ease-in forwards', opacity: 0 }}
-                  >
-                    <div className="p-4 border-t border-white/5">
-                      <div className="space-y-1.5 max-h-80 overflow-y-auto">
-                        {category.conditions.map((condition, cidx) => (
-                          <div key={cidx} className="flex items-start">
-                            <span className="text-[#F26219] mr-2 text-xs mt-0.5">•</span>
-                            <span className="text-xs text-white/70 leading-tight">{condition}</span>
-                          </div>
-                        ))}
+                {/* Conditions list — fades in on hover */}
+                <div
+                  style={{
+                    position: 'absolute',
+                    left: '24px',
+                    right: '24px',
+                    top: 'calc(50% - 24px)',
+                    opacity: isHovered ? 1 : 0,
+                    transition: 'opacity 0.3s ease 0.15s',
+                  }}
+                >
+                  <div className="w-8 h-px bg-white/40 mb-3" />
+                  <div className="space-y-1">
+                    {category.conditions.map((condition, cidx) => (
+                      <div key={cidx} className="flex items-start">
+                        <span className="text-[#F26219] mr-2 text-xs mt-0.5">•</span>
+                        <span className="text-xs text-white/80 leading-tight">{condition}</span>
                       </div>
-                    </div>
+                    ))}
                   </div>
-                )}
+                </div>
               </div>
             );
           })}
-
-          {/* 5th Column: Treatment Finder */}
-          <div
-            className="relative rounded-2xl border border-white/10 shadow-2xl cursor-pointer overflow-hidden"
-            style={{ width: '220px' }}
-            onClick={onTreatmentFinderClick}
-          >
-            <div className="px-6 py-6 transition-all duration-300 hover:bg-white/20" style={{backgroundColor: 'rgba(255,255,255,0.15)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)'}}>
-              <div className="flex items-center justify-center mb-3">
-                <div className="bg-[#F26219] text-white rounded-full w-20 h-20 flex items-center justify-center">
-                  <svg className="w-10 h-10" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24" style={{stroke: '#ffffff'}}>
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
-                    <line x1="12" y1="17" x2="12.01" y2="17"></line>
-                  </svg>
-                </div>
-              </div>
-              <div className="flex flex-col items-center justify-center gap-2">
-                <h3 className="text-base font-light text-center leading-tight text-white">Not Sure Where to Start?</h3>
-                <p className="text-white/70 text-sm font-semibold text-center mt-2">Start Treatment Finder</p>
-              </div>
-            </div>
-          </div>
         </div>
+
+        <p className="text-lg mt-8 text-center text-white/70">
+          Explore conditions by category
+        </p>
       </div>
     </div>
   );

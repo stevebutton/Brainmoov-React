@@ -20,6 +20,12 @@ const panels = [
     desc: 'Neurodevelopmental challenges like ADHD and autism, acquired brain injuries including concussions and TBI, neurological diseases such as Parkinson\'s and MS, plus performance enhancement goals.'
   },
   {
+    id: 'infrastructure',
+    title: 'Our Infrastructure',
+    nav: 'about-infrastructure',
+    desc: 'State-of-the-art technology and equipment supporting our functional neurology approach, including advanced diagnostic and therapeutic devices for precise, targeted neurological intervention.'
+  },
+  {
     id: 'process',
     title: 'Our Treatment Process',
     nav: 'process-detail',
@@ -45,7 +51,7 @@ export default function IntroPage({ showNav, hoveredSection, setHoveredSection, 
                   onMouseLeave={() => setHoveredSection(null)}
                   onClick={() => onNavigate(panel.nav)}
                   style={{
-                    width: '295px',
+                    width: '235px',
                     height: '340px',
                     backgroundColor: isHovered ? 'rgba(0,0,0,0.25)' : 'rgba(255,255,255,0.15)',
                     backdropFilter: 'blur(16px)',
@@ -64,7 +70,7 @@ export default function IntroPage({ showNav, hoveredSection, setHoveredSection, 
                       transition: 'transform 0.4s ease',
                     }}
                   >
-                    <h2 className="text-4xl font-semibold text-left text-white leading-none">{panel.title}</h2>
+                    <h2 className="text-2xl font-bold text-left text-white leading-none">{panel.title}</h2>
                   </div>
 
                   {/* Description — fades in on hover */}
