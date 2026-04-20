@@ -286,9 +286,10 @@ export default function AudienceSection({
               </div>
               <div
                 className="flex-1 rounded-lg overflow-hidden relative"
-                style={{ backgroundImage: `url(${assets['interview-bg']})`, backgroundSize: 'cover', backgroundPosition: 'center top' }}
+                style={{ }}
               >
-                <div className="absolute inset-0 bg-black/20" />
+                <div className="absolute inset-0" style={{ backgroundImage: `url(https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=600&h=500&fit=crop&q=80)`, backgroundSize: 'cover', backgroundPosition: 'center top', transform: 'scaleX(-1)' }} />
+              <div className="absolute inset-0 bg-black/20" />
                 <div className="absolute inset-0 flex items-end justify-start p-3">
                   <div className="flex items-center gap-2 bg-black/40 backdrop-blur-sm rounded-lg px-3 py-2">
                     <svg className="w-5 h-5 flex-shrink-0" fill="#F26219" stroke="none" viewBox="0 0 24 24">

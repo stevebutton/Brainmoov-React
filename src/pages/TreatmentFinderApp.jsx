@@ -89,8 +89,8 @@ function generateSlides(answers, recommendations) {
   return slides;
 }
 
-const card = 'bg-white rounded-xl border border-gray-200 hover:border-[#F26219] hover:bg-orange-50 transition-all cursor-pointer text-left w-full';
-const cardSelected = 'bg-orange-50 border-[#F26219]';
+const card = 'bg-white/10 backdrop-blur-md rounded-xl border border-white/20 hover:border-[#F26219]/70 hover:bg-white/20 transition-all cursor-pointer text-left w-full';
+const cardSelected = 'bg-[#F26219]/20 border-[#F26219]';
 
 // ─── Component ────────────────────────────────────────────────────────────────
 
@@ -127,26 +127,28 @@ export default function TreatmentFinderApp() {
     const isLast = currentSlide === total - 1;
 
     return (
-      <div className="h-screen bg-white flex flex-col overflow-hidden">
+      <div className="h-screen relative flex flex-col overflow-hidden">
+        <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover" src="https://framerusercontent.com/assets/GYKxkhR1e9E7Bx3M4YshNQj1II.mp4" />
+        <div className="absolute inset-0 bg-black/50" />
 
         {/* Progress bar */}
-        <div className="h-1.5 bg-gray-100 flex-shrink-0">
+        <div className="relative z-10 h-1.5 bg-white/10 flex-shrink-0">
           <div className="h-1.5 bg-[#F26219] transition-all duration-300" style={{ width: `${((currentSlide + 1) / total) * 100}%` }} />
         </div>
 
         {/* Slide content */}
-        <div className="flex-1 overflow-y-auto">
+        <div className="relative z-10 flex-1 overflow-y-auto">
 
           {/* Situation slide — centered */}
           {slide.type === 'situation' && (
             <div className="h-full flex flex-col items-center justify-center px-10 py-6">
-              <p className="text-xs font-bold text-[#F26219] uppercase tracking-widest mb-3">Your Personalised Journey</p>
-              <h2 className="text-2xl font-bold text-slate-900 mb-6 text-center">{slide.title}</h2>
-              <div className="grid grid-cols-2 gap-3 w-full max-w-xl">
+              <p className="text-sm font-bold text-[#F26219] uppercase tracking-widest mb-3">Your Personalised Journey</p>
+              <h2 className="text-3xl font-bold text-white mb-8 text-center">{slide.title}</h2>
+              <div className="grid grid-cols-2 gap-4 w-full max-w-2xl">
                 {slide.items.map((item, idx) => (
-                  <div key={idx} className="bg-gray-50 rounded-xl p-4 border border-gray-200 text-center">
-                    <div className="text-xs font-bold text-[#F26219] uppercase tracking-widest mb-1.5">{item.label}</div>
-                    <div className="font-semibold text-slate-900 text-sm">{item.value}</div>
+                  <div key={idx} className="bg-white/10 backdrop-blur-md rounded-xl p-6 border border-white/20 text-center">
+                    <div className="text-base font-bold text-[#F26219] uppercase tracking-widest mb-3">{item.label}</div>
+                    <div className="font-semibold text-white text-2xl">{item.value}</div>
                   </div>
                 ))}
               </div>
@@ -169,17 +171,17 @@ export default function TreatmentFinderApp() {
                     <svg className="w-5 h-5 ml-1" fill="#F26219" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3" /></svg>
                   </div>
                 </div>
-                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-4">
-                  <p className="text-white/70 text-xs uppercase tracking-widest">{slide.subtitle}</p>
-                  <p className="text-white font-bold text-base">{slide.title}</p>
+                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-5">
+                  <p className="text-white/85 text-sm uppercase tracking-widest">{slide.subtitle}</p>
+                  <p className="text-white font-bold text-lg">{slide.title}</p>
                 </div>
               </div>
 
               {/* Content — right */}
-              <div className="flex-1 flex flex-col justify-center px-8 py-8">
-                <p className="text-xs font-bold text-[#F26219] uppercase tracking-widest mb-2">{slide.subtitle}</p>
-                <h2 className="text-2xl font-bold text-slate-900 mb-4">{slide.title}</h2>
-                <p className="text-slate-600 leading-relaxed text-base">{slide.description}</p>
+              <div className="flex-1 flex flex-col justify-center px-10 py-10">
+                <p className="text-sm font-bold text-[#F26219] uppercase tracking-widest mb-3">{slide.subtitle}</p>
+                <h2 className="text-3xl font-bold text-white mb-5">{slide.title}</h2>
+                <p className="text-white/85 leading-relaxed text-lg">{slide.description}</p>
               </div>
             </div>
           )}
@@ -187,20 +189,20 @@ export default function TreatmentFinderApp() {
           {/* Timeline slide — horizontal */}
           {slide.type === 'timeline' && (
             <div className="h-full flex flex-col items-center justify-center px-8 py-6">
-              <h2 className="text-2xl font-bold text-slate-900 mb-8 text-center">{slide.title}</h2>
+              <h2 className="text-3xl font-bold text-white mb-10 text-center">{slide.title}</h2>
               <div className="flex items-start w-full">
                 {slide.phases.map((phase, idx) => (
                   <div key={idx} className="flex items-start flex-1">
                     <div className="flex flex-col items-center flex-1">
-                      <div className="w-10 h-10 rounded-full bg-[#F26219] flex items-center justify-center font-bold text-white text-base mb-2 flex-shrink-0">
+                      <div className="w-14 h-14 rounded-full bg-[#F26219] flex items-center justify-center font-bold text-white text-lg mb-3 flex-shrink-0">
                         {idx + 1}
                       </div>
-                      <div className="text-xs font-bold text-[#F26219] uppercase tracking-wide mb-1 text-center">{phase.week}</div>
-                      <div className="font-bold text-slate-900 text-center text-sm mb-0.5">{phase.activity}</div>
-                      <div className="text-xs text-slate-500 text-center">{phase.description}</div>
+                      <div className="text-sm font-bold text-[#F26219] uppercase tracking-wide mb-1 text-center">{phase.week}</div>
+                      <div className="font-bold text-white text-center text-base mb-1">{phase.activity}</div>
+                      <div className="text-sm text-white/85 text-center">{phase.description}</div>
                     </div>
                     {idx < slide.phases.length - 1 && (
-                      <div className="flex-shrink-0" style={{ width: '24px', height: '2px', backgroundColor: '#e5e7eb', marginTop: '18px' }} />
+                      <div className="flex-shrink-0" style={{ width: '24px', height: '2px', backgroundColor: '#e5e7eb', marginTop: '26px' }} />
                     )}
                   </div>
                 ))}
@@ -211,27 +213,27 @@ export default function TreatmentFinderApp() {
           {/* CTA slide — fully centered */}
           {slide.type === 'cta' && (
             <div className="h-full flex flex-col items-center justify-center px-12 py-8 text-center">
-              <div className="text-4xl mb-4">🎯</div>
-              <h2 className="text-3xl font-bold text-slate-900 mb-2">{slide.title}</h2>
-              <p className="text-base text-[#F26219] font-semibold mb-4">{slide.subtitle}</p>
-              <p className="text-slate-500 max-w-md mb-8 leading-relaxed text-sm">{slide.summary}</p>
+              <div className="text-5xl mb-5">🎯</div>
+              <h2 className="text-3xl font-bold text-white mb-3">{slide.title}</h2>
+              <p className="text-lg text-[#F26219] font-semibold mb-4">{slide.subtitle}</p>
+              <p className="text-white/85 max-w-lg mb-8 leading-relaxed text-base">{slide.summary}</p>
               <button
                 onClick={() => alert('Consultation booking coming soon!')}
-                className="bg-[#F26219] hover:bg-[#d4521a] text-white font-bold px-10 py-4 rounded-2xl text-lg transition-all hover:scale-105 shadow-lg flex items-center gap-3 mb-3"
+                className="bg-[#F26219] hover:bg-[#d4521a] text-white font-bold px-12 py-5 rounded-2xl text-xl transition-all hover:scale-105 shadow-lg flex items-center gap-3 mb-3"
               >
-                <Calendar className="w-5 h-5" /> Book Your Free Consultation
+                <Calendar className="w-6 h-6" /> Book Your Free Consultation
               </button>
-              <button onClick={reset} className="text-slate-400 hover:text-slate-600 font-medium mt-1 text-sm">← Start Over</button>
+              <button onClick={reset} className="text-slate-400 hover:text-slate-600 font-medium mt-1 text-base">← Start Over</button>
             </div>
           )}
         </div>
 
         {/* Nav footer */}
-        <div className="flex-shrink-0 border-t border-gray-200 bg-white px-8 py-4 flex items-center justify-between">
+        <div className="relative z-10 flex-shrink-0 border-t border-white/10 bg-black/40 backdrop-blur-sm px-8 py-4 flex items-center justify-between">
           <button
             onClick={() => setCurrentSlide(Math.max(0, currentSlide - 1))}
             disabled={isFirst}
-            className={`flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold text-sm transition-all ${isFirst ? 'text-gray-300 cursor-not-allowed' : 'text-slate-600 bg-gray-100 hover:bg-gray-200'}`}
+            className={`flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold text-sm transition-all ${isFirst ? 'text-white/20 cursor-not-allowed' : 'text-white/85 bg-white/10 hover:bg-white/20'}`}
           >
             <ChevronLeft className="w-4 h-4" /> Previous
           </button>
@@ -239,14 +241,14 @@ export default function TreatmentFinderApp() {
           <div className="flex gap-1.5 items-center">
             {slides.map((_, idx) => (
               <button key={idx} onClick={() => setCurrentSlide(idx)}
-                className={`rounded-full transition-all ${idx === currentSlide ? 'w-6 h-2.5 bg-[#F26219]' : 'w-2.5 h-2.5 bg-gray-300 hover:bg-gray-400'}`} />
+                className={`rounded-full transition-all ${idx === currentSlide ? 'w-6 h-2.5 bg-[#F26219]' : 'w-2.5 h-2.5 bg-white/30 hover:bg-white/50'}`} />
             ))}
           </div>
 
           <button
             onClick={() => setCurrentSlide(Math.min(total - 1, currentSlide + 1))}
             disabled={isLast}
-            className={`flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold text-sm transition-all ${isLast ? 'text-gray-300 cursor-not-allowed' : 'bg-[#F26219] hover:bg-[#d4521a] text-white'}`}
+            className={`flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold text-sm transition-all ${isLast ? 'text-white/20 cursor-not-allowed' : 'bg-[#F26219] hover:bg-[#d4521a] text-white'}`}
           >
             Next <ChevronRight className="w-4 h-4" />
           </button>
@@ -261,39 +263,41 @@ export default function TreatmentFinderApp() {
   // Step 0 — Landing
   if (step === 0) {
     return (
-      <div className="h-screen flex overflow-hidden">
-        <div className="w-[300px] bg-[#F8F4F0] flex flex-col justify-center px-10 py-8 flex-shrink-0">
-          <img src={assets.logo} alt="BrainMoove" style={{ width: '100px', height: '70px', objectFit: 'contain' }} className="mb-7" />
-          <h1 className="text-2xl font-bold text-slate-900 mb-3 leading-tight">Find the right treatment for you</h1>
-          <p className="text-sm text-slate-600 mb-6 leading-relaxed">Answer 4 short questions. We'll match you with the services and technologies that fit your needs.</p>
-          <div className="flex gap-4 text-xs text-slate-500 mb-7">
+      <div className="h-screen relative flex overflow-hidden">
+        <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover" src="https://framerusercontent.com/assets/GYKxkhR1e9E7Bx3M4YshNQj1II.mp4" />
+        <div className="absolute inset-0 bg-black/50" />
+        <div className="relative z-10 w-[360px] bg-black/30 backdrop-blur-sm border-r border-white/10 flex flex-col justify-center px-10 py-8 flex-shrink-0">
+          <img src={assets.logo} alt="BrainMoove" style={{ width: '130px', height: '91px', objectFit: 'contain' }} className="mb-7" />
+          <h1 className="text-3xl font-bold text-white mb-4 leading-tight">Find the right treatment for you</h1>
+          <p className="text-base text-white/85 mb-6 leading-relaxed">Answer 4 short questions. We'll match you with the services and technologies that fit your needs.</p>
+          <div className="flex gap-4 text-sm text-white/50 mb-7">
             <span>⏱ 2 minutes</span>
-            <span className="text-slate-300">|</span>
+            <span className="text-white/20">|</span>
             <span>❓ 4 questions</span>
           </div>
-          <button onClick={() => setStep(1)} className="bg-[#F26219] hover:bg-[#d4521a] text-white font-bold px-6 py-3 rounded-xl text-base transition-all w-fit shadow-md">
+          <button onClick={() => setStep(1)} className="bg-[#F26219] hover:bg-[#d4521a] text-white font-bold px-8 py-4 rounded-xl text-lg transition-all w-fit shadow-md">
             Start →
           </button>
         </div>
-        <div className="flex-1 bg-white flex flex-col justify-center px-10 py-8">
-          <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-5">What you'll receive</p>
-          <div className="space-y-4">
+        <div className="relative z-10 flex-1 flex flex-col justify-center px-10 py-8">
+          <p className="text-lg font-bold text-white/50 uppercase tracking-widest mb-8">What you'll receive</p>
+          <div className="space-y-8">
             {[['📋', 'Treatment Plan', 'Services and technologies matched to your responses'],
               ['🎥', 'Video Explanations', 'Specialists explain each recommended service'],
               ['🔬', 'Technology Demos', 'See how our equipment works'],
               ['📅', 'Treatment Timeline', 'A week-by-week overview of your journey']
             ].map(([icon, title, desc]) => (
-              <div key={title} className="flex items-start gap-3">
-                <span className="text-xl mt-0.5">{icon}</span>
+              <div key={title} className="flex items-start gap-6">
+                <span className="text-4xl mt-0.5">{icon}</span>
                 <div>
-                  <div className="font-semibold text-slate-900 text-sm">{title}</div>
-                  <div className="text-xs text-slate-500 mt-0.5">{desc}</div>
+                  <div className="font-semibold text-white text-2xl">{title}</div>
+                  <div className="text-lg text-white/85 mt-1">{desc}</div>
                 </div>
               </div>
             ))}
           </div>
-          <div className="mt-7 pt-6 border-t border-gray-100">
-            <p className="text-xs text-slate-400 leading-relaxed">Results are not a diagnosis — they help you prepare for a conversation with our team.</p>
+          <div className="mt-8 pt-6 border-t border-white/10">
+            <p className="text-base text-white/40 leading-relaxed">Results are not a diagnosis — they help you prepare for a conversation with our team.</p>
           </div>
         </div>
       </div>
@@ -301,33 +305,35 @@ export default function TreatmentFinderApp() {
   }
 
   return (
-    <div className="h-screen bg-white flex flex-col overflow-hidden">
+    <div className="h-screen relative flex flex-col overflow-hidden">
+      <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover" src="https://framerusercontent.com/assets/GYKxkhR1e9E7Bx3M4YshNQj1II.mp4" />
+      <div className="absolute inset-0 bg-black/50" />
       {step < 5 && (
-        <div className="h-1.5 bg-gray-100 flex-shrink-0">
+        <div className="relative z-10 h-1.5 bg-white/10 flex-shrink-0">
           <div className="h-1.5 bg-[#F26219] transition-all duration-300" style={{ width: `${(step / 4) * 100}%` }} />
         </div>
       )}
 
-      <div className="flex-1 overflow-y-auto px-10 py-6">
+      <div className="relative z-10 flex-1 overflow-y-auto px-10 py-6">
 
         {/* Step 1 */}
         {step === 1 && (
-          <div className="max-w-md mx-auto">
-            <div className="text-xs font-bold text-[#F26219] uppercase tracking-widest mb-3">Step 1 of 4</div>
-            <h2 className="text-2xl font-bold text-slate-900 mb-1.5">Who is this treatment for?</h2>
-            <p className="text-slate-500 text-sm mb-5">Select the age group that best applies</p>
-            <div className="space-y-2">
+          <div className="max-w-lg mx-auto">
+            <div className="text-sm font-bold text-[#F26219] uppercase tracking-widest mb-3">Step 1 of 4</div>
+            <h2 className="text-3xl font-bold text-white mb-2">Who is this treatment for?</h2>
+            <p className="text-white/85 text-base mb-6">Select the age group that best applies</p>
+            <div className="space-y-4">
               {[['child', 'Child or Teen', '0–17 years', 'Developmental support and early intervention'],
                 ['adult', 'Adult', '18–64 years', 'Recovery, optimisation, and symptom management'],
                 ['senior', 'Senior', '65+ years', 'Healthy ageing and fall prevention']
               ].map(([id, label, age, desc]) => (
-                <button key={id} onClick={() => { setAnswers({ ...answers, audience: id }); setStep(2); }} className={`${card} p-4 flex items-center gap-4`}>
-                  <div className="w-10 h-10 rounded-full bg-[#F26219]/10 flex items-center justify-center flex-shrink-0"><Users className="w-4 h-4 text-[#F26219]" /></div>
+                <button key={id} onClick={() => { setAnswers({ ...answers, audience: id }); setStep(2); }} className={`${card} p-6 flex items-center gap-6`}>
+                  <div className="w-16 h-16 rounded-full bg-[#F26219]/10 flex items-center justify-center flex-shrink-0"><Users className="w-8 h-8 text-[#F26219]" /></div>
                   <div>
-                    <div className="font-semibold text-slate-900 text-sm">{label} <span className="text-slate-400 font-normal text-xs ml-1">{age}</span></div>
-                    <div className="text-xs text-slate-500 mt-0.5">{desc}</div>
+                    <div className="font-semibold text-white text-2xl">{label} <span className="text-white/50 font-normal text-lg ml-1">{age}</span></div>
+                    <div className="text-lg text-white/85 mt-1">{desc}</div>
                   </div>
-                  <ChevronRight className="w-4 h-4 text-gray-300 ml-auto flex-shrink-0" />
+                  <ChevronRight className="w-6 h-6 text-gray-300 ml-auto flex-shrink-0" />
                 </button>
               ))}
             </div>
@@ -336,122 +342,122 @@ export default function TreatmentFinderApp() {
 
         {/* Step 2 */}
         {step === 2 && (
-          <div className="max-w-md mx-auto">
-            <div className="text-xs font-bold text-[#F26219] uppercase tracking-widest mb-3">Step 2 of 4</div>
-            <h2 className="text-2xl font-bold text-slate-900 mb-1.5">What brings you here?</h2>
-            <p className="text-slate-500 text-sm mb-5">Select the option that best describes your situation</p>
-            <div className="space-y-2">
+          <div className="max-w-[592px] mx-auto">
+            <div className="text-sm font-bold text-[#F26219] uppercase tracking-widest mb-3">Step 2 of 4</div>
+            <h2 className="text-3xl font-bold text-white mb-2">What brings you here?</h2>
+            <p className="text-white/85 text-base mb-6">Select the option that best describes your situation</p>
+            <div className="space-y-4">
               {[['diagnosed', '📋', 'I have a diagnosed condition', "You've received a medical diagnosis"],
                 ['symptoms', '🔍', 'I have symptoms but no diagnosis', 'Experiencing issues without clear answers'],
                 ['prevention', '💪', 'Prevention and optimisation', 'Proactive health and performance'],
                 ['injury', '⚡', 'Post-injury recovery', 'Recovering from brain or head injury']
               ].map(([id, icon, label, desc]) => (
-                <button key={id} onClick={() => { setAnswers({ ...answers, reason: id }); setStep(3); }} className={`${card} p-4 flex items-center gap-3`}>
-                  <span className="text-xl flex-shrink-0">{icon}</span>
+                <button key={id} onClick={() => { setAnswers({ ...answers, reason: id }); setStep(3); }} className={`${card} p-6 flex items-center gap-6`}>
+                  <span className="text-4xl flex-shrink-0">{icon}</span>
                   <div>
-                    <div className="font-semibold text-slate-900 text-sm">{label}</div>
-                    <div className="text-xs text-slate-500 mt-0.5">{desc}</div>
+                    <div className="font-semibold text-white text-2xl">{label}</div>
+                    <div className="text-lg text-white/85 mt-1">{desc}</div>
                   </div>
-                  <ChevronRight className="w-4 h-4 text-gray-300 ml-auto flex-shrink-0" />
+                  <ChevronRight className="w-6 h-6 text-gray-300 ml-auto flex-shrink-0" />
                 </button>
               ))}
             </div>
-            <button onClick={() => setStep(1)} className="mt-4 text-slate-400 hover:text-slate-600 text-xs flex items-center gap-1"><ChevronLeft className="w-3 h-3" /> Back</button>
+            <button onClick={() => setStep(1)} className="mt-5 text-slate-400 hover:text-slate-600 text-sm flex items-center gap-1"><ChevronLeft className="w-4 h-4" /> Back</button>
           </div>
         )}
 
         {/* Step 3 */}
         {step === 3 && (
-          <div className="max-w-xl mx-auto">
-            <div className="text-xs font-bold text-[#F26219] uppercase tracking-widest mb-3">Step 3 of 4</div>
-            <h2 className="text-2xl font-bold text-slate-900 mb-1.5">What symptoms are you experiencing?</h2>
-            <p className="text-slate-500 text-sm mb-5">Select all that apply</p>
-            <div className="grid grid-cols-2 gap-2">
+          <div className="max-w-[752px] mx-auto">
+            <div className="text-sm font-bold text-[#F26219] uppercase tracking-widest mb-3">Step 3 of 4</div>
+            <h2 className="text-3xl font-bold text-white mb-2">What symptoms are you experiencing?</h2>
+            <p className="text-white/85 text-base mb-6">Select all that apply</p>
+            <div className="grid grid-cols-2 gap-4">
               {[['attention', '🎯', 'Attention or focus difficulties'], ['balance', '⚖️', 'Balance or dizziness'], ['coordination', '🤸', 'Coordination challenges'], ['memory', '🧠', 'Memory problems'], ['sensory', '👂', 'Sensory sensitivities'], ['headaches', '😣', 'Headaches or migraines'], ['tremors', '🤲', 'Tremors or involuntary movements'], ['reading', '👁️', 'Reading or visual processing'], ['motor', '✋', 'Motor skill challenges']
               ].map(([id, icon, label]) => {
                 const sel = answers.symptoms.includes(id);
                 return (
-                  <label key={id} className={`${card} ${sel ? cardSelected : ''} p-3 flex items-center gap-2.5`}>
-                    <input type="checkbox" checked={sel} onChange={(e) => setAnswers({ ...answers, symptoms: e.target.checked ? [...answers.symptoms, id] : answers.symptoms.filter(s => s !== id) })} className="w-4 h-4 accent-[#F26219]" />
-                    <span className="text-base">{icon}</span>
-                    <span className="text-xs font-medium text-slate-800">{label}</span>
+                  <label key={id} className={`${card} ${sel ? cardSelected : ''} p-5 flex items-center gap-4`}>
+                    <input type="checkbox" checked={sel} onChange={(e) => setAnswers({ ...answers, symptoms: e.target.checked ? [...answers.symptoms, id] : answers.symptoms.filter(s => s !== id) })} className="w-6 h-6 accent-[#F26219]" />
+                    <span className="text-3xl">{icon}</span>
+                    <span className="text-lg font-medium text-white">{label}</span>
                   </label>
                 );
               })}
             </div>
-            <div className="flex items-center justify-between mt-5">
-              <button onClick={() => setStep(2)} className="text-slate-400 hover:text-slate-600 text-xs flex items-center gap-1"><ChevronLeft className="w-3 h-3" /> Back</button>
-              <button onClick={() => setStep(4)} className="bg-[#F26219] hover:bg-[#d4521a] text-white font-semibold px-6 py-2.5 rounded-xl transition-all flex items-center gap-2 text-sm">Continue <ChevronRight className="w-4 h-4" /></button>
+            <div className="flex items-center justify-between mt-6">
+              <button onClick={() => setStep(2)} className="text-slate-400 hover:text-slate-600 text-sm flex items-center gap-1"><ChevronLeft className="w-4 h-4" /> Back</button>
+              <button onClick={() => setStep(4)} className="bg-[#F26219] hover:bg-[#d4521a] text-white font-semibold px-8 py-3 rounded-xl transition-all flex items-center gap-2 text-base">Continue <ChevronRight className="w-5 h-5" /></button>
             </div>
           </div>
         )}
 
         {/* Step 4 */}
         {step === 4 && (
-          <div className="max-w-xl mx-auto">
-            <div className="text-xs font-bold text-[#F26219] uppercase tracking-widest mb-3">Step 4 of 4</div>
-            <h2 className="text-2xl font-bold text-slate-900 mb-1.5">What are your primary goals?</h2>
-            <p className="text-slate-500 text-sm mb-5">Select all that apply</p>
-            <div className="grid grid-cols-2 gap-2">
+          <div className="max-w-[752px] mx-auto">
+            <div className="text-sm font-bold text-[#F26219] uppercase tracking-widest mb-3">Step 4 of 4</div>
+            <h2 className="text-3xl font-bold text-white mb-2">What are your primary goals?</h2>
+            <p className="text-white/85 text-base mb-6">Select all that apply</p>
+            <div className="grid grid-cols-2 gap-4">
               {[['restore', '🔄', 'Restore normal function'], ['manage', '💊', 'Manage symptoms'], ['improve', '😊', 'Improve quality of life'], ['perform', '🚀', 'Optimise performance'], ['prevent', '🛡️', 'Prevent decline or injury'], ['independence', '🦾', 'Maintain independence']
               ].map(([id, icon, label]) => {
                 const sel = answers.goals.includes(id);
                 return (
-                  <label key={id} className={`${card} ${sel ? cardSelected : ''} p-3 flex items-center gap-2.5`}>
-                    <input type="checkbox" checked={sel} onChange={(e) => setAnswers({ ...answers, goals: e.target.checked ? [...answers.goals, id] : answers.goals.filter(g => g !== id) })} className="w-4 h-4 accent-[#F26219]" />
-                    <span className="text-base">{icon}</span>
-                    <span className="text-xs font-medium text-slate-800">{label}</span>
+                  <label key={id} className={`${card} ${sel ? cardSelected : ''} p-5 flex items-center gap-4`}>
+                    <input type="checkbox" checked={sel} onChange={(e) => setAnswers({ ...answers, goals: e.target.checked ? [...answers.goals, id] : answers.goals.filter(g => g !== id) })} className="w-6 h-6 accent-[#F26219]" />
+                    <span className="text-3xl">{icon}</span>
+                    <span className="text-lg font-medium text-white">{label}</span>
                   </label>
                 );
               })}
             </div>
-            <div className="flex items-center justify-between mt-5">
-              <button onClick={() => setStep(3)} className="text-slate-400 hover:text-slate-600 text-xs flex items-center gap-1"><ChevronLeft className="w-3 h-3" /> Back</button>
-              <button onClick={() => setStep(5)} className="bg-[#F26219] hover:bg-[#d4521a] text-white font-semibold px-6 py-2.5 rounded-xl transition-all flex items-center gap-2 text-sm">See My Results <ChevronRight className="w-4 h-4" /></button>
+            <div className="flex items-center justify-between mt-6">
+              <button onClick={() => setStep(3)} className="text-slate-400 hover:text-slate-600 text-sm flex items-center gap-1"><ChevronLeft className="w-4 h-4" /> Back</button>
+              <button onClick={() => setStep(5)} className="bg-[#F26219] hover:bg-[#d4521a] text-white font-semibold px-8 py-3 rounded-xl transition-all flex items-center gap-2 text-base">See My Results <ChevronRight className="w-5 h-5" /></button>
             </div>
           </div>
         )}
 
         {/* Step 5 — Results */}
         {step === 5 && recommendations && (
-          <div className="max-w-2xl mx-auto">
-            <div className="text-center mb-5">
-              <h2 className="text-2xl font-bold text-slate-900 mb-2">Your Personalised Treatment Plan</h2>
-              <p className="text-slate-500 text-sm mb-1">{recommendations.primaryMessage}</p>
-              <p className="text-slate-400 text-xs">A {recommendations.audienceNote} programme addressing {recommendations.symptomsText}</p>
+          <div className="max-w-3xl mx-auto">
+            <div className="text-center mb-7">
+              <h2 className="text-3xl font-bold text-white mb-3">Your Personalised Treatment Plan</h2>
+              <p className="text-white/85 text-base mb-1">{recommendations.primaryMessage}</p>
+              <p className="text-white/50 text-sm">A {recommendations.audienceNote} programme addressing {recommendations.symptomsText}</p>
             </div>
 
             {/* Recommendations grid */}
-            <div className="grid grid-cols-2 gap-5 mb-6">
+            <div className="grid grid-cols-2 gap-6 mb-8">
               <div>
-                <h4 className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-3">Recommended Services</h4>
-                <div className="space-y-2">
+                <h4 className="text-sm font-bold text-white/50 uppercase tracking-widest mb-4">Recommended Services</h4>
+                <div className="space-y-3">
                   {recommendations.recommendedServices.map(id => {
                     const s = technicalServices.find(x => x.id === id);
                     if (!s) return null;
                     const Icon = s.icon;
                     return (
-                      <div key={id} className="bg-gray-50 border border-gray-200 rounded-xl p-3.5 flex items-center gap-3">
-                        <div className="w-9 h-9 rounded-full bg-[#F26219]/10 flex items-center justify-center flex-shrink-0"><Icon className="w-4 h-4 text-[#F26219]" /></div>
-                        <span className="font-semibold text-slate-800 text-sm">{s.title}</span>
+                      <div key={id} className="bg-white/10 backdrop-blur-md border border-white/20 rounded-xl p-5 flex items-center gap-4">
+                        <div className="w-12 h-12 rounded-full bg-[#F26219]/20 flex items-center justify-center flex-shrink-0"><Icon className="w-6 h-6 text-[#F26219]" /></div>
+                        <span className="font-semibold text-white text-base">{s.title}</span>
                       </div>
                     );
                   })}
                 </div>
               </div>
               <div>
-                <h4 className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-3">Recommended Technologies</h4>
-                <div className="space-y-2">
+                <h4 className="text-sm font-bold text-white/50 uppercase tracking-widest mb-4">Recommended Technologies</h4>
+                <div className="space-y-3">
                   {recommendations.recommendedTechnologies.map(id => {
                     const t = machinesData.find(x => x.id === id);
                     if (!t) return null;
                     const Icon = t.icon;
                     return (
-                      <div key={id} className="bg-gray-50 border border-gray-200 rounded-xl p-3.5 flex items-center gap-3">
-                        <div className="w-9 h-9 rounded-full bg-[#F26219]/10 flex items-center justify-center flex-shrink-0"><Icon className="w-4 h-4 text-[#F26219]" /></div>
+                      <div key={id} className="bg-white/10 backdrop-blur-md border border-white/20 rounded-xl p-5 flex items-center gap-4">
+                        <div className="w-12 h-12 rounded-full bg-[#F26219]/20 flex items-center justify-center flex-shrink-0"><Icon className="w-6 h-6 text-[#F26219]" /></div>
                         <div>
-                          <div className="font-semibold text-slate-800 text-sm">{t.title}</div>
-                          <div className="text-xs text-slate-500 mt-0.5">{t.description}</div>
+                          <div className="font-semibold text-white text-base">{t.title}</div>
+                          <div className="text-sm text-white/85 mt-1">{t.description}</div>
                         </div>
                       </div>
                     );

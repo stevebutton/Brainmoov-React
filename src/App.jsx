@@ -548,7 +548,7 @@ export default function App() {
       {/* Persistent banner — always on top, never transitions */}
       {currentView !== 'intro' && (
         <div className="absolute top-0 left-0 right-0" style={{ zIndex: 30 }}>
-          <Banner onNavigate={handleViewChange} />
+          <Banner onNavigate={handleViewChange} showTreatmentFinder={true} onTreatmentFinderClick={handleTreatmentFinderClick} />
         </div>
       )}
 
