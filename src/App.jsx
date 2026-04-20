@@ -535,14 +535,14 @@ export default function App() {
         autoPlay loop muted playsInline
         className="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000"
         style={{ zIndex: 0, opacity: currentView === 'intro' ? 1 : 0 }}
-        src="https://framerusercontent.com/assets/BeYOgbtkAlBNo1myfAoLabX1Zc.mp4"
+        src="https://framerusercontent.com/assets/GZbL8udXhgB4dj21nUCmCkUdWO8.mp4"
       />
       {/* Main video — visible for all other sections */}
       <video
         autoPlay loop muted playsInline
         className="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000"
         style={{ zIndex: 0, opacity: currentView === 'intro' ? 0 : 1 }}
-        src="https://framerusercontent.com/assets/3XEgSgX9TsI7iOuZo0UlSAbALI.mp4"
+        src="https://framerusercontent.com/assets/GYKxkhR1e9E7Bx3M4YshNQj1II.mp4"
       />
 
       {/* Persistent banner — always on top, never transitions */}
