@@ -5,6 +5,19 @@ import { machines } from '../data/index';
 const introMachine = machines[0];
 const equipmentList = machines.slice(1);
 
+const equipmentImages = {
+  'Gyrostim':              'https://www.omtrial.com/wp-content/uploads/2020/08/GyroStim-800x413-1.jpg',
+  'Vibramoov':             'https://kinetecuk.com/wp-content/uploads/2022/10/Kurn_220720-5458-scaled.jpg',
+  'Force Platform':        'https://balancetrackingsystems.com/wp-content/uploads/2019/05/BTS-System-Plate-and-Tablet-Cutout5-e1559580291940.jpg',
+  'Interactive Metronome': 'https://soundsory.com/wp-content/uploads/2016/06/interactive-metronome-im-1024x684.jpg',
+  'TOVA':                  'https://tovatest.com/wp-content/uploads/2023/05/TOVA-geometric-stimuli-768x408.png',
+  'VNG':                   'https://natussensory.com/wp-content/uploads/Dizcovery_product_thumbnail-1.png',
+  'Brainport':             'https://news.wisc.edu/content/uploads/2016/07/Wicab-demo-500x500.jpg',
+  'NeuroFeedBack':         'https://focuscalm.com/cdn/shop/products/FocusCalm-headband-web2.png?v=1686697625',
+};
+
+const fallbackImage = 'https://images.unsplash.com/photo-1530026405186-ed1f139313f8?w=600&h=500&fit=crop&q=80';
+
 export default function AboutInfrastructureSection({
   showBanner,
   isExiting,
@@ -205,10 +218,9 @@ export default function AboutInfrastructureSection({
           </div>
           <div className="flex-1 rounded-lg overflow-hidden relative">
             <div className="absolute inset-0" style={{
-              backgroundImage: `url(https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=600&h=500&fit=crop&q=80)`,
+              backgroundImage: `url(${isIntro ? fallbackImage : (equipmentImages[machine?.title] || fallbackImage)})`,
               backgroundSize: 'cover',
-              backgroundPosition: 'center top',
-              transform: 'scaleX(-1)'
+              backgroundPosition: 'center',
             }} />
             <div className="absolute inset-0 bg-black/20" />
             <div className="absolute inset-0 flex items-end justify-start p-3">
