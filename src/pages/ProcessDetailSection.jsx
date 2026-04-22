@@ -10,7 +10,7 @@ const descriptions = {
   followup: 'Ongoing support and maintenance protocols to ensure lasting results and prevent regression.',
 };
 
-export default function ProcessDetailSection({ onNavigate }) {
+export default function ProcessDetailSection({ onNavigate, isExiting }) {
   const [hoveredPanel, setHoveredPanel] = useState(null);
   const [selectedVideo, setSelectedVideo] = useState(null);
 
@@ -41,7 +41,9 @@ export default function ProcessDetailSection({ onNavigate }) {
                     backdropFilter: 'blur(16px)',
                     WebkitBackdropFilter: 'blur(16px)',
                     transition: 'background-color 0.4s ease',
-                    animation: `introPanelUp 1s cubic-bezier(0.4, 0, 0.2, 1) ${delay}s both`,
+                    animation: isExiting
+                      ? `slideOutDown 0.5s ease-in ${(technicalServices.length - 1 - index) * 0.05}s both`
+                      : `introPanelUp 1s cubic-bezier(0.4, 0, 0.2, 1) ${delay}s both`,
                   }}
                 >
 

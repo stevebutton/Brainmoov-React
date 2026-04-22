@@ -8,8 +8,11 @@ const audienceDesc = {
   seniors: 'Targeted interventions for seniors to maintain cognitive function, mobility, and overall neurological health.',
 };
 
-export default function WhoDetailSection({ showBanner, hoveredAudience, setHoveredAudience, onNavigate }) {
+export default function WhoDetailSection({ showBanner, isExiting: isExitingProp, onNavigate }) {
   const [exiting, setExiting] = useState(false);
+  const [hoveredAudience, setHoveredAudience] = useState(null);
+
+  const shouldExit = exiting || isExitingProp;
 
   const handleNavigate = (nav) => {
     if (exiting) return;
@@ -41,7 +44,7 @@ export default function WhoDetailSection({ showBanner, hoveredAudience, setHover
                   backdropFilter: 'blur(16px)',
                   WebkitBackdropFilter: 'blur(16px)',
                   transition: 'background-color 0.4s ease',
-                  animation: exiting
+                  animation: shouldExit
                     ? `slideOutDown 0.5s ease-in ${(audiences.length - 1 - index) * 0.05}s both`
                     : `introPanelUp 1s cubic-bezier(0.4, 0, 0.2, 1) ${delay}s both`,
                 }}
@@ -95,7 +98,7 @@ export default function WhoDetailSection({ showBanner, hoveredAudience, setHover
         <p
           className="text-lg mt-8 text-center text-white/70"
           style={{
-            animation: exiting
+            animation: shouldExit
               ? 'introTitleExitUp 0.4s ease-in both'
               : `introPanelUp 1s cubic-bezier(0.4, 0, 0.2, 1) 0.9s both`,
           }}

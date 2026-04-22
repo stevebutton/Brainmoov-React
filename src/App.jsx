@@ -429,7 +429,7 @@ export default function App() {
         setSelectedTechService(null);
         setTransitioning(false);
         setPreviousView(null);
-      }, 2000);
+      }, 700);
     } else {
       const aboutSubsections = ['about-philosophy', 'about-objectives', 'about-team', 'about-infrastructure', 'about-history'];
       const isCurrentAboutSub = aboutSubsections.includes(currentView);
@@ -463,7 +463,7 @@ export default function App() {
           setTimeout(() => {
             setTransitioning(false);
           }, 50);
-        }, 2000);
+        }, 700);
       }
     }
   };
@@ -581,6 +581,7 @@ export default function App() {
       <div className="absolute inset-0" style={{ zIndex: 1 }}>
         <IntroPage
           showNav={showNav}
+          isActive={currentView === 'intro'}
           hoveredSection={hoveredSection}
           setHoveredSection={setHoveredSection}
           onNavigate={handleViewChange}
@@ -596,6 +597,8 @@ export default function App() {
         const isPreviousAboutSub = aboutSubsections.includes(previousView);
         const isAboutToAboutTransition = isCurrentAboutSub && isPreviousAboutSub;
 
+        const isExitingSection = previousView === sectionView && slideDirection === 'out';
+
         let animation = 'none';
         if (isAboutToAboutTransition && slideDirection !== 'out' && slideDirection !== 'from-bottom') {
           const isOutgoing = previousView === sectionView;
@@ -604,14 +607,6 @@ export default function App() {
             animation = 'dissolveOut 0.5s ease-in-out forwards';
           } else if (isIncoming) {
             animation = 'dissolveIn 0.5s ease-in-out forwards';
-          }
-        } else if (!isAboutToAboutTransition) {
-          const isSlidingOut = previousView === sectionView && slideDirection === 'out';
-          const isSlidingIn = currentView === sectionView && slideDirection === 'from-bottom';
-          if (isSlidingOut) {
-            animation = 'slideDownToBottom 2s cubic-bezier(0.4, 0, 0.2, 1) forwards';
-          } else if (isSlidingIn) {
-            animation = 'slideUpFromBottom 2s cubic-bezier(0.4, 0, 0.2, 1) forwards';
           }
         }
 
@@ -624,8 +619,7 @@ export default function App() {
             {sectionView === 'about' && (
               <AboutSection
                 showBanner={showBanner}
-                hoveredSection={hoveredSection}
-                setHoveredSection={setHoveredSection}
+                isExiting={isExitingSection}
                 onNavigate={handleViewChange}
               />
             )}
@@ -653,6 +647,7 @@ export default function App() {
             {sectionView === 'about-infrastructure' && (
               <AboutInfrastructureSection
                 showBanner={showBanner}
+                isExiting={isExitingSection}
                 selectedMachine={selectedMachine}
                 setSelectedMachine={(idx) => { setSelectedMachine(idx); setInfraCarouselIndex(0); }}
                 carouselIndex={infraCarouselIndex}
@@ -672,29 +667,22 @@ export default function App() {
             {sectionView === 'who-detail' && (
               <WhoDetailSection
                 showBanner={showBanner}
-                hoveredAudience={hoveredAudience}
-                setHoveredAudience={setHoveredAudience}
+                isExiting={isExitingSection}
                 onNavigate={handleViewChange}
               />
             )}
             {sectionView === 'what-detail' && (
               <WhatDetailSection
                 showBanner={showBanner}
-                hoveredCategory={hoveredCategory}
-                setHoveredCategory={setHoveredCategory}
+                isExiting={isExitingSection}
                 onNavigate={handleViewChange}
-                onTreatmentFinderClick={handleTreatmentFinderClick}
               />
             )}
             {sectionView === 'process-detail' && (
               <ProcessDetailSection
                 showBanner={showBanner}
-                hoveredProcessStep={hoveredProcessStep}
-                setHoveredProcessStep={setHoveredProcessStep}
-                selectedProcessVideo={selectedProcessVideo}
-                setSelectedProcessVideo={setSelectedProcessVideo}
+                isExiting={isExitingSection}
                 onNavigate={handleViewChange}
-                onTreatmentFinderClick={handleTreatmentFinderClick}
               />
             )}
           </div>
@@ -706,25 +694,19 @@ export default function App() {
         const shouldRender = currentView === audience.id || previousView === audience.id;
         if (!shouldRender) return null;
 
-        const isSlidingOut = previousView === audience.id && slideDirection === 'out';
-        const isSlidingIn = slideDirection === 'from-bottom';
+        const isExitingAudience = previousView === audience.id && slideDirection === 'out';
         const audienceWithBg = { ...audience, backgroundImage: assets[`${audience.id}-bg`] || audience.backgroundImage };
 
         return (
           <div
             key={audience.id}
             className="absolute inset-0"
-            style={{
-              zIndex: 10,
-              animation: isSlidingOut ? 'slideDownToBottom 2s cubic-bezier(0.4, 0, 0.2, 1) forwards' :
-                         isSlidingIn ? 'slideUpFromBottom 2s cubic-bezier(0.4, 0, 0.2, 1) forwards' :
-                         'none',
-              transform: 'translateY(0)'
-            }}
+            style={{ zIndex: 10 }}
           >
             <AudienceSection
               audience={audienceWithBg}
               showBanner={showBanner}
+              isExiting={isExitingAudience}
               videoPlaying={videoPlaying}
               toggleVideo={toggleVideo}
               selectedService={selectedService}

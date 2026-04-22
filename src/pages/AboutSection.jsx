@@ -44,9 +44,11 @@ const panels = [
   },
 ];
 
-export default function AboutSection({ showBanner, onNavigate }) {
+export default function AboutSection({ showBanner, isExiting: isExitingProp, onNavigate }) {
   const [hoveredSection, setHoveredSection] = useState(null);
   const [exiting, setExiting] = useState(false);
+
+  const shouldExit = exiting || isExitingProp;
 
   const handleNavigate = (nav) => {
     if (exiting) return;
@@ -78,7 +80,7 @@ export default function AboutSection({ showBanner, onNavigate }) {
                     backdropFilter: 'blur(16px)',
                     WebkitBackdropFilter: 'blur(16px)',
                     transition: 'background-color 0.4s ease',
-                    animation: exiting
+                    animation: shouldExit
                       ? `slideOutDown 0.5s ease-in ${(panels.length - 1 - index) * 0.05}s both`
                       : `introPanelUp 1s cubic-bezier(0.4, 0, 0.2, 1) ${delay}s both`,
                   }}

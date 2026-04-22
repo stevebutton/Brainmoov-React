@@ -11,7 +11,7 @@ const titleParts = [
   { prefix: 'Health &', italic: 'Performance Wishes' },
 ];
 
-export default function WhatDetailSection({ showBanner, onNavigate }) {
+export default function WhatDetailSection({ showBanner, isExiting, onNavigate }) {
   const [hoveredCategory, setHoveredCategory] = useState(null);
 
   return (
@@ -37,7 +37,9 @@ export default function WhatDetailSection({ showBanner, onNavigate }) {
                   backdropFilter: 'blur(16px)',
                   WebkitBackdropFilter: 'blur(16px)',
                   transition: 'background-color 0.4s ease',
-                  animation: `introPanelUp 1s cubic-bezier(0.4, 0, 0.2, 1) ${delay}s both`,
+                  animation: isExiting
+                    ? `slideOutDown 0.5s ease-in ${(conditionsData.length - 1 - idx) * 0.05}s both`
+                    : `introPanelUp 1s cubic-bezier(0.4, 0, 0.2, 1) ${delay}s both`,
                 }}
               >
                 {/* Icon + Title — centered at rest, moves up on hover */}
@@ -90,7 +92,7 @@ export default function WhatDetailSection({ showBanner, onNavigate }) {
 
         <p
           className="text-lg mt-8 text-center text-white/70"
-          style={{ animation: 'introPanelUp 1s cubic-bezier(0.4, 0, 0.2, 1) 0.9s both' }}
+          style={{ animation: isExiting ? 'introTitleExitUp 0.4s ease-in both' : 'introPanelUp 1s cubic-bezier(0.4, 0, 0.2, 1) 0.9s both' }}
         >
           Explore conditions by category
         </p>

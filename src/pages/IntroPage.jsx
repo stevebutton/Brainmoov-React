@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ChevronRight } from 'lucide-react';
 
 const panels = [
@@ -39,8 +39,12 @@ const panels = [
   },
 ];
 
-export default function IntroPage({ showNav, hoveredSection, setHoveredSection, onNavigate }) {
+export default function IntroPage({ showNav, isActive, hoveredSection, setHoveredSection, onNavigate }) {
   const [exiting, setExiting] = useState(false);
+
+  useEffect(() => {
+    if (isActive) setExiting(false);
+  }, [isActive]);
 
   const handleNavigate = (nav) => {
     if (exiting) return;

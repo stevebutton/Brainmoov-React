@@ -7,6 +7,7 @@ const equipmentList = machines.slice(1);
 
 export default function AboutInfrastructureSection({
   showBanner,
+  isExiting,
   selectedMachine,
   setSelectedMachine,
   carouselIndex,
@@ -37,7 +38,7 @@ export default function AboutInfrastructureSection({
           WebkitBackdropFilter: 'blur(16px)',
           overflow: 'hidden',
           boxShadow: '0 4px 24px rgba(0,0,0,0.3)',
-          animation: 'introPanelUp 2s cubic-bezier(0.4, 0, 0.2, 1) 0s both'
+          animation: isExiting ? 'slideOutDown 0.5s ease-in both' : 'introPanelUp 2s cubic-bezier(0.4, 0, 0.2, 1) 0s both'
         }}
       >
         <div className="h-full flex flex-col">
@@ -187,7 +188,7 @@ export default function AboutInfrastructureSection({
           backdropFilter: 'blur(16px)',
           WebkitBackdropFilter: 'blur(16px)',
           boxShadow: '0 4px 24px rgba(0,0,0,0.3)',
-          animation: 'fadeInPanel 0.5s ease-out forwards',
+          animation: isExiting ? 'slideOutDown 0.5s ease-in 0.05s both' : 'fadeInPanel 0.5s ease-out forwards',
           zIndex: 15
         }}
       >
