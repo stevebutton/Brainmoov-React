@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import { Heart, Brain, Activity, Sparkles, Target, Zap, Shield, Users } from 'lucide-react';
 import { useAssets } from './context/AssetContext';
 import IntroPage from './pages/IntroPage';
@@ -530,20 +531,32 @@ export default function App() {
 
   return (
     <div className="w-full h-full overflow-hidden relative">
-      {/* Intro video — visible on landing screen */}
-      <video
-        autoPlay loop muted playsInline
-        className="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000"
-        style={{ zIndex: 0, opacity: currentView === 'intro' ? 1 : 0 }}
-        src="https://framerusercontent.com/assets/GZbL8udXhgB4dj21nUCmCkUdWO8.mp4"
-      />
-      {/* Main video — visible for all other sections */}
-      <video
-        autoPlay loop muted playsInline
-        className="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000"
-        style={{ zIndex: 0, opacity: currentView === 'intro' ? 0 : 1 }}
-        src="https://framerusercontent.com/assets/GYKxkhR1e9E7Bx3M4YshNQj1II.mp4"
-      />
+      {/* Background videos — rendered via portal to fill full viewport behind the scaled canvas */}
+      {createPortal(
+        <>
+          <video
+            autoPlay loop muted playsInline
+            style={{
+              position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh',
+              objectFit: 'cover', zIndex: 0,
+              opacity: currentView === 'intro' ? 1 : 0,
+              transition: 'opacity 1s'
+            }}
+            src="https://framerusercontent.com/assets/GZbL8udXhgB4dj21nUCmCkUdWO8.mp4"
+          />
+          <video
+            autoPlay loop muted playsInline
+            style={{
+              position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh',
+              objectFit: 'cover', zIndex: 0,
+              opacity: currentView === 'intro' ? 0 : 1,
+              transition: 'opacity 1s'
+            }}
+            src="https://framerusercontent.com/assets/GYKxkhR1e9E7Bx3M4YshNQj1II.mp4"
+          />
+        </>,
+        document.body
+      )}
 
       {/* Persistent banner — always on top, never transitions */}
       {currentView !== 'intro' && (

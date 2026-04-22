@@ -1,6 +1,9 @@
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { machines } from '../data/index';
-import { useAssets } from '../context/AssetContext';
+
+// machines[0] is the section intro — buttons start from machines[1]
+const introMachine = machines[0];
+const equipmentList = machines.slice(1);
 
 export default function AboutInfrastructureSection({
   showBanner,
@@ -12,178 +15,214 @@ export default function AboutInfrastructureSection({
   onCarouselNext,
   onNavigate
 }) {
-  const { assets } = useAssets();
-  const machine = selectedMachine !== null ? machines[selectedMachine] : null;
+  // selectedMachine === 0 means intro state; > 0 means a specific item
+  const machine = selectedMachine > 0 ? machines[selectedMachine] : null;
+  const isIntro = selectedMachine === 0 || selectedMachine === null;
 
   return (
     <div className="w-full h-full relative">
 
-      {/* Section Title */}
-      <div className="absolute" style={{ top: '139px', left: '304px', right: '48px', zIndex: 20 }}>
-        <h2 className="text-3xl font-light text-white leading-tight">Our Infrastructure</h2>
-      </div>
-
-      {/* Left label */}
-      <div className="absolute px-8 z-20" style={{ top: '144px', width: '304px' }}>
-        <h3 className="text-xl font-light text-white text-right">our equipment</h3>
-      </div>
-
-      {/* Left buttons */}
+      {/* Main Panel — always visible */}
       <div
-        className="absolute flex flex-col justify-center px-8 z-20"
-        style={{ top: '200px', bottom: '80px' }}
+        className="absolute z-10"
+        style={{
+          left: '96px',
+          top: '100px',
+          width: '624px',
+          bottom: '28px',
+          borderRadius: '12px',
+          border: '1px solid rgba(255,255,255,0.2)',
+          backgroundColor: 'rgba(255,255,255,0.30)',
+          backdropFilter: 'blur(16px)',
+          WebkitBackdropFilter: 'blur(16px)',
+          overflow: 'hidden',
+          boxShadow: '0 4px 24px rgba(0,0,0,0.3)',
+          animation: 'introPanelUp 2s cubic-bezier(0.4, 0, 0.2, 1) 0s both'
+        }}
       >
-        <div className="flex flex-col gap-2 items-end">
-          {machines.map((m, index) => {
-            const isSelected = selectedMachine === index;
-            return (
-              <button
-                key={index}
-                onClick={() => setSelectedMachine(index)}
-                className={`group relative backdrop-blur-xl rounded-2xl p-3 transition-all hover:scale-105 border-2 flex items-center justify-end gap-3 w-[240px] shadow-lg ${
-                  isSelected
-                    ? 'bg-[#F26219]/20 border-[#F26219]/50 shadow-2xl'
-                    : 'bg-black/30 border-white/10 hover:bg-black/50 hover:border-white/20 hover:shadow-xl'
-                }`}
-              >
-                <h4 className={`text-xs font-semibold text-right leading-tight ${
-                  isSelected ? 'text-white' : 'text-white/70'
-                }`}>{m.title}</h4>
-              </button>
-            );
-          })}
-        </div>
-      </div>
+        <div className="h-full flex flex-col">
 
-      {/* Carousel Panel */}
-      {machine && (
-        <div
-          className="absolute z-10"
-          style={{
-            left: '300px',
-            top: '200px',
-            width: '340px',
-            bottom: '80px',
-            borderRadius: '12px',
-            border: '1px solid rgba(255,255,255,0.2)',
-            backgroundColor: 'rgba(255,255,255,0.15)',
-            backdropFilter: 'blur(16px)',
-            WebkitBackdropFilter: 'blur(16px)',
-            overflow: 'hidden',
-            boxShadow: '0 4px 24px rgba(0,0,0,0.3)',
-            animation: 'fadeInPanel 0.5s ease-out forwards'
-          }}
-        >
-          <div className="h-full flex flex-col">
-            <div className="flex-1 relative overflow-hidden">
-              <div
-                className="h-full flex transition-transform duration-500 ease-in-out"
-                style={{ transform: `translateX(-${carouselIndex * 100}%)` }}
-              >
-                {machine.cards.map((card, idx) => (
-                  <div key={idx} className="min-w-full h-full flex flex-col">
-                    <div className="p-6 flex-1 overflow-auto">
-                      <h4
-                        key={`machine-${idx}-${machine.title}`}
-                        className="text-lg font-light mb-1 animate-fade-slide-up leading-none text-white"
-                      >
-                        {machine.title}
-                      </h4>
-                      <div className="text-white/40 text-xs mb-4">
-                        {carouselIndex + 1} / {machine.cards.length}
-                      </div>
-                      <h5
-                        key={`title-${idx}-${carouselIndex}`}
-                        className="text-base font-semibold text-[#F26219] mb-2 animate-fade-in"
-                      >
-                        {card.title}
-                      </h5>
-                      <p
-                        key={`desc-${idx}-${carouselIndex}`}
-                        className="text-white/70 text-sm leading-relaxed animate-fade-in-delay"
-                      >
-                        {card.description}
-                      </p>
+          {/* Top: Section Title */}
+          <div className="px-5 pt-4 pb-3 border-b border-black/10 flex-shrink-0" style={{ animation: 'introTitleFromLeft 2s cubic-bezier(0.4, 0, 0.2, 1) 2s both' }}>
+            <h2 style={{ fontFamily: "'Instrument Serif', serif", fontSize: '60px', lineHeight: 1 }} className="text-slate-900 text-right">
+              Our <span style={{ fontFamily: "'Instrument Serif', serif", fontStyle: 'italic', color: '#2C97BE' }}>Infrastructure</span>
+            </h2>
+          </div>
+
+          {/* Body: Two Columns */}
+          <div className="flex flex-1 overflow-hidden">
+
+            {/* Left Column: Equipment Buttons (intro item excluded) */}
+            <div className="flex flex-col gap-2 p-4 items-stretch overflow-y-auto flex-shrink-0" style={{ width: '240px', animation: 'introButtonsUp 1s ease-out 5s both' }}>
+              <p className="text-xs font-light text-slate-500 text-right mb-1">Our Equipment</p>
+              {equipmentList.map((m, i) => {
+                const originalIndex = i + 1;
+                const isSelected = selectedMachine === originalIndex;
+                return (
+                  <button
+                    key={originalIndex}
+                    onClick={() => setSelectedMachine(originalIndex)}
+                    className={`group rounded-xl p-3 transition-all border-2 flex items-center justify-end shadow-sm ${
+                      isSelected
+                        ? 'bg-[#F26219]/20 border-[#F26219]/50'
+                        : 'bg-black/10 border-black/10 hover:bg-black/15 hover:border-black/20'
+                    }`}
+                  >
+                    <h4 className={`text-xs font-semibold text-right leading-tight ${
+                      isSelected ? 'text-slate-900' : 'text-slate-600'
+                    }`}>{m.title}</h4>
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Right Column */}
+            <div className="flex-1 flex flex-col overflow-hidden border-l border-black/10" style={{ animation: 'introTextRise 1s ease-out 4s both' }}>
+
+              {/* Intro state */}
+              {isIntro && (
+                <div className="flex-1 flex flex-col p-5 overflow-auto">
+                  <h4
+                    className="mb-3 text-right"
+                    style={{ fontFamily: "'Instrument Serif', serif", fontSize: '28px', color: '#000', lineHeight: 1.1 }}
+                  >
+                    <span style={{ fontStyle: 'italic', color: '#2C97BE' }}>Infrastructure</span>
+                  </h4>
+                  <p className="text-slate-700 text-sm leading-relaxed text-right flex-1">
+                    {introMachine.cards[0].description}
+                  </p>
+                  <p className="text-xs text-slate-400 text-right mt-3">Select equipment to learn more</p>
+                </div>
+              )}
+
+              {/* Machine selected state */}
+              {!isIntro && machine && (
+                <>
+                  <div className="flex-1 relative overflow-hidden">
+                    <div
+                      className="h-full flex transition-transform duration-500 ease-in-out"
+                      style={{ transform: `translateX(-${carouselIndex * 100}%)` }}
+                    >
+                      {machine.cards.map((card, idx) => (
+                        <div key={idx} className="min-w-full h-full flex flex-col">
+                          <div className="p-5 flex-1 overflow-auto">
+                            <h4
+                              key={`machine-${idx}-${machine.title}`}
+                              className="mb-1 animate-fade-slide-up text-right"
+                              style={{ fontFamily: "'Instrument Serif', serif", fontSize: '28px', color: '#000', lineHeight: 1.1 }}
+                            >
+                              {machine.title}
+                            </h4>
+                            <div className="text-slate-400 text-xs mb-3 text-right">
+                              {carouselIndex + 1} / {machine.cards.length}
+                            </div>
+                            <h5
+                              key={`title-${idx}-${carouselIndex}`}
+                              className="mb-2 animate-fade-in text-right"
+                              style={{ fontFamily: "'Instrument Serif', serif", fontSize: '20px', color: '#000', lineHeight: 1.2 }}
+                            >
+                              {card.title}
+                            </h5>
+                            <p
+                              key={`desc-${idx}-${carouselIndex}`}
+                              className="text-slate-700 text-sm leading-relaxed animate-fade-in-delay text-right"
+                            >
+                              {card.description}
+                            </p>
+                          </div>
+                        </div>
+                      ))}
                     </div>
                   </div>
-                ))}
-              </div>
 
-              {carouselIndex > 0 && (
-                <button
-                  onClick={onCarouselPrev}
-                  className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/40 backdrop-blur-lg border border-white/20 p-1.5 rounded-full shadow-xl hover:scale-110 transition-transform z-10"
-                >
-                  <ChevronLeft className="w-4 h-4 text-white" />
-                </button>
+                  {/* Bottom bar: prev | dots | next */}
+                  <div className="flex items-center justify-between px-3 py-3 border-t border-black/10 flex-shrink-0">
+                    <button
+                      onClick={onCarouselPrev}
+                      disabled={carouselIndex === 0}
+                      className={`bg-white/80 border border-black/10 p-1.5 rounded-full shadow hover:scale-110 transition-transform ${carouselIndex === 0 ? 'opacity-20 cursor-not-allowed' : ''}`}
+                    >
+                      <ChevronLeft className="w-4 h-4 text-slate-700" />
+                    </button>
+                    <div className="flex justify-center gap-1.5">
+                      {machine.cards.map((_, idx) => (
+                        <button
+                          key={idx}
+                          onClick={() => setCarouselIndex(idx)}
+                          className={`rounded-full transition-all ${
+                            idx === carouselIndex
+                              ? 'w-5 h-1.5 bg-[#F26219]'
+                              : 'w-1.5 h-1.5 bg-black/20 hover:bg-black/40'
+                          }`}
+                        />
+                      ))}
+                    </div>
+                    <button
+                      onClick={onCarouselNext}
+                      disabled={carouselIndex >= machine.cards.length - 1}
+                      className={`bg-white/80 border border-black/10 p-1.5 rounded-full shadow hover:scale-110 transition-transform ${carouselIndex >= machine.cards.length - 1 ? 'opacity-20 cursor-not-allowed' : ''}`}
+                    >
+                      <ChevronRight className="w-4 h-4 text-slate-700" />
+                    </button>
+                  </div>
+                </>
               )}
-              {carouselIndex < machine.cards.length - 1 && (
-                <button
-                  onClick={onCarouselNext}
-                  className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/40 backdrop-blur-lg border border-white/20 p-1.5 rounded-full shadow-xl hover:scale-110 transition-transform z-10"
-                >
-                  <ChevronRight className="w-4 h-4 text-white" />
-                </button>
-              )}
-            </div>
 
-            <div className="flex justify-center gap-1.5 py-3">
-              {machine.cards.map((_, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => setCarouselIndex(idx)}
-                  className={`rounded-full transition-all ${
-                    idx === carouselIndex
-                      ? 'w-5 h-1.5 bg-[#F26219]'
-                      : 'w-1.5 h-1.5 bg-white/30 hover:bg-white/50'
-                  }`}
-                />
-              ))}
             </div>
           </div>
         </div>
-      )}
+      </div>
 
       {/* Video Panel */}
-      {machine && (
-        <div
-          className="absolute overflow-hidden"
-          style={{
-            right: '48px',
-            top: '200px',
-            width: '340px',
-            bottom: '80px',
-            borderRadius: '12px',
-            border: '1px solid rgba(255,255,255,0.2)',
-            backgroundColor: 'rgba(255,255,255,0.15)',
-            backdropFilter: 'blur(16px)',
-            WebkitBackdropFilter: 'blur(16px)',
-            boxShadow: '0 4px 24px rgba(0,0,0,0.3)',
-            animation: 'fadeInPanel 0.5s ease-out forwards',
-            zIndex: 15
-          }}
-        >
-          <div className="h-full flex flex-col p-5">
-            <div className="mb-3">
-              <h4 className="text-lg font-light leading-none text-white">{machine.title}</h4>
-            </div>
-            <div
-              className="flex-1 rounded-lg overflow-hidden relative"
-              style={{ backgroundImage: `url(${assets['interview-bg']})`, backgroundSize: 'cover', backgroundPosition: 'center top' }}
+      <div
+        className="absolute overflow-hidden"
+        style={{
+          right: '88px',
+          top: '100px',
+          width: '415px',
+          bottom: '28px',
+          borderRadius: '12px',
+          border: '1px solid rgba(255,255,255,0.2)',
+          backgroundColor: 'rgba(255,255,255,0.30)',
+          backdropFilter: 'blur(16px)',
+          WebkitBackdropFilter: 'blur(16px)',
+          boxShadow: '0 4px 24px rgba(0,0,0,0.3)',
+          animation: 'fadeInPanel 0.5s ease-out forwards',
+          zIndex: 15
+        }}
+      >
+        <div className="h-full flex flex-col p-5">
+          <div className="mb-3">
+            <h4
+              className="text-right"
+              style={{ fontFamily: "'Instrument Serif', serif", fontSize: '28px', color: '#000', lineHeight: 1.1 }}
             >
-              <div className="absolute inset-0 bg-black/20" />
-              <div className="absolute inset-0 flex items-end justify-start p-3">
-                <div className="flex items-center gap-2 bg-black/40 backdrop-blur-sm rounded-lg px-3 py-2">
-                  <svg className="w-5 h-5 flex-shrink-0" fill="#F26219" stroke="none" viewBox="0 0 24 24">
-                    <polygon points="5 3 19 12 5 21 5 3" />
-                  </svg>
-                  <p className="text-xs font-medium text-white">{machine.title} — Video Overview</p>
-                </div>
+              {isIntro ? (
+                <span style={{ fontStyle: 'italic', color: '#2C97BE' }}>Infrastructure</span>
+              ) : machine?.title}
+            </h4>
+          </div>
+          <div className="flex-1 rounded-lg overflow-hidden relative">
+            <div className="absolute inset-0" style={{
+              backgroundImage: `url(https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=600&h=500&fit=crop&q=80)`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center top',
+              transform: 'scaleX(-1)'
+            }} />
+            <div className="absolute inset-0 bg-black/20" />
+            <div className="absolute inset-0 flex items-end justify-start p-3">
+              <div className="flex items-center gap-2 bg-black/40 backdrop-blur-sm rounded-lg px-3 py-2">
+                <svg className="w-5 h-5 flex-shrink-0" fill="#F26219" stroke="none" viewBox="0 0 24 24">
+                  <polygon points="5 3 19 12 5 21 5 3" />
+                </svg>
+                <p className="text-xs font-medium text-white">
+                  {isIntro ? 'Infrastructure' : machine?.title} — Video Overview
+                </p>
               </div>
             </div>
           </div>
         </div>
-      )}
+      </div>
 
     </div>
   );

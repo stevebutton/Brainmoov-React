@@ -47,88 +47,102 @@ export default function AudienceSection({
       </div>
 
 
-      {/* Section Title - only visible after a button is clicked */}
-      {(selectedService || selectedTechService) && (
-        <div
-          className="absolute"
-          style={{ top: '139px', left: '204px', right: '48px', zIndex: 20 }}
-        >
-          <h2 className="text-3xl font-normal text-white leading-tight">{audience.title}</h2>
-        </div>
-      )}
-
-      {/* Intro Text Overlay */}
-      <div
-        className={`absolute transition-opacity duration-700 ${
-          (selectedService || selectedTechService) ? 'opacity-0 pointer-events-none' : 'opacity-100'
-        }`}
-        style={{ top: '150px', left: 'calc(50% - 340px)', width: '680px', zIndex: 15 }}
-      >
-        <div className="p-10">
-          <h3 className="text-4xl font-bold mb-6 text-left text-white">
-            {audience.title} Services
-          </h3>
-          <p className="text-xl leading-snug text-left text-white/70">
-            {audience.intro}
-          </p>
-          <p className="mt-8 text-lg font-medium text-left text-white">
-            Select a service to learn more
-          </p>
-        </div>
-      </div>
-
-
       {/* Floating Content */}
       <div className={`absolute inset-0 z-10 flex ${(selectedService || selectedTechService) ? 'pb-20' : 'pb-8'}`} style={{paddingTop: '100px'}}>
-        {/* Left Side - Service Menu */}
-        {/* Buttons + label - vertically centered */}
-        <div
-          className={`absolute flex flex-col justify-start px-8 z-20 w-auto ${showSubmenu ? 'animate-submenu-in' : ''}`}
-          style={{
-            top: '224px',
-            opacity: showSubmenu ? undefined : 0,
-            transform: showSubmenu ? undefined : 'translateY(-100px)'
-          }}
-        >
-          <div className="flex flex-col gap-2 items-end">
-            <h3 className="text-xl font-light text-white text-right mb-2 leading-none">Our Services</h3>
-            {audience.services.map((service) => {
-              const ServiceIcon = service.icon;
-              const isSelected = selectedService?.id === service.id;
-              return (
-                <button
-                  key={service.id}
-                  onClick={() => onServiceSelect(service)}
-                  className={`group relative backdrop-blur-xl rounded-2xl p-3 transition-all hover:scale-105 border-2 flex items-center justify-between gap-3 w-[240px] shadow-lg ${
-                    isSelected
-                      ? 'bg-[#F26219]/20 border-[#F26219]/50 shadow-2xl'
-                      : 'bg-black/30 border-white/10 hover:bg-black/50 hover:border-white/20 hover:shadow-xl'
-                  }`}
-                >
-                  <h4 className={`flex-1 text-xs font-semibold text-right leading-tight ${
-                    isSelected ? 'text-white' : 'text-white/70'
-                  }`}>{service.title}</h4>
-                  <ServiceIcon className={`w-5 h-5 flex-shrink-0 transition-colors ${
-                    isSelected ? 'text-[#F26219]' : 'text-white/50 group-hover:text-[#F26219]'
-                  }`} />
-                </button>
-              );
-            })}
-          </div>
-        </div>
 
-        {/* Right Side - Carousel Panel */}
+        {/* Intro Panel — mounts when showSubmenu is true, triggering build animations */}
+        {!(selectedService || isClosingCards) && showSubmenu && (
+          <div
+            className="absolute z-10"
+            style={{
+              left: '96px',
+              top: '100px',
+              width: '624px',
+              bottom: '108px',
+              borderRadius: '12px',
+              border: '1px solid rgba(255,255,255,0.2)',
+              backgroundColor: 'rgba(255,255,255,0.30)',
+              backdropFilter: 'blur(16px)',
+              WebkitBackdropFilter: 'blur(16px)',
+              overflow: 'hidden',
+              boxShadow: '0 4px 24px rgba(0,0,0,0.3)',
+              animation: 'introPanelUp 2s cubic-bezier(0.4, 0, 0.2, 1) 0s both'
+            }}
+          >
+            <div className="h-full flex flex-col">
+
+              {/* Top: Section Title — slides in left to right */}
+              <div
+                className="px-5 pt-4 pb-3 border-b border-black/10 flex-shrink-0"
+                style={{ animation: 'introTitleFromLeft 2s cubic-bezier(0.4, 0, 0.2, 1) 2s both' }}
+              >
+                <h2 style={{ fontFamily: "'Instrument Serif', serif", fontSize: '60px', lineHeight: 1 }} className="text-slate-900 text-right">
+                  {audience.title.startsWith('Programme ') ? (
+                    <>Programme <span style={{ fontFamily: "'Instrument Serif', serif", fontStyle: 'italic', color: '#2C97BE' }}>{audience.title.slice('Programme '.length)}</span></>
+                  ) : audience.title}
+                </h2>
+              </div>
+
+              {/* Body: Two Columns */}
+              <div className="flex flex-1 overflow-hidden">
+
+                {/* Left Column: Service Buttons — slides up and fades in */}
+                <div
+                  className="flex flex-col gap-2 p-4 items-stretch overflow-y-auto flex-shrink-0"
+                  style={{ width: '240px', animation: 'introButtonsUp 1s ease-out 5s both' }}
+                >
+                  <p className="text-xs font-light text-slate-500 text-right mb-1">Our Services</p>
+                  {audience.services.map((service) => {
+                    const ServiceIcon = service.icon;
+                    return (
+                      <button
+                        key={service.id}
+                        onClick={() => onServiceSelect(service)}
+                        className="group rounded-xl p-3 transition-all border-2 flex items-center justify-between gap-2 shadow-sm bg-black/10 border-black/10 hover:bg-black/15 hover:border-black/20"
+                      >
+                        <h4 className="flex-1 text-xs font-semibold text-right leading-tight text-slate-600">{service.title}</h4>
+                        <ServiceIcon className="w-4 h-4 flex-shrink-0 text-slate-400 group-hover:text-[#F26219] transition-colors" />
+                      </button>
+                    );
+                  })}
+                </div>
+
+                {/* Right Column: Intro Content — dissolves in with vertical rise */}
+                <div
+                  className="flex-1 flex flex-col overflow-hidden border-l border-black/10 p-5"
+                  style={{ animation: 'introTextRise 1s ease-out 4s both' }}
+                >
+                  <h4
+                    className="mb-3 text-right"
+                    style={{ fontFamily: "'Instrument Serif', serif", fontSize: '28px', color: '#000', lineHeight: 1.1 }}
+                  >
+                    {audience.title.startsWith('Programme ') ? (
+                      <span style={{ fontStyle: 'italic', color: '#2C97BE' }}>{audience.title.slice('Programme '.length)}</span>
+                    ) : audience.title}
+                  </h4>
+                  <p className="text-slate-700 text-sm leading-relaxed text-right flex-1 overflow-auto">
+                    {audience.intro}
+                  </p>
+                  <p className="text-xs text-slate-400 text-right mt-3">Select a service to learn more</p>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Carousel Panel — shown when a service is selected */}
         {(selectedService || isClosingCards) && (
           <div
             className="absolute z-10"
             style={{
-              left: '300px',
-              top: '200px',
-              width: '340px',
-              bottom: '100px',
+              left: '96px',
+              top: '100px',
+              width: '624px',
+              bottom: '108px',
               borderRadius: '12px',
               border: '1px solid rgba(255,255,255,0.2)',
-              backgroundColor: 'rgba(255,255,255,0.15)',
+              backgroundColor: 'rgba(255,255,255,0.30)',
               backdropFilter: 'blur(16px)',
               WebkitBackdropFilter: 'blur(16px)',
               overflow: 'hidden',
@@ -139,75 +153,118 @@ export default function AudienceSection({
             }}
           >
             <div className="h-full flex flex-col">
-              {/* Carousel Content */}
-              <div className="flex-1 relative overflow-hidden">
-                <div
-                  className="h-full flex transition-transform duration-500 ease-in-out"
-                  style={{ transform: `translateX(-${carouselIndex * 100}%)` }}
-                >
-                  {selectedService.cards.map((card, idx) => (
-                    <div key={idx} className="min-w-full h-full flex flex-col">
-                      <div
-                        className="p-6 flex-1 overflow-auto"
-                      >
-                        <h4
-                          key={`service-${idx}-${selectedService.title}`}
-                          className="text-xl font-light mb-1 animate-fade-slide-up leading-none text-white"
-                        >
-                          {selectedService.title}
-                        </h4>
-                        <div className="text-white/40 text-xs mb-4">
-                          {carouselIndex + 1} / {selectedService.cards.length}
-                        </div>
-                        <h5
-                          key={`title-${idx}-${carouselIndex}`}
-                          className="text-base font-semibold text-[#F26219] mb-2 animate-fade-in"
-                        >
-                          {card.title}
-                        </h5>
-                        <p
-                          key={`desc-${idx}-${carouselIndex}`}
-                          className="text-white/70 text-sm leading-relaxed animate-fade-in-delay"
-                        >
-                          {card.description}
-                        </p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
 
-                {/* Navigation Arrows */}
-                {carouselIndex > 0 && (
-                  <button
-                    onClick={onCarouselPrev}
-                    className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/40 backdrop-blur-lg border border-white/20 p-1.5 rounded-full shadow-xl hover:scale-110 transition-transform z-10"
-                  >
-                    <ChevronLeft className="w-4 h-4 text-white" />
-                  </button>
-                )}
-                {carouselIndex < selectedService.cards.length - 1 && (
-                  <button
-                    onClick={onCarouselNext}
-                    className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/40 backdrop-blur-lg border border-white/20 p-1.5 rounded-full shadow-xl hover:scale-110 transition-transform z-10"
-                  >
-                    <ChevronRight className="w-4 h-4 text-white" />
-                  </button>
-                )}
+              {/* Top: Section Title */}
+              <div className="px-5 pt-4 pb-3 border-b border-black/10 flex-shrink-0">
+                <h2 style={{ fontFamily: "'Instrument Serif', serif", fontSize: '60px', lineHeight: 1 }} className="text-slate-900 text-right">
+                  {audience.title.startsWith('Programme ') ? (
+                    <>Programme <span style={{ fontFamily: "'Instrument Serif', serif", fontStyle: 'italic', color: '#2C97BE' }}>{audience.title.slice('Programme '.length)}</span></>
+                  ) : audience.title}
+                </h2>
               </div>
 
-              {/* Dot Indicators */}
-              <div className="flex justify-center gap-1.5 py-3">
-                {selectedService.cards.map((_, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => setCarouselIndex(idx)}
-                    className={`rounded-full transition-all ${
-                      idx === carouselIndex
-                        ? 'w-5 h-1.5 bg-[#F26219]'
-                        : 'w-1.5 h-1.5 bg-white/30 hover:bg-white/50'
-                    }`}
-                  />
-                ))}
+              {/* Body: Two Columns */}
+              <div className="flex flex-1 overflow-hidden">
+
+                {/* Left Column: Service Buttons */}
+                <div className="flex flex-col gap-2 p-4 items-stretch overflow-y-auto flex-shrink-0" style={{ width: '240px' }}>
+                  <p className="text-xs font-light text-slate-500 text-right mb-1">Our Services</p>
+                  {audience.services.map((service) => {
+                    const ServiceIcon = service.icon;
+                    const isSelected = selectedService?.id === service.id;
+                    return (
+                      <button
+                        key={service.id}
+                        onClick={() => onServiceSelect(service)}
+                        className={`group rounded-xl p-3 transition-all border-2 flex items-center justify-between gap-2 shadow-sm ${
+                          isSelected
+                            ? 'bg-[#F26219]/20 border-[#F26219]/50'
+                            : 'bg-black/10 border-black/10 hover:bg-black/15 hover:border-black/20'
+                        }`}
+                      >
+                        <h4 className={`flex-1 text-xs font-semibold text-right leading-tight ${
+                          isSelected ? 'text-slate-900' : 'text-slate-600'
+                        }`}>{service.title}</h4>
+                        <ServiceIcon className={`w-4 h-4 flex-shrink-0 transition-colors ${
+                          isSelected ? 'text-[#F26219]' : 'text-slate-400 group-hover:text-[#F26219]'
+                        }`} />
+                      </button>
+                    );
+                  })}
+                </div>
+
+                {/* Right Column: Carousel Content */}
+                <div className="flex-1 flex flex-col overflow-hidden border-l border-black/10">
+                  <div className="flex-1 relative overflow-hidden">
+                    <div
+                      className="h-full flex transition-transform duration-500 ease-in-out"
+                      style={{ transform: `translateX(-${carouselIndex * 100}%)` }}
+                    >
+                      {selectedService.cards.map((card, idx) => (
+                        <div key={idx} className="min-w-full h-full flex flex-col">
+                          <div className="p-5 flex-1 overflow-auto">
+                            <h4
+                              key={`service-${idx}-${selectedService.title}`}
+                              className="mb-1 animate-fade-slide-up text-right"
+                              style={{ fontFamily: "'Instrument Serif', serif", fontSize: '28px', color: '#000', lineHeight: 1.1 }}
+                            >
+                              {selectedService.title}
+                            </h4>
+                            <div className="text-slate-400 text-xs mb-3 text-right">
+                              {carouselIndex + 1} / {selectedService.cards.length}
+                            </div>
+                            <h5
+                              key={`title-${idx}-${carouselIndex}`}
+                              className="mb-2 animate-fade-in text-right"
+                              style={{ fontFamily: "'Instrument Serif', serif", fontSize: '20px', color: '#000', lineHeight: 1.2 }}
+                            >
+                              {card.title}
+                            </h5>
+                            <p
+                              key={`desc-${idx}-${carouselIndex}`}
+                              className="text-slate-700 text-sm leading-relaxed animate-fade-in-delay text-right"
+                            >
+                              {card.description}
+                            </p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+
+                  </div>
+
+                  {/* Bottom bar: prev arrow | dots | next arrow */}
+                  <div className="flex items-center justify-between px-3 py-3 border-t border-black/10 flex-shrink-0">
+                    <button
+                      onClick={onCarouselPrev}
+                      disabled={carouselIndex === 0}
+                      className={`bg-white/80 border border-black/10 p-1.5 rounded-full shadow hover:scale-110 transition-transform ${carouselIndex === 0 ? 'opacity-20 cursor-not-allowed' : ''}`}
+                    >
+                      <ChevronLeft className="w-4 h-4 text-slate-700" />
+                    </button>
+                    <div className="flex justify-center gap-1.5">
+                      {selectedService.cards.map((_, idx) => (
+                        <button
+                          key={idx}
+                          onClick={() => setCarouselIndex(idx)}
+                          className={`rounded-full transition-all ${
+                            idx === carouselIndex
+                              ? 'w-5 h-1.5 bg-[#F26219]'
+                              : 'w-1.5 h-1.5 bg-black/20 hover:bg-black/40'
+                          }`}
+                        />
+                      ))}
+                    </div>
+                    <button
+                      onClick={onCarouselNext}
+                      disabled={carouselIndex >= selectedService.cards.length - 1}
+                      className={`bg-white/80 border border-black/10 p-1.5 rounded-full shadow hover:scale-110 transition-transform ${carouselIndex >= selectedService.cards.length - 1 ? 'opacity-20 cursor-not-allowed' : ''}`}
+                    >
+                      <ChevronRight className="w-4 h-4 text-slate-700" />
+                    </button>
+                  </div>
+                </div>
+
               </div>
             </div>
           </div>
@@ -256,13 +313,13 @@ export default function AudienceSection({
             key={selectedTechService?.id || 'closing'}
             className="absolute overflow-hidden"
             style={{
-              right: '38px',
-              top: '120px',
+              right: '88px',
+              top: '100px',
               width: '415px',
-              bottom: '88px',
+              bottom: '108px',
               borderRadius: '12px',
               border: '1px solid rgba(255,255,255,0.2)',
-              backgroundColor: 'rgba(255,255,255,0.15)',
+              backgroundColor: 'rgba(255,255,255,0.30)',
               backdropFilter: 'blur(16px)',
               WebkitBackdropFilter: 'blur(16px)',
               boxShadow: '0 4px 24px rgba(0,0,0,0.3)',

@@ -4,10 +4,10 @@ export default function Banner({ title, subtitle = null, showBanner, onLogoClick
   const { assets } = useAssets();
   return (
     <div
-      className="absolute top-0 left-0 right-0 bg-white text-slate-900 z-20"
+      className="absolute top-0 left-0 right-0 z-20"
       style={{
         height: '112px',
-        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+        background: 'linear-gradient(to bottom, rgba(0,0,0,0.55) 0%, transparent 100%)',
       }}
     >
       <div className="flex items-center justify-end h-full pr-8">
