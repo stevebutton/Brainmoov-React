@@ -554,7 +554,7 @@ export default function App() {
               opacity: currentView === 'intro' ? 1 : 0,
               transition: 'opacity 1s'
             }}
-            src="https://framerusercontent.com/assets/GZbL8udXhgB4dj21nUCmCkUdWO8.mp4"
+            src="https://framerusercontent.com/assets/EMmOdc6i05bhoeesAvB12tlU6kE.mp4"
           />
           <video
             autoPlay loop muted playsInline
