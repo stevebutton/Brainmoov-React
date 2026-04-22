@@ -26,11 +26,13 @@ if (isStandalonePage) {
   document.body.style.overflow = 'auto'
   document.body.style.height = 'auto'
 } else {
-  // Scale the 1280×720 canvas to fit the current viewport, maintaining aspect ratio
+  // Scale the 1280×720 canvas to fit the current viewport, maintaining aspect ratio.
+  // Subtract vertical padding so the canvas never fills edge-to-edge top/bottom.
+  const VERTICAL_PADDING = 60 // 30px breathing room top and bottom
   const updateScale = () => {
     const scale = Math.min(
       window.innerWidth / 1280,
-      window.innerHeight / 720
+      (window.innerHeight - VERTICAL_PADDING) / 720
     )
     document.documentElement.style.setProperty('--scale', scale)
   }
