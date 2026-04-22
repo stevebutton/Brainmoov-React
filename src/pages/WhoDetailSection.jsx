@@ -1,11 +1,6 @@
+import { useState } from 'react';
 import { ChevronRight } from 'lucide-react';
 import { audiences } from '../data/index';
-
-const audienceImages = {
-  children: 'https://framerusercontent.com/images/1kzm2w4SmI20T5ugoisbV7JxY.jpg?width=350&height=420',
-  adults: 'https://framerusercontent.com/images/hwxkNDC6wxuUHZln1kGU1ylHJM.jpg?width=350&height=420',
-  seniors: 'https://framerusercontent.com/images/wpNelmVvH594ymTUxhtidiYsNZg.jpg?width=350&height=420',
-};
 
 const audienceDesc = {
   children: 'Specialized programs for infants, toddlers, and children addressing developmental challenges and optimizing neurological growth.',
@@ -14,33 +9,43 @@ const audienceDesc = {
 };
 
 export default function WhoDetailSection({ showBanner, hoveredAudience, setHoveredAudience, onNavigate }) {
+  const [exiting, setExiting] = useState(false);
+
+  const handleNavigate = (nav) => {
+    if (exiting) return;
+    setExiting(true);
+    setTimeout(() => onNavigate(nav), 650);
+  };
+
   return (
     <div className="w-full h-full relative">
-      <div className="p-12" style={{paddingTop: '170px'}}>
+      <div className="p-12" style={{ paddingTop: '170px' }}>
         <div className="flex justify-center gap-2.5">
-          {audiences.map((audience) => {
+          {audiences.map((audience, index) => {
             const isHovered = hoveredAudience === audience.id;
+            const programmeName = audience.title.startsWith('Programme ')
+              ? audience.title.slice('Programme '.length)
+              : audience.title;
+            const delay = 0.3 + index * 0.2;
             return (
               <div
                 key={audience.id}
                 className="relative overflow-hidden rounded-2xl border border-white/20 shadow-2xl cursor-pointer"
                 onMouseEnter={() => setHoveredAudience(audience.id)}
                 onMouseLeave={() => setHoveredAudience(null)}
-                onClick={() => onNavigate(audience.id)}
+                onClick={() => handleNavigate(audience.id)}
                 style={{
                   width: '295px',
                   height: '340px',
-                  backgroundImage: `url(${audienceImages[audience.id]})`,
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center top',
+                  backgroundColor: isHovered ? 'rgba(255,255,255,0.35)' : 'rgba(255,255,255,0.25)',
+                  backdropFilter: 'blur(16px)',
+                  WebkitBackdropFilter: 'blur(16px)',
+                  transition: 'background-color 0.4s ease',
+                  animation: exiting
+                    ? `slideOutDown 0.5s ease-in ${(audiences.length - 1 - index) * 0.05}s both`
+                    : `introPanelUp 1s cubic-bezier(0.4, 0, 0.2, 1) ${delay}s both`,
                 }}
               >
-                {/* Hover overlay */}
-                <div
-                  className="absolute inset-0 transition-colors duration-400"
-                  style={{ backgroundColor: isHovered ? 'rgba(0,0,0,0.35)' : 'rgba(0,0,0,0.1)' }}
-                />
-
                 {/* Title — centered at rest, animates up on hover */}
                 <div
                   style={{
@@ -48,11 +53,19 @@ export default function WhoDetailSection({ showBanner, hoveredAudience, setHover
                     left: '24px',
                     right: '24px',
                     top: '50%',
-                    transform: isHovered ? 'translateY(calc(-50% - 70px))' : 'translateY(-50%)',
+                    transform: isHovered ? 'translateY(calc(-50% - 90px))' : 'translateY(-50%)',
                     transition: 'transform 0.4s ease',
                   }}
                 >
-                  <h3 className="text-2xl font-semibold text-left text-white leading-tight">{audience.title}</h3>
+                  <h2
+                    style={{ fontFamily: "'Instrument Serif', serif", fontSize: '36px', lineHeight: 1.0 }}
+                    className="text-left text-slate-900"
+                  >
+                    Programme<br />
+                    <span style={{ fontFamily: "'Instrument Serif', serif", fontStyle: 'italic', color: '#2C97BE' }}>
+                      {programmeName}
+                    </span>
+                  </h2>
                 </div>
 
                 {/* Description — fades in on hover */}
@@ -66,11 +79,10 @@ export default function WhoDetailSection({ showBanner, hoveredAudience, setHover
                     transition: 'opacity 0.3s ease 0.15s',
                   }}
                 >
-                  <div className="w-8 h-px bg-white/40 mb-3" />
-                  <p className="text-sm text-white/80 leading-snug mb-4">{audienceDesc[audience.id]}</p>
+                  <p className="text-sm text-slate-700 leading-snug mb-4">{audienceDesc[audience.id]}</p>
                   <button
                     className="text-sm font-medium text-[#F26219] flex items-center gap-1 hover:underline"
-                    onClick={(e) => { e.stopPropagation(); onNavigate(audience.id); }}
+                    onClick={(e) => { e.stopPropagation(); handleNavigate(audience.id); }}
                   >
                     <span>Explore programs</span>
                     <ChevronRight className="w-4 h-4" />
@@ -80,7 +92,14 @@ export default function WhoDetailSection({ showBanner, hoveredAudience, setHover
             );
           })}
         </div>
-        <p className="text-lg mt-8 text-center text-white/70">
+        <p
+          className="text-lg mt-8 text-center text-white/70"
+          style={{
+            animation: exiting
+              ? 'introTitleExitUp 0.4s ease-in both'
+              : `introPanelUp 1s cubic-bezier(0.4, 0, 0.2, 1) 0.9s both`,
+          }}
+        >
           Select an audience to explore our specialized programs
         </p>
       </div>

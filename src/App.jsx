@@ -285,6 +285,18 @@ export default function App() {
   }, [currentView]);
 
   useEffect(() => {
+    const root = document.getElementById('root');
+    if (!root) return;
+    if (currentView === 'intro') {
+      root.style.borderRadius = '0';
+      root.style.boxShadow = 'none';
+    } else {
+      root.style.borderRadius = '36px';
+      root.style.boxShadow = '0 24px 80px rgba(0, 0, 0, 0.35)';
+    }
+  }, [currentView]);
+
+  useEffect(() => {
     if (currentView !== 'intro' && currentView !== null) {
       if (currentView === 'about-infrastructure') {
         setSelectedMachine(0);
@@ -561,7 +573,7 @@ export default function App() {
       {/* Persistent banner — always on top, never transitions */}
       {currentView !== 'intro' && (
         <div className="absolute top-0 left-0 right-0" style={{ zIndex: 30 }}>
-          <Banner onNavigate={handleViewChange} showTreatmentFinder={true} onTreatmentFinderClick={handleTreatmentFinderClick} />
+          <Banner onNavigate={handleViewChange} />
         </div>
       )}
 
