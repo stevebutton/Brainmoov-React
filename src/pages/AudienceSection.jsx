@@ -277,7 +277,7 @@ export default function AudienceSection({
             className="absolute bottom-0 left-0 right-0 bg-white z-20"
             style={{
               height: '80px',
-              animation: 'slideInUp 0.4s ease-out forwards',
+              animation: isExiting ? 'slideOutDown 0.5s ease-in forwards' : 'slideInUp 0.4s ease-out forwards',
               boxShadow: '0 -2px 8px rgba(0, 0, 0, 0.1)'
             }}
           >

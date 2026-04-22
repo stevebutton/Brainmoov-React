@@ -297,7 +297,7 @@ export default function App() {
   }, [currentView]);
 
   useEffect(() => {
-    if (currentView !== 'intro' && currentView !== null) {
+    if (currentView !== 'intro' && currentView !== null && currentView !== previousView) {
       if (currentView === 'about-infrastructure') {
         setSelectedMachine(0);
       }
