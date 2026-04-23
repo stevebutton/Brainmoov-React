@@ -22,7 +22,38 @@ export default function WhoDetailSection({ showBanner, isExiting: isExitingProp,
 
   return (
     <div className="w-full h-full relative">
-      <div className="p-12" style={{ paddingTop: '170px' }}>
+      <div className="flex flex-col items-center gap-4 px-12" style={{ paddingTop: '100px' }}>
+
+        {/* Intro Panel */}
+        <div
+          className="rounded-2xl border border-white/20 shadow-2xl"
+          style={{
+            width: '905px',
+            backgroundColor: 'rgba(255,255,255,0.30)',
+            backdropFilter: 'blur(16px)',
+            WebkitBackdropFilter: 'blur(16px)',
+            padding: '24px 36px',
+            animation: shouldExit
+              ? 'slideOutDown 0.5s ease-in 0.15s both'
+              : 'introPanelUp 2s cubic-bezier(0.4, 0, 0.2, 1) 0s both',
+          }}
+        >
+          <div className="flex items-center" style={{ gap: '0' }}>
+            <div style={{ width: '50%', paddingRight: '32px' }}>
+              <h2 style={{ fontFamily: "'Instrument Serif', serif", fontSize: '52px', lineHeight: 1.0, textAlign: 'right' }} className="text-slate-900">
+                Who<br />
+                <span style={{ fontFamily: "'Instrument Serif', serif", fontStyle: 'italic', color: '#2C97BE' }}>We Treat</span>
+              </h2>
+            </div>
+            <div style={{ width: '50%', paddingLeft: '32px', borderLeft: '1px solid rgba(0,0,0,0.1)' }}>
+              <p className="text-slate-700 text-sm leading-relaxed">
+                BrainMoove provides specialized neurological rehabilitation for patients at every stage of life. Our evidence-based programs address a wide spectrum of developmental, acquired, and age-related neurological conditions. Each treatment plan is tailored to the individual's unique neurological profile, goals, and stage of life.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Audience Panels */}
         <div className="flex justify-center gap-2.5">
           {audiences.map((audience, index) => {
             const isHovered = hoveredAudience === audience.id;
@@ -95,16 +126,7 @@ export default function WhoDetailSection({ showBanner, isExiting: isExitingProp,
             );
           })}
         </div>
-        <p
-          className="text-lg mt-8 text-center text-white/70"
-          style={{
-            animation: shouldExit
-              ? 'introTitleExitUp 0.4s ease-in both'
-              : `introPanelUp 1s cubic-bezier(0.4, 0, 0.2, 1) 0.9s both`,
-          }}
-        >
-          Select an audience to explore our specialized programs
-        </p>
+
       </div>
     </div>
   );

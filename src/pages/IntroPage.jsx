@@ -58,9 +58,12 @@ export default function IntroPage({ showNav, isActive, hoveredSection, setHovere
         <div className="w-full max-w-6xl">
           <div
             className="text-center mb-8"
-            style={{ animation: exiting
-              ? 'introTitleExitUp 0.4s ease-in both'
-              : 'introTitleFromTop 2s cubic-bezier(0.4, 0, 0.2, 1) 9s both'
+            style={{
+              animation: exiting
+                ? 'introTitleExitUp 0.4s ease-in both'
+                : 'introTitleFromTop 2s cubic-bezier(0.4, 0, 0.2, 1) 9s both',
+              background: 'radial-gradient(ellipse 70% 120% at 50% 50%, rgba(255,255,255,0.75) 0%, transparent 100%)',
+              padding: '12px 40px',
             }}
           >
             <h1 style={{ fontFamily: "'Instrument Serif', serif", fontSize: '72px', lineHeight: 1.0, color: '#1e293b', textShadow: '0 4px 16px rgba(0,0,0,0.25)' }}>
@@ -84,7 +87,7 @@ export default function IntroPage({ showNav, isActive, hoveredSection, setHovere
                   style={{
                     width: '235px',
                     height: '340px',
-                    backgroundColor: isHovered ? 'rgba(255,255,255,0.35)' : 'rgba(255,255,255,0.25)',
+                    backgroundColor: isHovered ? 'rgba(255,255,255,0.45)' : 'rgba(255,255,255,0.35)',
                     backdropFilter: 'blur(16px)',
                     WebkitBackdropFilter: 'blur(16px)',
                     transition: 'background-color 0.4s ease',

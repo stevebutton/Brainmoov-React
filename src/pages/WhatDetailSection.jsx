@@ -16,7 +16,37 @@ export default function WhatDetailSection({ showBanner, isExiting, onNavigate })
 
   return (
     <div className="w-full h-full relative">
-      <div className="p-12" style={{ paddingTop: '170px' }}>
+      <div className="flex flex-col items-center gap-4 px-12" style={{ paddingTop: '100px' }}>
+
+        {/* Intro Panel */}
+        <div
+          className="rounded-2xl border border-white/20 shadow-2xl"
+          style={{
+            width: '1210px',
+            backgroundColor: 'rgba(255,255,255,0.30)',
+            backdropFilter: 'blur(16px)',
+            WebkitBackdropFilter: 'blur(16px)',
+            padding: '24px 36px',
+            animation: isExiting
+              ? 'slideOutDown 0.5s ease-in 0.15s both'
+              : 'introPanelUp 2s cubic-bezier(0.4, 0, 0.2, 1) 0s both',
+          }}
+        >
+          <div className="flex items-center" style={{ gap: '0' }}>
+            <div style={{ width: '50%', paddingRight: '32px' }}>
+              <h2 style={{ fontFamily: "'Instrument Serif', serif", fontSize: '52px', lineHeight: 1.0, textAlign: 'right' }} className="text-slate-900">
+                What<br />
+                <span style={{ fontFamily: "'Instrument Serif', serif", fontStyle: 'italic', color: '#2C97BE' }}>We Treat</span>
+              </h2>
+            </div>
+            <div style={{ width: '50%', paddingLeft: '32px', borderLeft: '1px solid rgba(0,0,0,0.1)' }}>
+              <p className="text-slate-700 text-sm leading-relaxed">
+                BrainMoove addresses a broad range of neurological and developmental conditions across all ages. From neurodevelopmental challenges and acquired brain injuries to neurological diseases and performance goals, our evidence-based interventions target the root causes of dysfunction. Each condition is approached with precision, using advanced diagnostics to guide personalized treatment.
+              </p>
+            </div>
+          </div>
+        </div>
+
         <div className="flex justify-center gap-2.5">
           {conditionsData.map((category, idx) => {
             const isHovered = hoveredCategory === idx;
@@ -90,12 +120,6 @@ export default function WhatDetailSection({ showBanner, isExiting, onNavigate })
           })}
         </div>
 
-        <p
-          className="text-lg mt-8 text-center text-white/70"
-          style={{ animation: isExiting ? 'introTitleExitUp 0.4s ease-in both' : 'introPanelUp 1s cubic-bezier(0.4, 0, 0.2, 1) 0.9s both' }}
-        >
-          Explore conditions by category
-        </p>
       </div>
     </div>
   );

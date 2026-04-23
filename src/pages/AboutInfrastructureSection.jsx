@@ -6,14 +6,14 @@ const introMachine = machines[0];
 const equipmentList = machines.slice(1);
 
 const equipmentImages = {
-  'Gyrostim':              'https://www.omtrial.com/wp-content/uploads/2020/08/GyroStim-800x413-1.jpg',
-  'Vibramoov':             'https://kinetecuk.com/wp-content/uploads/2022/10/Kurn_220720-5458-scaled.jpg',
-  'Force Platform':        'https://balancetrackingsystems.com/wp-content/uploads/2019/05/BTS-System-Plate-and-Tablet-Cutout5-e1559580291940.jpg',
-  'Interactive Metronome': 'https://soundsory.com/wp-content/uploads/2016/06/interactive-metronome-im-1024x684.jpg',
-  'TOVA':                  'https://tovatest.com/wp-content/uploads/2023/05/TOVA-geometric-stimuli-768x408.png',
-  'VNG':                   'https://natussensory.com/wp-content/uploads/Dizcovery_product_thumbnail-1.png',
-  'Brainport':             'https://news.wisc.edu/content/uploads/2016/07/Wicab-demo-500x500.jpg',
-  'NeuroFeedBack':         'https://focuscalm.com/cdn/shop/products/FocusCalm-headband-web2.png?v=1686697625',
+  'Gyrostim':              'https://raw.githubusercontent.com/stevebutton/Brainmoov-React/main/src/gyrostim.jpg',
+  'Vibramoov':             'https://raw.githubusercontent.com/stevebutton/Brainmoov-React/main/src/vibramoove.jpg.jpg',
+  'Force Platform':        'https://raw.githubusercontent.com/stevebutton/Brainmoov-React/main/src/force-platform.jpg.jpg',
+  'Interactive Metronome': 'https://raw.githubusercontent.com/stevebutton/Brainmoov-React/main/src/interactive-metronome.jpg',
+  'TOVA':                  'https://raw.githubusercontent.com/stevebutton/Brainmoov-React/main/src/TOVA.jpg',
+  'VNG':                   'https://raw.githubusercontent.com/stevebutton/Brainmoov-React/main/src/VNG.jpg',
+  'Brainport':             'https://raw.githubusercontent.com/stevebutton/Brainmoov-React/main/src/brainport.jpg',
+  'NeuroFeedBack':         'https://raw.githubusercontent.com/stevebutton/Brainmoov-React/main/src/neurofeedback.jpg',
 };
 
 const fallbackImage = 'https://images.unsplash.com/photo-1530026405186-ed1f139313f8?w=600&h=500&fit=crop&q=80';
