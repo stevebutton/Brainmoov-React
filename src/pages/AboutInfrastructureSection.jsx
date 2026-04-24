@@ -187,8 +187,8 @@ export default function AboutInfrastructureSection({
         </div>
       </div>
 
-      {/* Video Panel */}
-      <div
+      {/* Video Panel — only shown when a machine is selected */}
+      {!isIntro && <div
         className="absolute overflow-hidden"
         style={{
           right: '88px',
@@ -235,7 +235,7 @@ export default function AboutInfrastructureSection({
             </div>
           </div>
         </div>
-      </div>
+      </div>}
 
     </div>
   );

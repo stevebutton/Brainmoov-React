@@ -92,7 +92,7 @@ export default function AudienceSection({
                   className="flex flex-col gap-2 p-4 items-stretch overflow-y-auto flex-shrink-0"
                   style={{ width: '240px', animation: 'introButtonsUp 1s ease-out 5s both' }}
                 >
-                  <p className="text-xs font-light text-slate-500 text-right mb-1">Our Services</p>
+                  <p style={{ fontFamily: "'Instrument Serif', serif", fontStyle: 'italic' }} className="text-xs text-slate-500 text-right mb-1">Our Services</p>
                   {audience.services.map((service) => {
                     const ServiceIcon = service.icon;
                     return (
@@ -101,7 +101,7 @@ export default function AudienceSection({
                         onClick={() => onServiceSelect(service)}
                         className="group rounded-xl p-3 transition-all border-2 flex items-center justify-between gap-2 shadow-sm bg-black/10 border-black/10 hover:bg-black/15 hover:border-black/20"
                       >
-                        <h4 className="flex-1 text-xs font-semibold text-right leading-tight text-slate-600">{service.title}</h4>
+                        <h4 className="flex-1 text-xs font-semibold text-right leading-tight text-white">{service.title}</h4>
                         <ServiceIcon className="w-4 h-4 flex-shrink-0 text-slate-400 group-hover:text-[#F26219] transition-colors" />
                       </button>
                     );
@@ -169,7 +169,7 @@ export default function AudienceSection({
 
                 {/* Left Column: Service Buttons */}
                 <div className="flex flex-col gap-2 p-4 items-stretch overflow-y-auto flex-shrink-0" style={{ width: '240px' }}>
-                  <p className="text-xs font-light text-slate-500 text-right mb-1">Our Services</p>
+                  <p style={{ fontFamily: "'Instrument Serif', serif", fontStyle: 'italic' }} className="text-xs text-slate-500 text-right mb-1">Our Services</p>
                   {audience.services.map((service) => {
                     const ServiceIcon = service.icon;
                     const isSelected = selectedService?.id === service.id;
@@ -183,9 +183,7 @@ export default function AudienceSection({
                             : 'bg-black/10 border-black/10 hover:bg-black/15 hover:border-black/20'
                         }`}
                       >
-                        <h4 className={`flex-1 text-xs font-semibold text-right leading-tight ${
-                          isSelected ? 'text-slate-900' : 'text-slate-600'
-                        }`}>{service.title}</h4>
+                        <h4 className="flex-1 text-xs font-semibold text-right leading-tight text-white">{service.title}</h4>
                         <ServiceIcon className={`w-4 h-4 flex-shrink-0 transition-colors ${
                           isSelected ? 'text-[#F26219]' : 'text-slate-400 group-hover:text-[#F26219]'
                         }`} />
@@ -283,7 +281,7 @@ export default function AudienceSection({
           >
             <div className="h-full flex items-center">
               <div className="flex items-center justify-end" style={{width: '304px', paddingRight: '32px'}}>
-                <h3 className="text-xl font-bold text-slate-900 whitespace-nowrap">our treatment process</h3>
+                <h3 style={{ fontFamily: "'Instrument Serif', serif", fontSize: '22px' }} className="text-slate-900 whitespace-nowrap">our treatment process</h3>
               </div>
               <div className="self-stretch flex items-stretch">
                 {technicalServices.map((techService, index) => {

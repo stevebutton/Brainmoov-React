@@ -17,7 +17,7 @@ export default function Banner({ title, subtitle = null, showBanner, onLogoClick
             {[
               ['intro', 'Home'],
               ['about', 'What is BrainMoove?'],
-              ['who-detail', 'Who We Treat'],
+              ['who-detail', 'Who We Work With'],
               ['what-detail', 'What We Treat'],
               ['about-infrastructure', 'Our Infrastructure'],
               ['process-detail', 'Our Treatment Process'],

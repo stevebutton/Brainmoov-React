@@ -41,8 +41,8 @@ export default function WhoDetailSection({ showBanner, isExiting: isExitingProp,
           <div className="flex items-center" style={{ gap: '0' }}>
             <div style={{ width: '50%', paddingRight: '32px' }}>
               <h2 style={{ fontFamily: "'Instrument Serif', serif", fontSize: '52px', lineHeight: 1.0, textAlign: 'right' }} className="text-slate-900">
-                Who<br />
-                <span style={{ fontFamily: "'Instrument Serif', serif", fontStyle: 'italic', color: '#2C97BE' }}>We Treat</span>
+                Who We<br />
+                <span style={{ fontFamily: "'Instrument Serif', serif", fontStyle: 'italic', color: '#2C97BE' }}>Work With</span>
               </h2>
             </div>
             <div style={{ width: '50%', paddingLeft: '32px', borderLeft: '1px solid rgba(0,0,0,0.1)' }}>

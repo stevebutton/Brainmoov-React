@@ -38,6 +38,17 @@ const allTechnologies = [
 
 const audienceMap = { child: 'children', adult: 'adults', senior: 'seniors' };
 
+const equipmentImages = {
+  'Gyrostim':              'https://raw.githubusercontent.com/stevebutton/Brainmoov-React/main/src/gyrostim.jpg',
+  'Vibramoov':             'https://raw.githubusercontent.com/stevebutton/Brainmoov-React/main/src/vibramoove.jpg.jpg',
+  'Force Platform':        'https://raw.githubusercontent.com/stevebutton/Brainmoov-React/main/src/force-platform.jpg.jpg',
+  'Interactive Metronome': 'https://raw.githubusercontent.com/stevebutton/Brainmoov-React/main/src/interactive-metronome.jpg',
+  'TOVA':                  'https://raw.githubusercontent.com/stevebutton/Brainmoov-React/main/src/TOVA.jpg',
+  'VNG':                   'https://raw.githubusercontent.com/stevebutton/Brainmoov-React/main/src/VNG.jpg',
+  'Brainport':             'https://raw.githubusercontent.com/stevebutton/Brainmoov-React/main/src/brainport.jpg',
+  'NeuroFeedBack':         'https://raw.githubusercontent.com/stevebutton/Brainmoov-React/main/src/neurofeedback.jpg',
+};
+
 // Welcome slide removed — results screen serves that purpose
 function generateSlides(answers, recommendations) {
   const slides = [];
@@ -137,11 +148,10 @@ export default function TreatmentFinderApp() {
         {/* Slide content */}
         <div className="flex-1 overflow-y-auto">
 
-          {/* Situation slide — centered */}
+          {/* Situation slide — top aligned */}
           {slide.type === 'situation' && (
-            <div className="h-full flex flex-col items-center justify-center px-10 py-6">
-              <p className="text-sm font-bold text-[#F26219] uppercase tracking-widest mb-3">Your Personalised Journey</p>
-              <h2 className="text-3xl font-bold text-slate-900 mb-8 text-center">{slide.title}</h2>
+            <div className="flex flex-col items-center px-10 pt-10 pb-6">
+              <h1 className="text-4xl font-bold text-slate-900 mb-8 text-center">Your Personalised Journey</h1>
               <div className="grid grid-cols-2 gap-4 w-full max-w-2xl">
                 {slide.items.map((item, idx) => (
                   <div key={idx} className="bg-gray-50 rounded-xl p-6 border border-gray-200 text-center">
@@ -159,8 +169,10 @@ export default function TreatmentFinderApp() {
               {/* Video — left 50% */}
               <div className="w-1/2 flex-shrink-0 bg-gray-100 relative overflow-hidden">
                 <img
-                  src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=600&h=500&fit=crop&q=80"
-                  alt="Video placeholder"
+                  src={slide.type === 'technology'
+                    ? (equipmentImages[slide.title] || 'https://images.unsplash.com/photo-1530026405186-ed1f139313f8?w=600&h=500&fit=crop&q=80')
+                    : 'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=600&h=500&fit=crop&q=80'}
+                  alt={slide.title}
                   className="w-full h-full object-cover"
                 />
                 <div className="absolute inset-0 bg-black/20" />
@@ -227,29 +239,36 @@ export default function TreatmentFinderApp() {
         </div>
 
         {/* Nav footer */}
-        <div className="relative z-10 flex-shrink-0 border-t border-gray-200 bg-white px-8 py-4 flex items-center justify-between">
-          <button
-            onClick={() => setCurrentSlide(Math.max(0, currentSlide - 1))}
-            disabled={isFirst}
-            className={`flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold text-sm transition-all ${isFirst ? 'text-gray-300 cursor-not-allowed' : 'text-slate-600 bg-gray-100 hover:bg-gray-200'}`}
-          >
-            <ChevronLeft className="w-4 h-4" /> Previous
-          </button>
+        <div className="relative z-10 flex-shrink-0 border-t border-gray-200 bg-white px-8 py-4 flex items-center">
+          {/* Left: Previous */}
+          <div className="flex-1 flex justify-start">
+            <button
+              onClick={() => setCurrentSlide(Math.max(0, currentSlide - 1))}
+              disabled={isFirst}
+              className={`flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold text-sm transition-all ${isFirst ? 'text-gray-300 cursor-not-allowed' : 'text-slate-600 bg-gray-100 hover:bg-gray-200'}`}
+            >
+              <ChevronLeft className="w-4 h-4" /> Previous
+            </button>
+          </div>
 
-          <div className="flex gap-1.5 items-center">
+          {/* Center: Next */}
+          <div className="flex-1 flex justify-center">
+            <button
+              onClick={() => setCurrentSlide(Math.min(total - 1, currentSlide + 1))}
+              disabled={isLast}
+              className={`flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold text-sm transition-all ${isLast ? 'text-gray-300 cursor-not-allowed' : 'bg-[#F26219] hover:bg-[#d4521a] text-white'}`}
+            >
+              Next <ChevronRight className="w-4 h-4" />
+            </button>
+          </div>
+
+          {/* Right: Dots */}
+          <div className="flex-1 flex justify-end gap-1.5 items-center">
             {slides.map((_, idx) => (
               <button key={idx} onClick={() => setCurrentSlide(idx)}
                 className={`rounded-full transition-all ${idx === currentSlide ? 'w-6 h-2.5 bg-[#F26219]' : 'w-2.5 h-2.5 bg-gray-300 hover:bg-gray-400'}`} />
             ))}
           </div>
-
-          <button
-            onClick={() => setCurrentSlide(Math.min(total - 1, currentSlide + 1))}
-            disabled={isLast}
-            className={`flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold text-sm transition-all ${isLast ? 'text-gray-300 cursor-not-allowed' : 'bg-[#F26219] hover:bg-[#d4521a] text-white'}`}
-          >
-            Next <ChevronRight className="w-4 h-4" />
-          </button>
         </div>
       </div>
     );
