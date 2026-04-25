@@ -7,35 +7,40 @@ const panels = [
     prefix: 'What is ',
     italicPart: 'BrainMoove?',
     nav: 'about',
-    desc: 'A specialized rehabilitation center bridging neuroscience and clinical care through evidence-based functional neurology. We restore and optimize brain function across all ages with targeted, non-invasive interventions.'
+    image: 'https://raw.githubusercontent.com/stevebutton/Brainmoov-React/main/src/WhatisBrainMoove.jpg',
+    desc: 'A specialized rehabilitation center bridging neuroscience and clinical care through eviden'
   },
   {
     id: 'who',
     prefix: 'Who We',
     italicPart: 'Work With',
     nav: 'who-detail',
-    desc: 'Specialized care for children and infants facing developmental challenges, adults and athletes seeking performance optimization, and seniors maintaining cognitive function.'
+    image: 'https://raw.githubusercontent.com/stevebutton/Brainmoov-React/main/src/whoweworkwith.jpg',
+    desc: 'Specialized care for children and infants facing developmental challenges, adults and athl'
   },
   {
     id: 'what',
     prefix: 'What ',
     italicPart: 'We Treat',
     nav: 'what-detail',
-    desc: 'Neurodevelopmental challenges like ADHD and autism, acquired brain injuries including concussions and TBI, neurological diseases such as Parkinson\'s and MS, plus performance enhancement goals.'
+    image: 'https://raw.githubusercontent.com/stevebutton/Brainmoov-React/main/src/whatwetreat.jpg',
+    desc: 'Neurodevelopmental challenges like ADHD and autism, acquired brain injuries including conc'
   },
   {
     id: 'infrastructure',
     prefix: 'Our ',
     italicPart: 'Infrastructure',
     nav: 'about-infrastructure',
-    desc: 'State-of-the-art technology and equipment supporting our functional neurology approach, including advanced diagnostic and therapeutic devices for precise, targeted neurological intervention.'
+    image: 'https://raw.githubusercontent.com/stevebutton/Brainmoov-React/main/src/ourinfrastructure.jpg',
+    desc: 'State-of-the-art technology and equipment supporting our functional neurology approach, in'
   },
   {
     id: 'process',
     prefix: 'Our ',
     italicPart: 'Treatment Process',
     nav: 'process-detail',
-    desc: 'Begins with in-depth assessment and advanced neurological testing to identify dysfunction. We develop personalized treatment plans, monitor progress throughout, and provide ongoing follow-up care for lasting results.'
+    image: 'https://raw.githubusercontent.com/stevebutton/Brainmoov-React/main/src/ourtreatmentprocess.jpg',
+    desc: 'Begins with in-depth assessment and advanced neurological testing to identify dysfunction.'
   },
 ];
 
@@ -96,47 +101,81 @@ export default function IntroPage({ showNav, isActive, hoveredSection, setHovere
                       : `introPanelUp 2s cubic-bezier(0.4, 0, 0.2, 1) ${delay}s both`,
                   }}
                 >
-                  {/* Title — centers at rest, animates up on hover */}
+                  {/* Background image */}
+                  <img
+                    src={panel.image}
+                    alt=""
+                    style={{
+                      position: 'absolute',
+                      inset: 0,
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover',
+                      opacity: isHovered ? 0 : 1,
+                      transition: 'opacity 0.4s ease',
+                    }}
+                  />
+                  {/* Dark overlay for text readability */}
+                  <div style={{
+                    position: 'absolute',
+                    inset: 0,
+                    backgroundColor: 'rgba(0,0,0,0.25)',
+                    opacity: isHovered ? 0 : 1,
+                    transition: 'opacity 0.4s ease',
+                  }} />
+
+                  {/* Title + description — bottom-anchored, description absolutely placed below */}
                   <div
                     style={{
                       position: 'absolute',
                       left: '24px',
                       right: '24px',
-                      top: '50%',
-                      transform: isHovered ? 'translateY(calc(-50% - 90px))' : 'translateY(-50%)',
+                      bottom: '50px',
+                      transform: isHovered ? 'translateY(-75px)' : 'translateY(0)',
                       transition: 'transform 0.4s ease',
                     }}
                   >
                     <h2
-                      style={{ fontFamily: "'Instrument Serif', serif", fontSize: '36px', lineHeight: 1.0 }}
-                      className="text-left text-slate-900"
+                      style={{
+                        fontFamily: "'Instrument Serif', serif",
+                        fontSize: '36px',
+                        lineHeight: 1.0,
+                        color: isHovered ? '#1e293b' : '#ffffff',
+                        transition: 'color 0.4s ease',
+                      }}
+                      className="text-left"
                     >
                       {panel.prefix.trim()}<br />
-                      <span style={{ fontFamily: "'Instrument Serif', serif", fontStyle: 'italic', color: '#2C97BE' }}>
+                      <span style={{
+                        fontFamily: "'Instrument Serif', serif",
+                        fontStyle: 'italic',
+                        color: isHovered ? '#2C97BE' : '#ffffff',
+                        transition: 'color 0.4s ease',
+                      }}>
                         {panel.italicPart}
                       </span>
                     </h2>
-                  </div>
-
-                  {/* Description — fades in on hover */}
-                  <div
-                    style={{
-                      position: 'absolute',
-                      left: '24px',
-                      right: '24px',
-                      top: 'calc(50% - 24px)',
-                      opacity: isHovered ? 1 : 0,
-                      transition: 'opacity 0.3s ease 0.15s',
-                    }}
-                  >
-                    <p className="text-sm text-slate-700 leading-snug mb-4">{panel.desc}</p>
-                    <button
-                      className="text-sm font-medium text-[#F26219] flex items-center gap-1 hover:underline"
-                      onClick={(e) => { e.stopPropagation(); handleNavigate(panel.nav); }}
+                    {/* Description: absolutely positioned below title, out of flow so it doesn't affect bottom anchor */}
+                    <div
+                      style={{
+                        position: 'absolute',
+                        top: '100%',
+                        left: 0,
+                        right: 0,
+                        marginTop: '12px',
+                        opacity: isHovered ? 1 : 0,
+                        transition: 'opacity 0.3s ease 0.15s',
+                      }}
                     >
-                      <span>Find out more</span>
-                      <ChevronRight className="w-4 h-4" />
-                    </button>
+                      <p className="text-sm text-slate-700 leading-snug mb-3">{panel.desc}</p>
+                      <button
+                        className="text-sm font-medium text-[#F26219] flex items-center gap-1 hover:underline"
+                        onClick={(e) => { e.stopPropagation(); handleNavigate(panel.nav); }}
+                      >
+                        <span>Find out more</span>
+                        <ChevronRight className="w-4 h-4" />
+                      </button>
+                    </div>
                   </div>
                 </div>
               );
