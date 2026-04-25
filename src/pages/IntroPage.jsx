@@ -3,14 +3,6 @@ import { ChevronRight } from 'lucide-react';
 
 const panels = [
   {
-    id: 'about',
-    prefix: 'What is ',
-    italicPart: 'BrainMoove?',
-    nav: 'about',
-    image: 'https://raw.githubusercontent.com/stevebutton/Brainmoov-React/main/src/WhatisBrainMoove.jpg',
-    desc: 'A specialized rehabilitation center bridging neuroscience and clinical care through eviden'
-  },
-  {
     id: 'who',
     prefix: 'Who We',
     italicPart: 'Work With',
@@ -90,7 +82,7 @@ export default function IntroPage({ showNav, isActive, hoveredSection, setHovere
                   onMouseLeave={() => setHoveredSection(null)}
                   onClick={() => handleNavigate(panel.nav)}
                   style={{
-                    width: '235px',
+                    width: '295px',
                     height: '340px',
                     backgroundColor: isHovered ? 'rgba(255,255,255,0.45)' : 'rgba(255,255,255,0.35)',
                     backdropFilter: 'blur(16px)',

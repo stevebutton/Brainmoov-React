@@ -16,7 +16,6 @@ export default function Banner({ title, subtitle = null, showBanner, onLogoClick
           <div className="flex gap-2">
             {[
               ['intro', 'Home'],
-              ['about', 'What is BrainMoove?'],
               ['who-detail', 'Who We Work With'],
               ['what-detail', 'What We Treat'],
               ['about-infrastructure', 'Our Infrastructure'],
