@@ -99,10 +99,10 @@ export default function AudienceSection({
                       <button
                         key={service.id}
                         onClick={() => onServiceSelect(service)}
-                        className="group rounded-xl p-3 transition-all border-2 flex items-center justify-between gap-2 shadow-sm bg-black/10 border-black/10 hover:bg-black/15 hover:border-black/20"
+                        className="group rounded-xl px-4 py-2.5 transition-all flex items-center justify-between gap-2 bg-black/40 backdrop-blur-sm hover:bg-black/55"
                       >
                         <h4 className="flex-1 text-xs font-semibold text-right leading-tight text-white">{service.title}</h4>
-                        <ServiceIcon className="w-4 h-4 flex-shrink-0 text-slate-400 group-hover:text-[#F26219] transition-colors" />
+                        <ServiceIcon className="w-4 h-4 flex-shrink-0 text-white/60 group-hover:text-[#F26219] transition-colors" />
                       </button>
                     );
                   })}
@@ -155,9 +155,9 @@ export default function AudienceSection({
           >
             <div className="h-full flex flex-col">
 
-              {/* Top: Section Title */}
-              <div className="px-5 pt-4 pb-3 border-b border-black/10 flex-shrink-0">
-                <h2 style={{ fontFamily: "'Instrument Serif', serif", fontSize: '60px', lineHeight: 1 }} className="text-slate-900 text-right">
+              {/* Top: Section Title — shrinks in from 60px to 32px on mount */}
+              <div className="px-5 pt-3 pb-2 border-b border-black/10 flex-shrink-0">
+                <h2 style={{ fontFamily: "'Instrument Serif', serif", fontSize: '32px', lineHeight: 1, animation: isClosingCards ? 'none' : 'titleShrink 0.5s ease-out both' }} className="text-slate-900 text-right">
                   {audience.title.startsWith('Programme ') ? (
                     <>Programme <span style={{ fontFamily: "'Instrument Serif', serif", fontStyle: 'italic', color: '#2C97BE' }}>{audience.title.slice('Programme '.length)}</span></>
                   ) : audience.title}
@@ -177,15 +177,13 @@ export default function AudienceSection({
                       <button
                         key={service.id}
                         onClick={() => onServiceSelect(service)}
-                        className={`group rounded-xl p-3 transition-all border-2 flex items-center justify-between gap-2 shadow-sm ${
-                          isSelected
-                            ? 'bg-[#F26219]/20 border-[#F26219]/50'
-                            : 'bg-black/10 border-black/10 hover:bg-black/15 hover:border-black/20'
+                        className={`group rounded-xl px-4 py-2.5 transition-all flex items-center justify-between gap-2 backdrop-blur-sm ${
+                          isSelected ? 'bg-[#F26219]/70' : 'bg-black/40 hover:bg-black/55'
                         }`}
                       >
                         <h4 className="flex-1 text-xs font-semibold text-right leading-tight text-white">{service.title}</h4>
                         <ServiceIcon className={`w-4 h-4 flex-shrink-0 transition-colors ${
-                          isSelected ? 'text-[#F26219]' : 'text-slate-400 group-hover:text-[#F26219]'
+                          isSelected ? 'text-white' : 'text-white/60 group-hover:text-[#F26219]'
                         }`} />
                       </button>
                     );
@@ -205,7 +203,7 @@ export default function AudienceSection({
                             <h4
                               key={`service-${idx}-${selectedService.title}`}
                               className="mb-1 animate-fade-slide-up text-right"
-                              style={{ fontFamily: "'Instrument Serif', serif", fontSize: '28px', color: '#000', lineHeight: 1.1 }}
+                              style={{ fontFamily: "'Instrument Serif', serif", fontSize: '42px', color: '#000', lineHeight: 1.0 }}
                             >
                               {selectedService.title}
                             </h4>
@@ -215,7 +213,7 @@ export default function AudienceSection({
                             <h5
                               key={`title-${idx}-${carouselIndex}`}
                               className="mb-2 animate-fade-in text-right"
-                              style={{ fontFamily: "'Instrument Serif', serif", fontSize: '20px', color: '#000', lineHeight: 1.2 }}
+                              style={{ fontFamily: "'Instrument Serif', serif", fontSize: '24px', color: '#000', lineHeight: 1.2 }}
                             >
                               {card.title}
                             </h5>
@@ -312,50 +310,51 @@ export default function AudienceSection({
             key={selectedTechService?.id || 'closing'}
             className="absolute overflow-hidden"
             style={{
-              right: '88px',
+              left: '730px',
               top: '100px',
-              width: '415px',
+              width: '500px',
               bottom: '108px',
               borderRadius: '12px',
               border: '1px solid rgba(255,255,255,0.2)',
-              backgroundColor: 'rgba(255,255,255,0.30)',
-              backdropFilter: 'blur(16px)',
-              WebkitBackdropFilter: 'blur(16px)',
               boxShadow: '0 4px 24px rgba(0,0,0,0.3)',
               animation: isExiting || isClosingVideo
-                ? 'slideOutToRight 0.5s ease-in forwards'
-                : 'slideInDown 0.6s ease-out forwards',
+                ? 'slideOutDown 2s ease-in forwards'
+                : 'slideInFromRight 3s cubic-bezier(0.4, 0, 0.2, 1) forwards',
               zIndex: 15
             }}
           >
-            <div className="h-full flex flex-col p-5">
-              <div className="flex items-center justify-between mb-3">
-                <h4 className="text-lg font-light leading-none text-white">
-                  {isClosingVideo ? lastTechService?.title : selectedTechService?.title}
-                </h4>
-                <button
-                  onClick={() => onTechServiceSelect(null)}
-                  className="text-white/70 hover:text-white transition-colors"
-                >
-                  <X className="w-4 h-4" />
-                </button>
-              </div>
+            {/* Full-panel video */}
+            <video
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="absolute inset-0 w-full h-full object-cover"
+            >
+              <source src="https://framerusercontent.com/assets/ffkZqGIsmyMKwRmeyOhRRBack4.mp4" type="video/mp4" />
+            </video>
+            <div className="absolute inset-0 bg-black/20" />
+
+            {/* Close button */}
+            <button
+              onClick={() => onTechServiceSelect(null)}
+              className="absolute top-3 right-3 text-white/70 hover:text-white transition-colors z-10"
+            >
+              <X className="w-4 h-4" />
+            </button>
+
+            {/* Bottom overlay */}
+            <div className="absolute inset-0 flex items-end justify-start p-4 z-10">
               <div
-                className="flex-1 rounded-lg overflow-hidden relative"
-                style={{ }}
+                className="flex items-center gap-3 bg-black/40 backdrop-blur-sm rounded-xl px-5 py-3"
+                style={{ animation: isClosingVideo ? 'none' : 'slideInUp 2s ease-out 3s both' }}
               >
-                <div className="absolute inset-0" style={{ backgroundImage: `url(https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=600&h=500&fit=crop&q=80)`, backgroundSize: 'cover', backgroundPosition: 'center top', transform: 'scaleX(-1)' }} />
-              <div className="absolute inset-0 bg-black/20" />
-                <div className="absolute inset-0 flex items-end justify-start p-3">
-                  <div className="flex items-center gap-2 bg-black/40 backdrop-blur-sm rounded-lg px-3 py-2">
-                    <svg className="w-5 h-5 flex-shrink-0" fill="#F26219" stroke="none" viewBox="0 0 24 24">
-                      <polygon points="5 3 19 12 5 21 5 3" />
-                    </svg>
-                    <p className="text-xs font-medium text-white">
-                      {isClosingVideo ? lastTechService?.title : selectedTechService?.title} — Video Overview
-                    </p>
-                  </div>
-                </div>
+                <svg className="w-7 h-7 flex-shrink-0" fill="#F26219" stroke="none" viewBox="0 0 24 24">
+                  <polygon points="5 3 19 12 5 21 5 3" />
+                </svg>
+                <p className="text-base font-semibold text-white">
+                  {isClosingVideo ? lastTechService?.title : selectedTechService?.title} — Video Overview
+                </p>
               </div>
             </div>
           </div>

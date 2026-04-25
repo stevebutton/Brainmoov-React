@@ -11,8 +11,8 @@ const panels = [
   },
   {
     id: 'who',
-    prefix: 'Who ',
-    italicPart: 'We Treat',
+    prefix: 'Who We',
+    italicPart: 'Work With',
     nav: 'who-detail',
     desc: 'Specialized care for children and infants facing developmental challenges, adults and athletes seeking performance optimization, and seniors maintaining cognitive function.'
   },
@@ -61,7 +61,7 @@ export default function IntroPage({ showNav, isActive, hoveredSection, setHovere
             style={{
               animation: exiting
                 ? 'introTitleExitUp 0.4s ease-in both'
-                : 'introTitleFromTop 2s cubic-bezier(0.4, 0, 0.2, 1) 9s both',
+                : 'introTitleFromTop 2s cubic-bezier(0.4, 0, 0.2, 1) 1s both',
               background: 'radial-gradient(ellipse 70% 120% at 50% 50%, rgba(255,255,255,0.75) 0%, transparent 100%)',
               padding: '12px 40px',
             }}

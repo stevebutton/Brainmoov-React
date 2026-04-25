@@ -321,7 +321,7 @@ export default function App() {
 
         const submenuTimer = setTimeout(() => {
           setShowSubmenu(true);
-        }, 2000);
+        }, 200);
 
         return () => {
           clearTimeout(bannerTimer);
@@ -490,11 +490,11 @@ export default function App() {
     if (techService === null) {
       setIsClosingVideo(true);
       setLastTechService(selectedTechService);
+      setSelectedTechService(null);
       setTimeout(() => {
-        setSelectedTechService(null);
         setIsClosingVideo(false);
         setIsFirstVideoOpen(true);
-      }, 1500);
+      }, 2000);
       return;
     }
 
@@ -502,8 +502,17 @@ export default function App() {
       return;
     }
 
-    if (selectedTechService !== null && isFirstVideoOpen) {
+    // Switching from one video to another — exit current first, then enter new
+    if (selectedTechService !== null) {
       setIsFirstVideoOpen(false);
+      setLastTechService(selectedTechService);
+      setSelectedTechService(null);
+      setIsClosingVideo(true);
+      setTimeout(() => {
+        setIsClosingVideo(false);
+        setSelectedTechService(techService);
+      }, 2000);
+      return;
     }
 
     setLastTechService(techService);

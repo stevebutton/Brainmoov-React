@@ -57,8 +57,8 @@ export default function AboutInfrastructureSection({
         <div className="h-full flex flex-col">
 
           {/* Top: Section Title */}
-          <div className="px-5 pt-4 pb-3 border-b border-black/10 flex-shrink-0" style={{ animation: 'introTitleFromLeft 2s cubic-bezier(0.4, 0, 0.2, 1) 2s both' }}>
-            <h2 style={{ fontFamily: "'Instrument Serif', serif", fontSize: '60px', lineHeight: 1 }} className="text-slate-900 text-right">
+          <div className="px-5 pt-3 pb-2 border-b border-black/10 flex-shrink-0" style={{ animation: 'introTitleFromLeft 2s cubic-bezier(0.4, 0, 0.2, 1) 2s both' }}>
+            <h2 style={{ fontFamily: "'Instrument Serif', serif", fontSize: isIntro ? '60px' : '32px', lineHeight: 1, transition: 'font-size 0.5s ease-out' }} className="text-slate-900 text-right">
               Our <span style={{ fontFamily: "'Instrument Serif', serif", fontStyle: 'italic', color: '#2C97BE' }}>Infrastructure</span>
             </h2>
           </div>
@@ -76,15 +76,11 @@ export default function AboutInfrastructureSection({
                   <button
                     key={originalIndex}
                     onClick={() => setSelectedMachine(originalIndex)}
-                    className={`group rounded-xl p-3 transition-all border-2 flex items-center justify-end shadow-sm ${
-                      isSelected
-                        ? 'bg-[#F26219]/20 border-[#F26219]/50'
-                        : 'bg-black/10 border-black/10 hover:bg-black/15 hover:border-black/20'
+                    className={`group rounded-xl px-4 py-2.5 transition-all flex items-center justify-end backdrop-blur-sm ${
+                      isSelected ? 'bg-[#F26219]/70' : 'bg-black/40 hover:bg-black/55'
                     }`}
                   >
-                    <h4 className={`text-xs font-semibold text-right leading-tight ${
-                      isSelected ? 'text-slate-900' : 'text-slate-600'
-                    }`}>{m.title}</h4>
+                    <h4 className="text-xs font-semibold text-right leading-tight text-white">{m.title}</h4>
                   </button>
                 );
               })}
@@ -123,7 +119,7 @@ export default function AboutInfrastructureSection({
                             <h4
                               key={`machine-${idx}-${machine.title}`}
                               className="mb-1 animate-fade-slide-up text-right"
-                              style={{ fontFamily: "'Instrument Serif', serif", fontSize: '28px', color: '#000', lineHeight: 1.1 }}
+                              style={{ fontFamily: "'Instrument Serif', serif", fontSize: '42px', color: '#000', lineHeight: 1.0 }}
                             >
                               {machine.title}
                             </h4>
@@ -133,7 +129,7 @@ export default function AboutInfrastructureSection({
                             <h5
                               key={`title-${idx}-${carouselIndex}`}
                               className="mb-2 animate-fade-in text-right"
-                              style={{ fontFamily: "'Instrument Serif', serif", fontSize: '20px', color: '#000', lineHeight: 1.2 }}
+                              style={{ fontFamily: "'Instrument Serif', serif", fontSize: '24px', color: '#000', lineHeight: 1.2 }}
                             >
                               {card.title}
                             </h5>
