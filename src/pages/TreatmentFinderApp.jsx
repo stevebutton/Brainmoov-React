@@ -151,12 +151,12 @@ export default function TreatmentFinderApp() {
           {/* Situation slide — top aligned */}
           {slide.type === 'situation' && (
             <div className="flex flex-col items-center px-10 pt-10 pb-6">
-              <h1 className="text-4xl font-bold text-slate-900 mb-8 text-center">Your Personalised Journey</h1>
+              <h1 className="text-4xl font-bold text-slate-900 mb-8 text-center" style={{ fontFamily: "'Instrument Serif', serif" }}>Your Personalised Journey</h1>
               <div className="grid grid-cols-2 gap-4 w-full max-w-2xl">
                 {slide.items.map((item, idx) => (
                   <div key={idx} className="bg-gray-50 rounded-xl p-6 border border-gray-200 text-center">
                     <div className="text-base font-bold text-[#F26219] uppercase tracking-widest mb-3">{item.label}</div>
-                    <div className="font-semibold text-slate-900 text-2xl">{item.value}</div>
+                    <div className="font-semibold text-slate-900 text-2xl" style={{ fontFamily: "'Instrument Serif', serif" }}>{item.value}</div>
                   </div>
                 ))}
               </div>
@@ -183,14 +183,14 @@ export default function TreatmentFinderApp() {
                 </div>
                 <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-5">
                   <p className="text-slate-500 text-sm uppercase tracking-widest">{slide.subtitle}</p>
-                  <p className="text-slate-900 font-bold text-lg">{slide.title}</p>
+                  <p className="text-slate-900 font-bold text-lg" style={{ fontFamily: "'Instrument Serif', serif" }}>{slide.title}</p>
                 </div>
               </div>
 
               {/* Content — right */}
               <div className="flex-1 flex flex-col justify-center px-10 py-10">
                 <p className="text-sm font-bold text-[#F26219] uppercase tracking-widest mb-3">{slide.subtitle}</p>
-                <h2 className="text-3xl font-bold text-slate-900 mb-5">{slide.title}</h2>
+                <h2 className="text-3xl font-bold text-slate-900 mb-5" style={{ fontFamily: "'Instrument Serif', serif" }}>{slide.title}</h2>
                 <p className="text-slate-500 leading-relaxed text-lg">{slide.description}</p>
               </div>
             </div>
@@ -199,7 +199,7 @@ export default function TreatmentFinderApp() {
           {/* Timeline slide — horizontal */}
           {slide.type === 'timeline' && (
             <div className="h-full flex flex-col items-center justify-center px-8 py-6">
-              <h2 className="text-3xl font-bold text-slate-900 mb-10 text-center">{slide.title}</h2>
+              <h2 className="text-3xl font-bold text-slate-900 mb-10 text-center" style={{ fontFamily: "'Instrument Serif', serif" }}>{slide.title}</h2>
               <div className="flex items-start w-full">
                 {slide.phases.map((phase, idx) => (
                   <div key={idx} className="flex items-start flex-1">
@@ -224,7 +224,7 @@ export default function TreatmentFinderApp() {
           {slide.type === 'cta' && (
             <div className="h-full flex flex-col items-center justify-center px-12 py-8 text-center">
               <div className="text-5xl mb-5">🎯</div>
-              <h2 className="text-3xl font-bold text-slate-900 mb-3">{slide.title}</h2>
+              <h2 className="text-3xl font-bold text-slate-900 mb-3" style={{ fontFamily: "'Instrument Serif', serif" }}>{slide.title}</h2>
               <p className="text-lg text-[#F26219] font-semibold mb-4">{slide.subtitle}</p>
               <p className="text-slate-500 max-w-lg mb-8 leading-relaxed text-base">{slide.summary}</p>
               <button
@@ -283,7 +283,7 @@ export default function TreatmentFinderApp() {
       <div className="h-screen flex overflow-hidden">
         <div className="w-[360px] bg-[#F8F4F0] flex flex-col justify-center px-10 py-8 flex-shrink-0">
           <img src={assets.logo} alt="BrainMoove" style={{ width: '130px', height: '91px', objectFit: 'contain' }} className="mb-7" />
-          <h1 className="text-3xl font-bold text-slate-900 mb-4 leading-tight">Find the right treatment for you</h1>
+          <h1 className="text-3xl font-bold text-slate-900 mb-4 leading-tight" style={{ fontFamily: "'Instrument Serif', serif" }}>Find the right treatment for you</h1>
           <p className="text-base text-slate-600 mb-6 leading-relaxed">Answer 4 short questions. We'll match you with the services and technologies that fit your needs.</p>
           <div className="flex gap-4 text-sm text-slate-500 mb-7">
             <span>⏱ 2 minutes</span>
@@ -295,7 +295,7 @@ export default function TreatmentFinderApp() {
           </button>
         </div>
         <div className="flex-1 bg-white flex flex-col justify-center px-10 py-8">
-          <p className="text-lg font-bold text-slate-400 uppercase tracking-widest mb-8">What you'll receive</p>
+          <p className="text-lg font-bold text-slate-400 uppercase tracking-widest mb-8" style={{ fontFamily: "'Instrument Serif', serif" }}>What you'll receive</p>
           <div className="space-y-8">
             {[['📋', 'Treatment Plan', 'Services and technologies matched to your responses'],
               ['🎥', 'Video Explanations', 'Specialists explain each recommended service'],
@@ -305,7 +305,7 @@ export default function TreatmentFinderApp() {
               <div key={title} className="flex items-start gap-6">
                 <span className="text-4xl mt-0.5">{icon}</span>
                 <div>
-                  <div className="font-semibold text-slate-900 text-2xl">{title}</div>
+                  <div className="font-semibold text-slate-900 text-2xl" style={{ fontFamily: "'Instrument Serif', serif" }} style={{ fontFamily: "'Instrument Serif', serif" }}>{title}</div>
                   <div className="text-lg text-slate-500 mt-1">{desc}</div>
                 </div>
               </div>
@@ -327,23 +327,23 @@ export default function TreatmentFinderApp() {
         </div>
       )}
 
-      <div className="flex-1 overflow-y-auto px-10 py-6">
+      <div className="flex-1 overflow-y-auto px-10 py-4">
 
         {/* Step 1 */}
         {step === 1 && (
           <div className="max-w-lg mx-auto">
             <div className="text-sm font-bold text-[#F26219] uppercase tracking-widest mb-3">Step 1 of 4</div>
-            <h2 className="text-3xl font-bold text-slate-900 mb-2">Who is this treatment for?</h2>
-            <p className="text-slate-500 text-base mb-6">Select the age group that best applies</p>
-            <div className="space-y-4">
+            <h2 className="text-3xl font-bold text-slate-900 mb-2" style={{ fontFamily: "'Instrument Serif', serif" }}>Who is this treatment for?</h2>
+            <p className="text-slate-500 text-base mb-4">Select the age group that best applies</p>
+            <div className="space-y-3">
               {[['child', 'Child or Teen', '0–17 years', 'Developmental support and early intervention'],
                 ['adult', 'Adult', '18–64 years', 'Recovery, optimisation, and symptom management'],
                 ['senior', 'Senior', '65+ years', 'Healthy ageing and fall prevention']
               ].map(([id, label, age, desc]) => (
-                <button key={id} onClick={() => { setAnswers({ ...answers, audience: id }); setStep(2); }} className={`${card} p-6 flex items-center gap-6`}>
-                  <div className="w-16 h-16 rounded-full bg-[#F26219]/10 flex items-center justify-center flex-shrink-0"><Users className="w-8 h-8 text-[#F26219]" /></div>
+                <button key={id} onClick={() => { setAnswers({ ...answers, audience: id }); setStep(2); }} className={`${card} p-4 flex items-center gap-4`}>
+                  <div className="w-12 h-12 rounded-full bg-[#F26219]/10 flex items-center justify-center flex-shrink-0"><Users className="w-6 h-6 text-[#F26219]" /></div>
                   <div>
-                    <div className="font-semibold text-slate-900 text-2xl">{label} <span className="text-slate-400 font-normal text-lg ml-1">{age}</span></div>
+                    <div className="font-semibold text-slate-900 text-2xl" style={{ fontFamily: "'Instrument Serif', serif" }}>{label} <span className="text-slate-400 font-normal text-lg ml-1">{age}</span></div>
                     <div className="text-lg text-slate-500 mt-1">{desc}</div>
                   </div>
                   <ChevronRight className="w-6 h-6 text-gray-300 ml-auto flex-shrink-0" />
@@ -357,18 +357,18 @@ export default function TreatmentFinderApp() {
         {step === 2 && (
           <div className="max-w-[592px] mx-auto">
             <div className="text-sm font-bold text-[#F26219] uppercase tracking-widest mb-3">Step 2 of 4</div>
-            <h2 className="text-3xl font-bold text-slate-900 mb-2">What brings you here?</h2>
-            <p className="text-slate-500 text-base mb-6">Select the option that best describes your situation</p>
-            <div className="space-y-4">
+            <h2 className="text-3xl font-bold text-slate-900 mb-2" style={{ fontFamily: "'Instrument Serif', serif" }}>What brings you here?</h2>
+            <p className="text-slate-500 text-base mb-4">Select the option that best describes your situation</p>
+            <div className="space-y-3">
               {[['diagnosed', '📋', 'I have a diagnosed condition', "You've received a medical diagnosis"],
                 ['symptoms', '🔍', 'I have symptoms but no diagnosis', 'Experiencing issues without clear answers'],
                 ['prevention', '💪', 'Prevention and optimisation', 'Proactive health and performance'],
                 ['injury', '⚡', 'Post-injury recovery', 'Recovering from brain or head injury']
               ].map(([id, icon, label, desc]) => (
-                <button key={id} onClick={() => { setAnswers({ ...answers, reason: id }); setStep(3); }} className={`${card} p-6 flex items-center gap-6`}>
+                <button key={id} onClick={() => { setAnswers({ ...answers, reason: id }); setStep(3); }} className={`${card} p-4 flex items-center gap-4`}>
                   <span className="text-4xl flex-shrink-0">{icon}</span>
                   <div>
-                    <div className="font-semibold text-slate-900 text-2xl">{label}</div>
+                    <div className="font-semibold text-slate-900 text-2xl" style={{ fontFamily: "'Instrument Serif', serif" }}>{label}</div>
                     <div className="text-lg text-slate-500 mt-1">{desc}</div>
                   </div>
                   <ChevronRight className="w-6 h-6 text-gray-300 ml-auto flex-shrink-0" />
@@ -383,17 +383,17 @@ export default function TreatmentFinderApp() {
         {step === 3 && (
           <div className="max-w-[752px] mx-auto">
             <div className="text-sm font-bold text-[#F26219] uppercase tracking-widest mb-3">Step 3 of 4</div>
-            <h2 className="text-3xl font-bold text-slate-900 mb-2">What symptoms are you experiencing?</h2>
-            <p className="text-slate-500 text-base mb-6">Select all that apply</p>
-            <div className="grid grid-cols-2 gap-4">
+            <h2 className="text-3xl font-bold text-slate-900 mb-2" style={{ fontFamily: "'Instrument Serif', serif" }}>What symptoms are you experiencing?</h2>
+            <p className="text-slate-500 text-base mb-4">Select all that apply</p>
+            <div className="grid grid-cols-2 gap-3">
               {[['attention', '🎯', 'Attention or focus difficulties'], ['balance', '⚖️', 'Balance or dizziness'], ['coordination', '🤸', 'Coordination challenges'], ['memory', '🧠', 'Memory problems'], ['sensory', '👂', 'Sensory sensitivities'], ['headaches', '😣', 'Headaches or migraines'], ['tremors', '🤲', 'Tremors or involuntary movements'], ['reading', '👁️', 'Reading or visual processing'], ['motor', '✋', 'Motor skill challenges']
               ].map(([id, icon, label]) => {
                 const sel = answers.symptoms.includes(id);
                 return (
-                  <label key={id} className={`${card} ${sel ? cardSelected : ''} p-5 flex items-center gap-4`}>
+                  <label key={id} className={`${card} ${sel ? cardSelected : ''} p-3 flex items-center gap-3`}>
                     <input type="checkbox" checked={sel} onChange={(e) => setAnswers({ ...answers, symptoms: e.target.checked ? [...answers.symptoms, id] : answers.symptoms.filter(s => s !== id) })} className="w-6 h-6 accent-[#F26219]" />
                     <span className="text-3xl">{icon}</span>
-                    <span className="text-lg font-medium text-slate-800">{label}</span>
+                    <span className="text-lg font-medium text-slate-800" style={{ fontFamily: "'Instrument Serif', serif" }}>{label}</span>
                   </label>
                 );
               })}
@@ -409,17 +409,17 @@ export default function TreatmentFinderApp() {
         {step === 4 && (
           <div className="max-w-[752px] mx-auto">
             <div className="text-sm font-bold text-[#F26219] uppercase tracking-widest mb-3">Step 4 of 4</div>
-            <h2 className="text-3xl font-bold text-slate-900 mb-2">What are your primary goals?</h2>
-            <p className="text-slate-500 text-base mb-6">Select all that apply</p>
-            <div className="grid grid-cols-2 gap-4">
+            <h2 className="text-3xl font-bold text-slate-900 mb-2" style={{ fontFamily: "'Instrument Serif', serif" }}>What are your primary goals?</h2>
+            <p className="text-slate-500 text-base mb-4">Select all that apply</p>
+            <div className="grid grid-cols-2 gap-3">
               {[['restore', '🔄', 'Restore normal function'], ['manage', '💊', 'Manage symptoms'], ['improve', '😊', 'Improve quality of life'], ['perform', '🚀', 'Optimise performance'], ['prevent', '🛡️', 'Prevent decline or injury'], ['independence', '🦾', 'Maintain independence']
               ].map(([id, icon, label]) => {
                 const sel = answers.goals.includes(id);
                 return (
-                  <label key={id} className={`${card} ${sel ? cardSelected : ''} p-5 flex items-center gap-4`}>
+                  <label key={id} className={`${card} ${sel ? cardSelected : ''} p-3 flex items-center gap-3`}>
                     <input type="checkbox" checked={sel} onChange={(e) => setAnswers({ ...answers, goals: e.target.checked ? [...answers.goals, id] : answers.goals.filter(g => g !== id) })} className="w-6 h-6 accent-[#F26219]" />
                     <span className="text-3xl">{icon}</span>
-                    <span className="text-lg font-medium text-slate-800">{label}</span>
+                    <span className="text-lg font-medium text-slate-800" style={{ fontFamily: "'Instrument Serif', serif" }}>{label}</span>
                   </label>
                 );
               })}
@@ -435,7 +435,7 @@ export default function TreatmentFinderApp() {
         {step === 5 && recommendations && (
           <div className="max-w-3xl mx-auto">
             <div className="text-center mb-7">
-              <h2 className="text-3xl font-bold text-slate-900 mb-3">Your Personalised Treatment Plan</h2>
+              <h2 className="text-3xl font-bold text-slate-900 mb-3" style={{ fontFamily: "'Instrument Serif', serif" }} style={{ fontFamily: "'Instrument Serif', serif" }}>Your Personalised Treatment Plan</h2>
               <p className="text-slate-500 text-base mb-1">{recommendations.primaryMessage}</p>
               <p className="text-slate-400 text-sm">A {recommendations.audienceNote} programme addressing {recommendations.symptomsText}</p>
             </div>
@@ -443,33 +443,33 @@ export default function TreatmentFinderApp() {
             {/* Recommendations grid */}
             <div className="grid grid-cols-2 gap-6 mb-8">
               <div>
-                <h4 className="text-sm font-bold text-slate-500 uppercase tracking-widest mb-4">Recommended Services</h4>
+                <h4 className="text-sm font-bold text-slate-500 uppercase tracking-widest mb-4" style={{ fontFamily: "'Instrument Serif', serif" }}>Recommended Services</h4>
                 <div className="space-y-3">
                   {recommendations.recommendedServices.map(id => {
                     const s = technicalServices.find(x => x.id === id);
                     if (!s) return null;
                     const Icon = s.icon;
                     return (
-                      <div key={id} className="bg-gray-50 border border-gray-200 rounded-xl p-5 flex items-center gap-4">
+                      <div key={id} className="bg-gray-50 border border-gray-200 rounded-xl p-3 flex items-center gap-3">
                         <div className="w-12 h-12 rounded-full bg-[#F26219]/10 flex items-center justify-center flex-shrink-0"><Icon className="w-6 h-6 text-[#F26219]" /></div>
-                        <span className="font-semibold text-slate-800 text-base">{s.title}</span>
+                        <span className="font-semibold text-slate-800 text-base" style={{ fontFamily: "'Instrument Serif', serif" }}>{s.title}</span>
                       </div>
                     );
                   })}
                 </div>
               </div>
               <div>
-                <h4 className="text-sm font-bold text-slate-500 uppercase tracking-widest mb-4">Recommended Technologies</h4>
+                <h4 className="text-sm font-bold text-slate-500 uppercase tracking-widest mb-4" style={{ fontFamily: "'Instrument Serif', serif" }}>Recommended Technologies</h4>
                 <div className="space-y-3">
                   {recommendations.recommendedTechnologies.map(id => {
                     const t = machinesData.find(x => x.id === id);
                     if (!t) return null;
                     const Icon = t.icon;
                     return (
-                      <div key={id} className="bg-gray-50 border border-gray-200 rounded-xl p-5 flex items-center gap-4">
+                      <div key={id} className="bg-gray-50 border border-gray-200 rounded-xl p-3 flex items-center gap-3">
                         <div className="w-12 h-12 rounded-full bg-[#F26219]/10 flex items-center justify-center flex-shrink-0"><Icon className="w-6 h-6 text-[#F26219]" /></div>
                         <div>
-                          <div className="font-semibold text-slate-800 text-base">{t.title}</div>
+                          <div className="font-semibold text-slate-800 text-base" style={{ fontFamily: "'Instrument Serif', serif" }}>{t.title}</div>
                           <div className="text-sm text-slate-500 mt-1">{t.description}</div>
                         </div>
                       </div>

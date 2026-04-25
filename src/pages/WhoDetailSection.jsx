@@ -2,6 +2,12 @@ import { useState } from 'react';
 import { ChevronRight } from 'lucide-react';
 import { audiences } from '../data/index';
 
+const audienceVideos = {
+  children: 'https://framerusercontent.com/assets/wSKTeQyQLgySCMfbAchVND2dc.mp4',
+  adults:   'https://framerusercontent.com/assets/6DlsHzgTbazutorOKu2u5gnDSs.mp4',
+  seniors:  'https://framerusercontent.com/assets/FXAA0gfnA0kdEQcK6o8RD6WoUk.mp4',
+};
+
 const audienceDesc = {
   children: 'Specialized programs for infants, toddlers, and children addressing developmental challenges and optimizing neurological growth.',
   adults: 'Comprehensive care for adults and athletes focused on performance optimization, injury recovery, and cognitive enhancement.',
@@ -80,23 +86,53 @@ export default function WhoDetailSection({ showBanner, isExiting: isExitingProp,
                     : `introPanelUp 1s cubic-bezier(0.4, 0, 0.2, 1) ${delay}s both`,
                 }}
               >
-                {/* Title — centered at rest, animates up on hover */}
+                {/* Background video */}
+                <video
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  style={{
+                    position: 'absolute',
+                    inset: 0,
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover',
+                    opacity: isHovered ? 0 : 1,
+                    transition: 'opacity 0.4s ease',
+                  }}
+                >
+                  <source src={audienceVideos[audience.id]} type="video/mp4" />
+                </video>
+
+                {/* Title — bottom-aligned at rest, animates up on hover */}
                 <div
                   style={{
                     position: 'absolute',
                     left: '24px',
                     right: '24px',
-                    top: '50%',
-                    transform: isHovered ? 'translateY(calc(-50% - 90px))' : 'translateY(-50%)',
+                    bottom: '24px',
+                    transform: isHovered ? 'translateY(-200px)' : 'translateY(0)',
                     transition: 'transform 0.4s ease',
                   }}
                 >
                   <h2
-                    style={{ fontFamily: "'Instrument Serif', serif", fontSize: '36px', lineHeight: 1.0 }}
-                    className="text-left text-slate-900"
+                    style={{
+                      fontFamily: "'Instrument Serif', serif",
+                      fontSize: '36px',
+                      lineHeight: 1.0,
+                      color: isHovered ? '#1e293b' : '#ffffff',
+                      transition: 'color 0.4s ease',
+                    }}
+                    className="text-left"
                   >
                     Programme<br />
-                    <span style={{ fontFamily: "'Instrument Serif', serif", fontStyle: 'italic', color: '#2C97BE' }}>
+                    <span style={{
+                      fontFamily: "'Instrument Serif', serif",
+                      fontStyle: 'italic',
+                      color: isHovered ? '#2C97BE' : '#ffffff',
+                      transition: 'color 0.4s ease',
+                    }}>
                       {programmeName}
                     </span>
                   </h2>
