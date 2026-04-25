@@ -23,6 +23,8 @@ export default function AboutInfrastructureSection({
   isExiting,
   selectedMachine,
   setSelectedMachine,
+  isClosingInfraVideo,
+  lastMachine,
   carouselIndex,
   setCarouselIndex,
   onCarouselPrev,
@@ -32,6 +34,7 @@ export default function AboutInfrastructureSection({
   // selectedMachine === 0 means intro state; > 0 means a specific item
   const machine = selectedMachine > 0 ? machines[selectedMachine] : null;
   const isIntro = selectedMachine === 0 || selectedMachine === null;
+  const displayMachine = isClosingInfraVideo ? machines[lastMachine] : machine;
 
   return (
     <div className="w-full h-full relative">
@@ -115,10 +118,10 @@ export default function AboutInfrastructureSection({
                     >
                       {machine.cards.map((card, idx) => (
                         <div key={idx} className="min-w-full h-full flex flex-col">
-                          <div className="p-5 flex-1 overflow-auto">
+                          <div className="p-5 flex-1 overflow-y-auto overflow-x-hidden">
                             <h4
                               key={`machine-${idx}-${machine.title}`}
-                              className="mb-1 animate-fade-slide-up text-right"
+                              className="mb-1 animate-slide-in-right-blur text-right"
                               style={{ fontFamily: "'Instrument Serif', serif", fontSize: '42px', color: '#000', lineHeight: 1.0 }}
                             >
                               {machine.title}
@@ -183,8 +186,9 @@ export default function AboutInfrastructureSection({
         </div>
       </div>
 
-      {/* Video Panel — only shown when a machine is selected */}
-      {!isIntro && <div
+      {/* Video Panel — shown when a machine is selected or closing */}
+      {(!isIntro || isClosingInfraVideo) && <div
+        key={isClosingInfraVideo ? 'closing' : machine?.title}
         className="absolute overflow-hidden"
         style={{
           right: '88px',
@@ -197,35 +201,25 @@ export default function AboutInfrastructureSection({
           backdropFilter: 'blur(16px)',
           WebkitBackdropFilter: 'blur(16px)',
           boxShadow: '0 4px 24px rgba(0,0,0,0.3)',
-          animation: isExiting ? 'slideOutDown 0.5s ease-in 0.05s both' : 'fadeInPanel 0.5s ease-out forwards',
+          animation: isExiting || isClosingInfraVideo ? 'slideOutDown 2s ease-in forwards' : 'slideInFromRight 3s cubic-bezier(0.4, 0, 0.2, 1) forwards',
           zIndex: 15
         }}
       >
-        <div className="h-full flex flex-col p-5">
-          <div className="mb-3">
-            <h4
-              className="text-right"
-              style={{ fontFamily: "'Instrument Serif', serif", fontSize: '28px', color: '#000', lineHeight: 1.1 }}
-            >
-              {isIntro ? (
-                <span style={{ fontStyle: 'italic', color: '#2C97BE' }}>Infrastructure</span>
-              ) : machine?.title}
-            </h4>
-          </div>
-          <div className="flex-1 rounded-lg overflow-hidden relative">
+        <div className="h-full relative" style={{ padding: '10px' }}>
+          <div className="absolute rounded-xl overflow-hidden" style={{ inset: '10px' }}>
             <div className="absolute inset-0" style={{
-              backgroundImage: `url(${isIntro ? fallbackImage : (equipmentImages[machine?.title] || fallbackImage)})`,
+              backgroundImage: `url(${equipmentImages[displayMachine?.title] || fallbackImage})`,
               backgroundSize: 'cover',
               backgroundPosition: 'center',
             }} />
             <div className="absolute inset-0 bg-black/20" />
-            <div className="absolute inset-0 flex items-end justify-start p-3">
-              <div className="flex items-center gap-2 bg-black/40 backdrop-blur-sm rounded-lg px-3 py-2">
-                <svg className="w-5 h-5 flex-shrink-0" fill="#F26219" stroke="none" viewBox="0 0 24 24">
+            <div className="absolute inset-0 flex items-end justify-start p-4">
+              <div className="flex items-center gap-3 bg-black/40 backdrop-blur-sm rounded-xl px-5 py-3">
+                <svg className="w-7 h-7 flex-shrink-0" fill="#F26219" stroke="none" viewBox="0 0 24 24">
                   <polygon points="5 3 19 12 5 21 5 3" />
                 </svg>
-                <p className="text-xs font-medium text-white">
-                  {isIntro ? 'Infrastructure' : machine?.title} — Video Overview
+                <p className="text-base font-semibold text-white">
+                  {displayMachine?.title} — Video Overview
                 </p>
               </div>
             </div>

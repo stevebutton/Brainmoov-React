@@ -69,7 +69,9 @@ export default function ProcessDetailSection({ onNavigate, isExiting }) {
                     backgroundColor: isHovered || isVideoOpen ? 'rgba(255,255,255,0.35)' : 'rgba(255,255,255,0.25)',
                     backdropFilter: 'blur(16px)',
                     WebkitBackdropFilter: 'blur(16px)',
-                    transition: 'background-color 0.4s ease',
+                    scale: isVideoOpen ? '1.1' : '1',
+                    zIndex: isVideoOpen ? 10 : 1,
+                    transition: 'background-color 0.4s ease, scale 0.3s ease',
                     animation: isExiting
                       ? `slideOutDown 0.5s ease-in ${(technicalServices.length - 1 - index) * 0.05}s both`
                       : `introPanelUp 1s cubic-bezier(0.4, 0, 0.2, 1) ${delay}s both`,
@@ -91,24 +93,17 @@ export default function ProcessDetailSection({ onNavigate, isExiting }) {
                         </button>
                       </div>
                       <div className="flex-1 relative overflow-hidden mx-3 mb-3 rounded-xl">
-                        <div
-                          className="absolute inset-0"
-                          style={{
-                            backgroundImage: 'url(https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=400&h=400&fit=crop&q=80)',
-                            backgroundSize: 'cover',
-                            backgroundPosition: 'center top',
-                            transform: 'scaleX(-1)',
-                          }}
-                        />
+                        <video
+                          autoPlay
+                          loop
+                          muted
+                          playsInline
+                          className="absolute inset-0 w-full h-full object-cover"
+                        >
+                          <source src="https://framerusercontent.com/assets/INsc3G5K2Tv80wdTWEjcLPSHR0.mp4" type="video/mp4" />
+                        </video>
                         <div className="absolute inset-0 bg-black/20" />
-                        <div className="absolute inset-0 flex items-center justify-center">
-                          <div className="w-14 h-14 rounded-full bg-[#F26219]/90 flex items-center justify-center shadow-lg">
-                            <svg className="w-6 h-6 ml-1" fill="white" viewBox="0 0 24 24">
-                              <polygon points="5 3 19 12 5 21 5 3" />
-                            </svg>
-                          </div>
-                        </div>
-                        <div className="absolute bottom-3 left-3 right-3">
+<div className="absolute bottom-3 left-3 right-3">
                           <div className="flex items-center gap-2 bg-black/40 backdrop-blur-sm rounded-lg px-3 py-2">
                             <p className="text-xs font-medium text-white">Step {index + 1} — Video Overview</p>
                           </div>

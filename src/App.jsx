@@ -233,6 +233,8 @@ export default function App() {
   const [shouldAnimateBanner, setShouldAnimateBanner] = useState(true);
   const [selectedMachine, setSelectedMachine] = useState(null);
   const [infraCarouselIndex, setInfraCarouselIndex] = useState(0);
+  const [isClosingInfraVideo, setIsClosingInfraVideo] = useState(false);
+  const [lastMachine, setLastMachine] = useState(null);
   const [showQuestionnaire, setShowQuestionnaire] = useState(false);
   const [showCarousel, setShowCarousel] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -519,6 +521,24 @@ export default function App() {
     setSelectedTechService(techService);
   };
 
+  const handleMachineSelect = (idx) => {
+    if (selectedMachine === idx) return;
+    // First selection from intro state — no exit needed
+    if (!selectedMachine || selectedMachine === 0) {
+      setSelectedMachine(idx);
+      setInfraCarouselIndex(0);
+      return;
+    }
+    // Switching machines — update left panel immediately, video panel exits then enters
+    setIsClosingInfraVideo(true);
+    setLastMachine(selectedMachine);
+    setSelectedMachine(idx);
+    setInfraCarouselIndex(0);
+    setTimeout(() => {
+      setIsClosingInfraVideo(false);
+    }, 2000);
+  };
+
   const handleCarouselPrev = () => {
     if (selectedService && carouselIndex > 0) {
       setCarouselIndex(carouselIndex - 1);
@@ -658,7 +678,9 @@ export default function App() {
                 showBanner={showBanner}
                 isExiting={isExitingSection}
                 selectedMachine={selectedMachine}
-                setSelectedMachine={(idx) => { setSelectedMachine(idx); setInfraCarouselIndex(0); }}
+                setSelectedMachine={handleMachineSelect}
+                isClosingInfraVideo={isClosingInfraVideo}
+                lastMachine={lastMachine}
                 carouselIndex={infraCarouselIndex}
                 setCarouselIndex={setInfraCarouselIndex}
                 onCarouselPrev={() => setInfraCarouselIndex(i => Math.max(0, i - 1))}

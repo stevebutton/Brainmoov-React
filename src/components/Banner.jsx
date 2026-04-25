@@ -7,29 +7,32 @@ export default function Banner({ title, subtitle = null, showBanner, onLogoClick
       className="absolute top-0 left-0 right-0 z-20"
       style={{
         height: '112px',
-        background: 'linear-gradient(to bottom, rgba(0,0,0,0.55) 0%, transparent 100%)',
+        background: 'none',
       }}
     >
       <div className="flex items-center justify-end h-full pr-8">
         {/* Navigation pills — right aligned */}
         {onNavigate && (
-          <div className="flex gap-2">
+          <div className="flex gap-7">
             {[
               ['intro', 'Home'],
               ['who-detail', 'Who We Work With'],
               ['what-detail', 'What We Treat'],
               ['about-infrastructure', 'Our Infrastructure'],
               ['process-detail', 'Our Treatment Process'],
-            ].map(([section, label]) => (
+            ].map(([section, label], index, arr) => {
+              const isLast = index === arr.length - 1;
+              return (
               <button
                 key={section}
                 onClick={() => onNavigate(section)}
-                className="text-sm font-semibold text-white transition-all whitespace-nowrap flex items-center px-5 hover:opacity-80"
+                className={`text-sm font-semibold text-white transition-all whitespace-nowrap flex items-center px-5 hover:opacity-80 ${isLast ? '' : 'hover:scale-110'}`}
                 style={{ height: '56px', borderRadius: '30px', backgroundColor: '#2C97BE' }}
               >
                 {label}
               </button>
-            ))}
+              );
+            })}
           </div>
         )}
 
