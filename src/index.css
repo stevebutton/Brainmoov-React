@@ -197,3 +197,12 @@ html, body {
   from { font-size: 60px; }
   to   { font-size: 32px; }
 }
+
+@keyframes slideInRightBlur {
+  from { opacity: 0; transform: translateX(50px); filter: blur(8px); }
+  to   { opacity: 1; transform: translateX(0);    filter: blur(0px); }
+}
+
+.animate-slide-in-right-blur {
+  animation: slideInRightBlur 2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}

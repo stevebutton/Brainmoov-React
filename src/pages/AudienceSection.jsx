@@ -199,10 +199,10 @@ export default function AudienceSection({
                     >
                       {selectedService.cards.map((card, idx) => (
                         <div key={idx} className="min-w-full h-full flex flex-col">
-                          <div className="p-5 flex-1 overflow-auto">
+                          <div className="p-5 flex-1 overflow-y-auto overflow-x-hidden">
                             <h4
                               key={`service-${idx}-${selectedService.title}`}
-                              className="mb-1 animate-fade-slide-up text-right"
+                              className="mb-1 animate-slide-in-right-blur text-right"
                               style={{ fontFamily: "'Instrument Serif', serif", fontSize: '42px', color: '#000', lineHeight: 1.0 }}
                             >
                               {selectedService.title}
@@ -331,7 +331,7 @@ export default function AudienceSection({
               playsInline
               className="absolute inset-0 w-full h-full object-cover"
             >
-              <source src="https://framerusercontent.com/assets/ffkZqGIsmyMKwRmeyOhRRBack4.mp4" type="video/mp4" />
+              <source src="https://framerusercontent.com/assets/INsc3G5K2Tv80wdTWEjcLPSHR0.mp4" type="video/mp4" />
             </video>
             <div className="absolute inset-0 bg-black/20" />
 
