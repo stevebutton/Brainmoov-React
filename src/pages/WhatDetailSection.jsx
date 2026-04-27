@@ -10,16 +10,16 @@ const STEP = PANEL_W + GAP;
 const categoryIcons = [Activity, Zap, Brain, Sparkles, Activity, Zap, Brain, Sparkles, Activity, Zap];
 
 const titleParts = [
-  { prefix: 'Neurodevelopmental', italic: 'Challenges' },
-  { prefix: 'Acquired Brain', italic: 'Injuries' },
-  { prefix: 'Neurological', italic: 'Diseases & Disorders' },
-  { prefix: 'Health &', italic: 'Performance Wishes' },
-  { prefix: 'Panel', italic: 'Five' },
-  { prefix: 'Panel', italic: 'Six' },
-  { prefix: 'Panel', italic: 'Seven' },
-  { prefix: 'Panel', italic: 'Eight' },
-  { prefix: 'Panel', italic: 'Nine' },
-  { prefix: 'Panel', italic: 'Ten' },
+  { prefix: 'Neuro', italic: 'visuel' },
+  { prefix: 'Visio', italic: 'Spatial' },
+  { prefix: 'Travail de la', italic: 'Rythmicité' },
+  { prefix: 'Attention &', italic: 'Concentration' },
+  { prefix: 'Lâcher', italic: 'Prise' },
+  { prefix: 'Schéma', italic: 'Corporel' },
+  { prefix: 'Travail', italic: 'Vestibulaire' },
+  { prefix: 'Travail de', italic: 'Mémorisation' },
+  { prefix: 'Fonctions', italic: 'Exécutives' },
+  { prefix: 'Équilibre', italic: 'Autonomique' },
 ];
 
 const allPanels = [
