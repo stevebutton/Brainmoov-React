@@ -39,7 +39,8 @@ export function ContentProvider({ children }) {
       client.fetch(queries.audiences),
       client.fetch(queries.machines),
       client.fetch(queries.technicalServices),
-    ]).then(([introPanels, audiences, machines, technicalServices]) => {
+      client.fetch(queries.siteSettings),
+    ]).then(([introPanels, audiences, machines, technicalServices, siteSettings]) => {
       setContent({
         introPanels: introPanels.map(p => ({ ...p, desc: p.description })),
         audiences: audiences.map(a => ({
@@ -57,6 +58,7 @@ export function ContentProvider({ children }) {
           ...s,
           icon: serviceIconMap[s.id] || Brain,
         })),
+        siteSettings,
       })
       setLoading(false)
     }).catch(err => {

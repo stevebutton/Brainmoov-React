@@ -29,4 +29,8 @@ export const queries = {
   technicalServices: `*[_type == "technicalService"] | order(order asc) {
     id, title, description, order
   }`,
+
+  siteSettings: `*[_type == "siteSettings"][0] {
+    whoIntro, whoDetailIntro
+  }`,
 }

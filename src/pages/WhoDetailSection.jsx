@@ -9,15 +9,12 @@ const audienceVideos = {
   seniors:  'https://framerusercontent.com/assets/FXAA0gfnA0kdEQcK6o8RD6WoUk.mp4',
 };
 
-const audienceDesc = {
-  children: 'Specialized programs for infants, toddlers, and children addressing developmental challenges and optimizing neurological growth.',
-  adults: 'Comprehensive care for adults and athletes focused on performance optimization, injury recovery, and cognitive enhancement.',
-  seniors: 'Targeted interventions for seniors to maintain cognitive function, mobility, and overall neurological health.',
-};
+const WHO_INTRO_FALLBACK = 'BrainMoove provides specialized neurological rehabilitation for patients at every stage of life. Our evidence-based programs address a wide spectrum of developmental, acquired, and age-related neurological conditions. Each treatment plan is tailored to the individual\'s unique neurological profile, goals, and stage of life.';
 
 export default function WhoDetailSection({ showBanner, isExiting: isExitingProp, onNavigate }) {
   const { content } = useContent();
   const audiences = content?.audiences || fallbackAudiences;
+  const whoIntro = content?.siteSettings?.whoIntro || WHO_INTRO_FALLBACK;
   const [exiting, setExiting] = useState(false);
   const [hoveredAudience, setHoveredAudience] = useState(null);
 
@@ -55,9 +52,7 @@ export default function WhoDetailSection({ showBanner, isExiting: isExitingProp,
               </h2>
             </div>
             <div style={{ width: '50%', paddingLeft: '32px', borderLeft: '1px solid rgba(0,0,0,0.1)' }}>
-              <p className="text-slate-700 text-sm leading-relaxed">
-                BrainMoove provides specialized neurological rehabilitation for patients at every stage of life. Our evidence-based programs address a wide spectrum of developmental, acquired, and age-related neurological conditions. Each treatment plan is tailored to the individual's unique neurological profile, goals, and stage of life.
-              </p>
+              <p className="text-slate-700 text-sm leading-relaxed">{whoIntro}</p>
             </div>
           </div>
         </div>
@@ -152,7 +147,7 @@ export default function WhoDetailSection({ showBanner, isExiting: isExitingProp,
                     transition: 'opacity 0.3s ease 0.15s',
                   }}
                 >
-                  <p className="text-sm text-slate-700 leading-snug mb-4">{audienceDesc[audience.id]}</p>
+                  <p className="text-sm text-slate-700 leading-snug mb-4">{audience.intro}</p>
                   <button
                     className="text-sm font-medium text-[#F26219] flex items-center gap-1 hover:underline"
                     onClick={(e) => { e.stopPropagation(); handleNavigate(audience.id); }}
