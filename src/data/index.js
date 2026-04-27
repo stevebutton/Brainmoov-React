@@ -194,6 +194,27 @@ export const technicalServices = [
   { id: 'followup', title: 'Follow-up Care', icon: Shield }
 ];
 
+const PLACEHOLDER_CARD = [{ title: 'Overview', description: 'Placeholder content — to be updated in Sanity.' }];
+const makeServices = (prefix) => [Sparkles, Target, Brain, Zap, Activity].map((icon, i) => ({
+  id: `${prefix}-${i + 1}`,
+  title: `Service Placeholder ${i + 1}`,
+  icon,
+  cards: PLACEHOLDER_CARD,
+}));
+
+export const whatConditions = [
+  { id: 'what-neurovisuel',    title: 'Neurovisuel',                                                                          intro: 'Placeholder intro — to be updated in Sanity.', services: makeServices('nv')  },
+  { id: 'what-visio-spatial',  title: 'Visio spatial',                                                                         intro: 'Placeholder intro — to be updated in Sanity.', services: makeServices('vs')  },
+  { id: 'what-rythmicite',     title: 'Travail de la Rythmicité',                                                              intro: 'Placeholder intro — to be updated in Sanity.', services: makeServices('ry')  },
+  { id: 'what-attention',      title: "Travail de l'attention et de la concentration",                                         intro: 'Placeholder intro — to be updated in Sanity.', services: makeServices('at')  },
+  { id: 'what-lacher-prise',   title: 'Travail du lâcher prise',                                                               intro: 'Placeholder intro — to be updated in Sanity.', services: makeServices('lp')  },
+  { id: 'what-schema-corporel',title: 'Perception du schéma corporel et locomoteur et de la tonicité axiale',                 intro: 'Placeholder intro — to be updated in Sanity.', services: makeServices('sc')  },
+  { id: 'what-vestibulaire',   title: 'Travail vestibulaire',                                                                  intro: 'Placeholder intro — to be updated in Sanity.', services: makeServices('ve')  },
+  { id: 'what-memorisation',   title: 'Travail de mémorisation',                                                               intro: 'Placeholder intro — to be updated in Sanity.', services: makeServices('me')  },
+  { id: 'what-fonctions-exec', title: 'Entraînement des fonctions exécutives',                                                 intro: 'Placeholder intro — to be updated in Sanity.', services: makeServices('fe')  },
+  { id: 'what-equilibre',      title: "Entraînement des fonctions et de l'équilibre Autonomique",                              intro: 'Placeholder intro — to be updated in Sanity.', services: makeServices('eq')  },
+];
+
 export const conditionsData = [
   {
     category: 'Neurodevelopmental Challenges',

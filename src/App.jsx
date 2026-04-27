@@ -14,9 +14,12 @@ import WhoDetailSection from './pages/WhoDetailSection';
 import WhatDetailSection from './pages/WhatDetailSection';
 import ProcessDetailSection from './pages/ProcessDetailSection';
 import AudienceSection from './pages/AudienceSection';
+import ConditionSection from './pages/ConditionSection';
 import Banner from './components/Banner';
 import TreatmentFinder from './components/TreatmentFinder/index';
 import Carousel from './components/TreatmentFinder/Carousel';
+
+import { whatConditions } from './data/index';
 
 const hardcodedAudiences = [
   {
@@ -207,7 +210,8 @@ const hardcodedAudiences = [
 const VALID_SECTIONS = new Set([
   'intro', 'children', 'adults', 'seniors',
   'about', 'about-philosophy', 'about-objectives', 'about-team', 'about-infrastructure', 'about-history',
-  'who-detail', 'what-detail', 'process-detail'
+  'who-detail', 'what-detail', 'process-detail',
+  ...whatConditions.map(c => c.id),
 ]);
 
 function getInitialView() {
@@ -757,6 +761,34 @@ export default function App() {
               onCarouselPrev={handleCarouselPrev}
               onCarouselNext={handleCarouselNext}
               onNavigate={handleViewChange}
+            />
+          </div>
+        );
+      })}
+
+      {/* What We Treat — condition sections */}
+      {whatConditions.map(condition => {
+        const shouldRender = currentView === condition.id || previousView === condition.id;
+        if (!shouldRender) return null;
+        const isExitingCondition = previousView === condition.id && slideDirection === 'out';
+        return (
+          <div key={condition.id} className="absolute inset-0" style={{ zIndex: 10 }}>
+            <ConditionSection
+              condition={condition}
+              isExiting={isExitingCondition}
+              selectedService={selectedService}
+              selectedTechService={selectedTechService}
+              isClosingCards={isClosingCards}
+              isClosingVideo={isClosingVideo}
+              isFirstVideoOpen={isFirstVideoOpen}
+              lastTechService={lastTechService}
+              showSubmenu={showSubmenu}
+              carouselIndex={carouselIndex}
+              setCarouselIndex={setCarouselIndex}
+              onServiceSelect={handleServiceSelect}
+              onTechServiceSelect={handleTechServiceSelect}
+              onCarouselPrev={handleCarouselPrev}
+              onCarouselNext={handleCarouselNext}
             />
           </div>
         );

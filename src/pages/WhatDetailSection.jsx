@@ -9,17 +9,23 @@ const STEP = PANEL_W + GAP;
 
 const categoryIcons = [Activity, Zap, Brain, Sparkles, Activity, Zap, Brain, Sparkles, Activity, Zap];
 
+const conditionIds = [
+  'what-neurovisuel', 'what-visio-spatial', 'what-rythmicite', 'what-attention',
+  'what-lacher-prise', 'what-schema-corporel', 'what-vestibulaire',
+  'what-memorisation', 'what-fonctions-exec', 'what-equilibre',
+];
+
 const titleParts = [
-  { prefix: 'Neuro', italic: 'visuel' },
-  { prefix: 'Visio', italic: 'Spatial' },
-  { prefix: 'Travail de la', italic: 'Rythmicité' },
-  { prefix: 'Attention &', italic: 'Concentration' },
-  { prefix: 'Lâcher', italic: 'Prise' },
-  { prefix: 'Schéma', italic: 'Corporel' },
-  { prefix: 'Travail', italic: 'Vestibulaire' },
-  { prefix: 'Travail de', italic: 'Mémorisation' },
-  { prefix: 'Fonctions', italic: 'Exécutives' },
-  { prefix: 'Équilibre', italic: 'Autonomique' },
+  'Neurovisuel',
+  'Visio spatial',
+  'Travail de la Rythmicité',
+  "Travail de l'attention et de la concentration",
+  'Travail du lâcher prise',
+  'Perception du schéma corporel et locomoteur et de la tonicité axiale',
+  'Travail vestibulaire',
+  'Travail de mémorisation',
+  'Entraînement des fonctions exécutives',
+  "Entraînement des fonctions et de l'équilibre Autonomique",
 ];
 
 const allPanels = [
@@ -142,7 +148,7 @@ export default function WhatDetailSection({ showBanner, isExiting, onNavigate })
           {allPanels.map((category, idx) => {
             const isHovered = hoveredCategory === idx;
             const Icon = categoryIcons[idx];
-            const { prefix, italic } = titleParts[idx];
+            const title = titleParts[idx];
 
             return (
               // Outer: owns layout size + stagger animation (transform via keyframes)
@@ -151,7 +157,8 @@ export default function WhatDetailSection({ showBanner, isExiting, onNavigate })
                 className="flex-shrink-0"
                 onMouseEnter={() => !isDragging && setHoveredCategory(idx)}
                 onMouseLeave={() => setHoveredCategory(null)}
-                style={{
+                onClick={() => !isDragging && onNavigate(conditionIds[idx])}
+                style={{ cursor: 'pointer',
                   width: `calc(${PANEL_W}px * var(--scale, 1))`,
                   height: '100%',
                   zIndex: isHovered ? 2 : 1,
@@ -188,15 +195,14 @@ export default function WhatDetailSection({ showBanner, isExiting, onNavigate })
                     <h2
                       style={{
                         fontFamily: "'Instrument Serif', serif",
+                        fontStyle: 'italic',
                         fontSize: `calc(36px * var(--scale, 1))`,
                         lineHeight: 1.0,
+                        color: '#2C97BE',
                       }}
-                      className="text-left text-slate-900"
+                      className="text-left"
                     >
-                      {prefix}<br />
-                      <span style={{ fontFamily: "'Instrument Serif', serif", fontStyle: 'italic', color: '#2C97BE' }}>
-                        {italic}
-                      </span>
+                      {title}
                     </h2>
                   </div>
 
