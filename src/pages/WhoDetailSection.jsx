@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { ChevronRight } from 'lucide-react';
-import { audiences } from '../data/index';
+import { audiences as fallbackAudiences } from '../data/index';
+import { useContent } from '../context/ContentContext';
 
 const audienceVideos = {
   children: 'https://framerusercontent.com/assets/wSKTeQyQLgySCMfbAchVND2dc.mp4',
@@ -15,6 +16,8 @@ const audienceDesc = {
 };
 
 export default function WhoDetailSection({ showBanner, isExiting: isExitingProp, onNavigate }) {
+  const { content } = useContent();
+  const audiences = content?.audiences || fallbackAudiences;
   const [exiting, setExiting] = useState(false);
   const [hoveredAudience, setHoveredAudience] = useState(null);
 

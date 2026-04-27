@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { X } from 'lucide-react';
-import { technicalServices } from '../data/index';
+import { technicalServices as fallbackTechnicalServices } from '../data/index';
+import { useContent } from '../context/ContentContext';
 
 const descriptions = {
   assessment: 'Comprehensive evaluation of your neurological health, medical history, and specific concerns to establish baseline function.',
@@ -11,6 +12,8 @@ const descriptions = {
 };
 
 export default function ProcessDetailSection({ onNavigate, isExiting }) {
+  const { content } = useContent();
+  const technicalServices = content?.technicalServices || fallbackTechnicalServices;
   const [hoveredPanel, setHoveredPanel] = useState(null);
   const [selectedVideo, setSelectedVideo] = useState(null);
 

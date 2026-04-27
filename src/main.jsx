@@ -4,6 +4,7 @@ import App from './App.jsx'
 import AssetManager from './pages/AssetManager.jsx'
 import TreatmentFinderApp from './pages/TreatmentFinderApp.jsx'
 import { AssetProvider } from './context/AssetContext.jsx'
+import { ContentProvider } from './context/ContentContext.jsx'
 import './index.css'
 
 const path = window.location.pathname
@@ -49,7 +50,9 @@ function Root() {
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <AssetProvider>
-      <Root />
+      <ContentProvider>
+        <Root />
+      </ContentProvider>
     </AssetProvider>
   </React.StrictMode>,
 )

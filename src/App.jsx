@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { Heart, Brain, Activity, Sparkles, Target, Zap, Shield, Users } from 'lucide-react';
 import { useAssets } from './context/AssetContext';
+import { useContent } from './context/ContentContext';
 import IntroPage from './pages/IntroPage';
 import AboutSection from './pages/AboutSection';
 import AboutPhilosophySection from './pages/AboutPhilosophySection';
@@ -17,7 +18,7 @@ import Banner from './components/Banner';
 import TreatmentFinder from './components/TreatmentFinder/index';
 import Carousel from './components/TreatmentFinder/Carousel';
 
-const audiences = [
+const hardcodedAudiences = [
   {
     id: 'children',
     title: 'Programme Enfants & Nourrissons',
@@ -216,6 +217,8 @@ function getInitialView() {
 
 export default function App() {
   const { assets } = useAssets();
+  const { content } = useContent();
+  const audiences = content?.audiences || hardcodedAudiences;
   const [currentView, setCurrentView] = useState(getInitialView);
   const [showNav, setShowNav] = useState(false);
   const [videoPlaying, setVideoPlaying] = useState({});

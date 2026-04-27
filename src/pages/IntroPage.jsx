@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { ChevronRight } from 'lucide-react';
+import { useContent } from '../context/ContentContext';
 
-const panels = [
+const hardcodedPanels = [
   {
     id: 'who',
     prefix: 'Who We',
@@ -37,6 +38,8 @@ const panels = [
 ];
 
 export default function IntroPage({ showNav, isActive, hoveredSection, setHoveredSection, onNavigate }) {
+  const { content } = useContent();
+  const panels = content?.introPanels || hardcodedPanels;
   const [exiting, setExiting] = useState(false);
 
   useEffect(() => {

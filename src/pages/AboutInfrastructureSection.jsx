@@ -1,9 +1,6 @@
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { machines } from '../data/index';
-
-// machines[0] is the section intro — buttons start from machines[1]
-const introMachine = machines[0];
-const equipmentList = machines.slice(1);
+import { machines as fallbackMachines } from '../data/index';
+import { useContent } from '../context/ContentContext';
 
 const equipmentImages = {
   'Gyrostim':              'https://raw.githubusercontent.com/stevebutton/Brainmoov-React/main/src/gyrostim.jpg',
@@ -31,6 +28,11 @@ export default function AboutInfrastructureSection({
   onCarouselNext,
   onNavigate
 }) {
+  const { content } = useContent();
+  const machines = content?.machines || fallbackMachines;
+  const introMachine = machines[0];
+  const equipmentList = machines.slice(1);
+
   // selectedMachine === 0 means intro state; > 0 means a specific item
   const machine = selectedMachine > 0 ? machines[selectedMachine] : null;
   const isIntro = selectedMachine === 0 || selectedMachine === null;
@@ -208,7 +210,7 @@ export default function AboutInfrastructureSection({
         <div className="h-full relative" style={{ padding: '10px' }}>
           <div className="absolute rounded-xl overflow-hidden" style={{ inset: '10px' }}>
             <div className="absolute inset-0" style={{
-              backgroundImage: `url(${equipmentImages[displayMachine?.title] || fallbackImage})`,
+              backgroundImage: `url(${displayMachine?.imageUrl || equipmentImages[displayMachine?.title] || fallbackImage})`,
               backgroundSize: 'cover',
               backgroundPosition: 'center',
             }} />

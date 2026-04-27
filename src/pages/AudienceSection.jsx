@@ -1,6 +1,7 @@
 import { ChevronLeft, ChevronRight, X } from 'lucide-react';
-import { technicalServices } from '../data/index';
+import { technicalServices as fallbackTechnicalServices } from '../data/index';
 import { useAssets } from '../context/AssetContext';
+import { useContent } from '../context/ContentContext';
 
 export default function AudienceSection({
   audience,
@@ -24,6 +25,8 @@ export default function AudienceSection({
   onNavigate
 }) {
   const { assets } = useAssets();
+  const { content } = useContent();
+  const technicalServices = content?.technicalServices || fallbackTechnicalServices;
   const Icon = audience.icon;
   const isPlaying = videoPlaying[audience.id];
 
