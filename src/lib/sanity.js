@@ -21,6 +21,7 @@ export const queries = {
     intro[] { ${ptProjection} },
     "backgroundImage": backgroundImage.asset->url, videoTitle,
     "services": services[] {
+      _key,
       "id": coalesce(id.current, id),
       title,
       description[] { _type, _key, style, listItem, level, markDefs[] { _type, _key, href }, children[] { _type, _key, text, marks } },
@@ -46,6 +47,7 @@ export const queries = {
     panelDescription,
     intro[] { ${ptProjection} },
     "services": services[] {
+      _key,
       "id": coalesce(id.current, id),
       title,
       description[] { _type, _key, style, listItem, level, markDefs[] { _type, _key, href }, children[] { _type, _key, text, marks } },

@@ -19,10 +19,16 @@ export default function ConditionSection({
   onTechServiceSelect,
   onCarouselPrev,
   onCarouselNext,
+  onNavigate,
+  allConditionIds,
 }) {
   const { content } = useContent();
   const technicalServices = content?.technicalServices || fallbackTechnicalServices;
   const ss = content?.siteSettings;
+
+  const conditionIdx = allConditionIds ? allConditionIds.indexOf(condition.id) : -1;
+  const prevConditionId = conditionIdx > 0 ? allConditionIds[conditionIdx - 1] : null;
+  const nextConditionId = conditionIdx >= 0 && conditionIdx < allConditionIds.length - 1 ? allConditionIds[conditionIdx + 1] : null;
   const uiApproaches = ss?.uiApproaches || 'Approches';
   const uiSelectApproach = ss?.uiSelectApproach || 'Sélectionnez une approche';
   const uiOurProcess = ss?.uiOurProcess || 'notre processus';
@@ -194,7 +200,9 @@ export default function ConditionSection({
                   </p>
                   {condition.services.map((service) => {
                     const ServiceIcon = service.icon || DefaultServiceIcon;
-                    const isSelected = selectedService?.id === service.id;
+                    const isSelected = selectedService
+                      ? (service._key ? selectedService._key === service._key : selectedService.id === service.id)
+                      : false;
                     return (
                       <button
                         key={service.id}
@@ -384,6 +392,26 @@ export default function ConditionSection({
             </div>
           </div>
         )}
+
+      {/* Condition prev / next navigation — center left / right edges */}
+      {onNavigate && (
+        <>
+          <button
+            onClick={() => prevConditionId && onNavigate(prevConditionId)}
+            className="absolute z-20 rounded-full bg-white/60 backdrop-blur-sm border border-white/30 shadow-md flex items-center justify-center hover:bg-white/90 transition-colors"
+            style={{ left: '12px', top: '50%', transform: 'translateY(-50%)', width: '52px', height: '52px', opacity: prevConditionId ? 1 : 0, pointerEvents: prevConditionId ? 'auto' : 'none', transition: 'opacity 0.3s ease, background-color 0.2s ease' }}
+          >
+            <ChevronLeft className="w-7 h-7 text-slate-700" />
+          </button>
+          <button
+            onClick={() => nextConditionId && onNavigate(nextConditionId)}
+            className="absolute z-20 rounded-full bg-white/60 backdrop-blur-sm border border-white/30 shadow-md flex items-center justify-center hover:bg-white/90 transition-colors"
+            style={{ right: '12px', top: '50%', transform: 'translateY(-50%)', width: '52px', height: '52px', opacity: nextConditionId ? 1 : 0, pointerEvents: nextConditionId ? 'auto' : 'none', transition: 'opacity 0.3s ease, background-color 0.2s ease' }}
+          >
+            <ChevronRight className="w-7 h-7 text-slate-700" />
+          </button>
+        </>
+      )}
 
       </div>
     </div>

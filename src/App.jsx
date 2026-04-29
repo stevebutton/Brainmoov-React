@@ -790,6 +790,8 @@ export default function App() {
               onTechServiceSelect={handleTechServiceSelect}
               onCarouselPrev={handleCarouselPrev}
               onCarouselNext={handleCarouselNext}
+              onNavigate={handleViewChange}
+              allConditionIds={conditions.map(c => c.id)}
             />
           </div>
         );

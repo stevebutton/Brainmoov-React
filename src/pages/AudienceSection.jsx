@@ -182,7 +182,9 @@ export default function AudienceSection({
                   <p style={{ fontFamily: "'Instrument Serif', serif", fontStyle: 'italic' }} className="text-xs text-slate-500 text-right mb-1">{uiOurServices}</p>
                   {audience.services.map((service) => {
                     const ServiceIcon = service.icon || DefaultServiceIcon;
-                    const isSelected = selectedService?.id === service.id;
+                    const isSelected = selectedService
+                      ? (service._key ? selectedService._key === service._key : selectedService.id === service.id)
+                      : false;
                     return (
                       <button
                         key={service.id}
