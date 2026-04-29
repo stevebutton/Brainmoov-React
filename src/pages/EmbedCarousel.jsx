@@ -76,28 +76,11 @@ export default function EmbedCarousel() {
   };
 
   return (
-    <div style={{ position: 'relative', width: '100%', height: `${PANEL_H + 32}px`, background: 'white' }}>
-
-      {/* Prev arrow */}
-      <button
-        onClick={() => snapTo(currentIndex - 1)}
-        style={{
-          position: 'absolute', left: '8px', top: `${(PANEL_H + 32) / 2}px`, transform: 'translateY(-50%)',
-          zIndex: 10, width: '36px', height: '36px',
-          opacity: canPrev ? 1 : 0, pointerEvents: canPrev ? 'auto' : 'none',
-          transition: 'opacity 0.3s ease',
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-          borderRadius: '50%', background: 'rgba(255,255,255,0.5)',
-          backdropFilter: 'blur(8px)', border: '1px solid rgba(255,255,255,0.3)',
-          boxShadow: '0 2px 8px rgba(0,0,0,0.15)', cursor: 'pointer',
-        }}
-      >
-        <ChevronLeft style={{ width: '18px', height: '18px', color: '#334155' }} />
-      </button>
+    <div style={{ width: '100%', background: 'white' }}>
 
       {/* Track */}
       <div
-        style={{ position: 'absolute', inset: 0, cursor: isDragging ? 'grabbing' : 'grab', clipPath: 'inset(0)', height: `${PANEL_H + 32}px` }}
+        style={{ position: 'relative', cursor: isDragging ? 'grabbing' : 'grab', clipPath: 'inset(-80px 0)', height: `${PANEL_H + 32}px`, overflow: 'hidden' }}
         onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}
         onPointerUp={handlePointerUp}
@@ -106,7 +89,7 @@ export default function EmbedCarousel() {
         <div
           style={{
             display: 'flex', gap: `${GAP}px`, height: `${PANEL_H}px`,
-            padding: '16px 0',
+            padding: '40px 0 16px 0',
             transform: `translateX(calc(48px - ${offset}px))`,
             transition: isDragging ? 'none' : 'transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
             userSelect: 'none',
@@ -133,7 +116,7 @@ export default function EmbedCarousel() {
                     backgroundColor: isHovered ? 'rgba(255,255,255,0.2)' : 'rgba(255,255,255,0.1)',
                     backdropFilter: panel.image ? 'none' : 'blur(12px)',
                     WebkitBackdropFilter: panel.image ? 'none' : 'blur(12px)',
-                    scale: isHovered ? '1.2' : '1',
+                    scale: isHovered ? '1.1' : '1',
                     transition: 'background-color 0.3s ease, scale 0.3s ease',
                     ...(panel.image && {
                       backgroundImage: `url(${panel.image})`,
@@ -188,22 +171,39 @@ export default function EmbedCarousel() {
         </div>
       </div>
 
-      {/* Next arrow */}
-      <button
-        onClick={() => snapTo(currentIndex + 1)}
-        style={{
-          position: 'absolute', right: '8px', top: `${(PANEL_H + 32) / 2}px`, transform: 'translateY(-50%)',
-          zIndex: 10, width: '36px', height: '36px',
-          opacity: canNext ? 1 : 0, pointerEvents: canNext ? 'auto' : 'none',
-          transition: 'opacity 0.3s ease',
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-          borderRadius: '50%', background: 'rgba(255,255,255,0.5)',
-          backdropFilter: 'blur(8px)', border: '1px solid rgba(255,255,255,0.3)',
-          boxShadow: '0 2px 8px rgba(0,0,0,0.15)', cursor: 'pointer',
-        }}
-      >
-        <ChevronRight style={{ width: '18px', height: '18px', color: '#334155' }} />
-      </button>
+      {/* Arrows below track — fixed to 1280px width */}
+      <div style={{
+        width: '1280px', maxWidth: '100%', margin: '0 auto',
+        display: 'flex', justifyContent: 'space-between',
+        padding: '16px 8px 8px',
+      }}>
+        <button
+          onClick={() => snapTo(currentIndex - 1)}
+          style={{
+            width: '48px', height: '48px',
+            opacity: canPrev ? 1 : 0, pointerEvents: canPrev ? 'auto' : 'none',
+            transition: 'opacity 0.3s ease',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            borderRadius: '50%', background: 'rgba(0,0,0,0.08)',
+            border: '1px solid rgba(0,0,0,0.1)', cursor: 'pointer',
+          }}
+        >
+          <ChevronLeft style={{ width: '28px', height: '28px', color: '#334155' }} />
+        </button>
+        <button
+          onClick={() => snapTo(currentIndex + 1)}
+          style={{
+            width: '48px', height: '48px',
+            opacity: canNext ? 1 : 0, pointerEvents: canNext ? 'auto' : 'none',
+            transition: 'opacity 0.3s ease',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            borderRadius: '50%', background: 'rgba(0,0,0,0.08)',
+            border: '1px solid rgba(0,0,0,0.1)', cursor: 'pointer',
+          }}
+        >
+          <ChevronRight style={{ width: '28px', height: '28px', color: '#334155' }} />
+        </button>
+      </div>
 
     </div>
   );

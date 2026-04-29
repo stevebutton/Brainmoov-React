@@ -231,7 +231,7 @@ export default function App() {
     const root = document.getElementById('root');
     if (root) {
       root.style.width = '100vw';
-      root.style.height = '532px';
+      root.style.height = '600px';
       root.style.overflow = 'hidden';
       root.style.position = 'static';
       root.style.top = 'unset';
