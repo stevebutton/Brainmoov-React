@@ -173,7 +173,7 @@ export default function EmbedCarousel() {
 
       {/* Arrows below track — fixed to 1280px width */}
       <div style={{
-        width: '1280px', maxWidth: '100%', margin: '0 auto',
+        width: '400px', maxWidth: '100%', margin: '0 auto',
         display: 'flex', justifyContent: 'space-between',
         padding: '16px 8px 8px',
       }}>
