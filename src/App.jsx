@@ -227,9 +227,9 @@ export default function App() {
   // Embed mode — render just the carousel, no canvas/banner/nav
   const embedParam = new URLSearchParams(window.location.search).get('embed');
   if (embedParam === 'carousel') {
-    document.body.style.background = 'transparent';
+    document.body.style.background = 'white';
     return (
-      <div style={{ width: '100vw', height: '100vh', background: 'transparent', overflow: 'hidden' }}>
+      <div style={{ width: '100vw', height: '100vh', background: 'white', overflow: 'hidden' }}>
         <EmbedCarousel />
       </div>
     );
