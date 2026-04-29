@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom';
 import { Heart, Brain, Activity, Sparkles, Target, Zap, Shield, Users } from 'lucide-react';
 import { useAssets } from './context/AssetContext';
 import { useContent } from './context/ContentContext';
+import EmbedCarousel from './pages/EmbedCarousel';
 import IntroPage from './pages/IntroPage';
 import AboutSection from './pages/AboutSection';
 import AboutPhilosophySection from './pages/AboutPhilosophySection';
@@ -222,6 +223,18 @@ function getInitialView() {
 export default function App() {
   const { assets } = useAssets();
   const { content } = useContent();
+
+  // Embed mode — render just the carousel, no canvas/banner/nav
+  const embedParam = new URLSearchParams(window.location.search).get('embed');
+  if (embedParam === 'carousel') {
+    document.body.style.background = 'transparent';
+    return (
+      <div style={{ width: '100vw', height: '100vh', background: 'transparent', overflow: 'hidden' }}>
+        <EmbedCarousel />
+      </div>
+    );
+  }
+
   const audiences = content?.audiences || hardcodedAudiences;
   const conditions = content?.conditions || whatConditions;
   const [currentView, setCurrentView] = useState(getInitialView);
