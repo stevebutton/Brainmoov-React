@@ -1,7 +1,19 @@
 import { useAssets } from '../context/AssetContext';
+import { useContent } from '../context/ContentContext';
 
 export default function Banner({ title, subtitle = null, showBanner, onLogoClick, onNavigate, shouldAnimate = true, showTreatmentFinder = false, onTreatmentFinderClick = null, showTitle = true }) {
   const { assets } = useAssets();
+  const { content } = useContent();
+  const ss = content?.siteSettings;
+
+  const navItems = [
+    ['intro',              ss?.navHome           || 'Home'],
+    ['who-detail',         ss?.navWho            || 'Who We Work With'],
+    ['what-detail',        ss?.navWhat           || 'What We Treat'],
+    ['about-infrastructure', ss?.navInfrastructure || 'Our Infrastructure'],
+    ['process-detail',     ss?.navProcess        || 'Our Treatment Process'],
+  ];
+
   return (
     <div
       className="absolute top-0 left-0 right-0 z-20"
@@ -14,13 +26,7 @@ export default function Banner({ title, subtitle = null, showBanner, onLogoClick
         {/* Navigation pills — right aligned */}
         {onNavigate && (
           <div className="flex gap-7">
-            {[
-              ['intro', 'Home'],
-              ['who-detail', 'Who We Work With'],
-              ['what-detail', 'What We Treat'],
-              ['about-infrastructure', 'Our Infrastructure'],
-              ['process-detail', 'Our Treatment Process'],
-            ].map(([section, label], index, arr) => {
+            {navItems.map(([section, label], index, arr) => {
               const isLast = index === arr.length - 1;
               return (
               <button
@@ -49,7 +55,9 @@ export default function Banner({ title, subtitle = null, showBanner, onLogoClick
                 <line x1="12" y1="17" x2="12.01" y2="17"></line>
               </svg>
             </div>
-            <span className="text-sm font-semibold text-white whitespace-nowrap">Treatment Finder</span>
+            <span className="text-sm font-semibold text-white whitespace-nowrap">
+              {ss?.navTreatmentFinder || 'Treatment Finder'}
+            </span>
           </button>
         )}
       </div>

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { ChevronRight } from 'lucide-react';
 import { audiences as fallbackAudiences } from '../data/index';
 import { useContent } from '../context/ContentContext';
+import RichText from '../components/RichText';
 
 const audienceVideos = {
   children: 'https://framerusercontent.com/assets/wSKTeQyQLgySCMfbAchVND2dc.mp4',
@@ -14,7 +15,12 @@ const WHO_INTRO_FALLBACK = 'BrainMoove provides specialized neurological rehabil
 export default function WhoDetailSection({ showBanner, isExiting: isExitingProp, onNavigate }) {
   const { content } = useContent();
   const audiences = content?.audiences || fallbackAudiences;
-  const whoIntro = content?.siteSettings?.whoIntro || WHO_INTRO_FALLBACK;
+  const ws = content?.whoSection;
+  const whoHeading = ws?.heading || 'Who We';
+  const whoHeadingItalic = ws?.headingItalic || 'Work With';
+  const whoIntro = ws?.intro || WHO_INTRO_FALLBACK;
+  const ss = content?.siteSettings;
+  const btnExplorePrograms = ss?.btnExplorePrograms || 'Explore programs';
   const [exiting, setExiting] = useState(false);
   const [hoveredAudience, setHoveredAudience] = useState(null);
 
@@ -47,12 +53,12 @@ export default function WhoDetailSection({ showBanner, isExiting: isExitingProp,
           <div className="flex items-center" style={{ gap: '0' }}>
             <div style={{ width: '50%', paddingRight: '32px' }}>
               <h2 style={{ fontFamily: "'Instrument Serif', serif", fontSize: '52px', lineHeight: 1.0, textAlign: 'right' }} className="text-slate-900">
-                Who We<br />
-                <span style={{ fontFamily: "'Instrument Serif', serif", fontStyle: 'italic', color: '#2C97BE' }}>Work With</span>
+                {whoHeading}<br />
+                <span style={{ fontFamily: "'Instrument Serif', serif", fontStyle: 'italic', color: '#2C97BE' }}>{whoHeadingItalic}</span>
               </h2>
             </div>
             <div style={{ width: '50%', paddingLeft: '32px', borderLeft: '1px solid rgba(0,0,0,0.1)' }}>
-              <p className="text-slate-700 text-sm leading-relaxed">{whoIntro}</p>
+              <RichText value={whoIntro} className="text-slate-700 text-sm leading-relaxed" />
             </div>
           </div>
         </div>
@@ -147,12 +153,12 @@ export default function WhoDetailSection({ showBanner, isExiting: isExitingProp,
                     transition: 'opacity 0.3s ease 0.15s',
                   }}
                 >
-                  <p className="text-sm text-slate-700 leading-snug mb-4">{audience.intro}</p>
+                  <RichText value={audience.intro} className="text-sm text-slate-700 leading-snug mb-4" />
                   <button
                     className="text-sm font-medium text-[#F26219] flex items-center gap-1 hover:underline"
                     onClick={(e) => { e.stopPropagation(); handleNavigate(audience.id); }}
                   >
-                    <span>Explore programs</span>
+                    <span>{btnExplorePrograms}</span>
                     <ChevronRight className="w-4 h-4" />
                   </button>
                 </div>

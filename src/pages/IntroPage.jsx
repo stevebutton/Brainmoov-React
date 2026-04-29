@@ -40,6 +40,7 @@ const hardcodedPanels = [
 export default function IntroPage({ showNav, isActive, hoveredSection, setHoveredSection, onNavigate }) {
   const { content } = useContent();
   const panels = content?.introPanels || hardcodedPanels;
+  const btnFindOutMore = content?.siteSettings?.btnFindOutMore || 'Find out more';
   const [exiting, setExiting] = useState(false);
 
   useEffect(() => {
@@ -167,7 +168,7 @@ export default function IntroPage({ showNav, isActive, hoveredSection, setHovere
                         className="text-sm font-medium text-[#F26219] flex items-center gap-1 hover:underline"
                         onClick={(e) => { e.stopPropagation(); handleNavigate(panel.nav); }}
                       >
-                        <span>Find out more</span>
+                        <span>{btnFindOutMore}</span>
                         <ChevronRight className="w-4 h-4" />
                       </button>
                     </div>

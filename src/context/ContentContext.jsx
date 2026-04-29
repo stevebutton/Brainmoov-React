@@ -37,12 +37,21 @@ export function ContentProvider({ children }) {
     Promise.all([
       client.fetch(queries.introPanels),
       client.fetch(queries.audiences),
+      client.fetch(queries.conditions),
       client.fetch(queries.machines),
       client.fetch(queries.technicalServices),
       client.fetch(queries.siteSettings),
-    ]).then(([introPanels, audiences, machines, technicalServices, siteSettings]) => {
+      client.fetch(queries.aboutContent),
+      client.fetch(queries.whoSection),
+      client.fetch(queries.whatSection),
+      client.fetch(queries.processSection),
+    ]).then(([
+      introPanels, audiences, conditions, machines,
+      technicalServices, siteSettings, aboutContent,
+      whoSection, whatSection, processSection,
+    ]) => {
       setContent({
-        introPanels: introPanels.map(p => ({ ...p, desc: p.description })),
+        introPanels: introPanels.map(p => ({ ...p, image: p.imageUrl, desc: p.description })),
         audiences: audiences.map(a => ({
           ...a,
           icon: audienceIconMap[a.id] || Brain,
@@ -52,6 +61,13 @@ export function ContentProvider({ children }) {
             icon: serviceIconMap[s.id] || Sparkles,
           })) || [],
         })),
+        conditions: conditions.length > 0 ? conditions.map(c => ({
+          ...c,
+          services: c.services?.map(s => ({
+            ...s,
+            icon: serviceIconMap[s.id] || Sparkles,
+          })) || [],
+        })) : null,
         // Prepend the intro object at index 0 to match existing machines[0] pattern
         machines: [INFRA_INTRO, ...machines],
         technicalServices: technicalServices.map(s => ({
@@ -59,6 +75,10 @@ export function ContentProvider({ children }) {
           icon: serviceIconMap[s.id] || Brain,
         })),
         siteSettings,
+        aboutContent,
+        whoSection,
+        whatSection,
+        processSection,
       })
       setLoading(false)
     }).catch(err => {

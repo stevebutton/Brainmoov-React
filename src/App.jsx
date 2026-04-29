@@ -223,6 +223,7 @@ export default function App() {
   const { assets } = useAssets();
   const { content } = useContent();
   const audiences = content?.audiences || hardcodedAudiences;
+  const conditions = content?.conditions || whatConditions;
   const [currentView, setCurrentView] = useState(getInitialView);
   const [showNav, setShowNav] = useState(false);
   const [videoPlaying, setVideoPlaying] = useState({});
@@ -767,7 +768,7 @@ export default function App() {
       })}
 
       {/* What We Treat — condition sections */}
-      {whatConditions.map(condition => {
+      {conditions.map(condition => {
         const shouldRender = currentView === condition.id || previousView === condition.id;
         if (!shouldRender) return null;
         const isExitingCondition = previousView === condition.id && slideDirection === 'out';

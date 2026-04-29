@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { ChevronRight, Lightbulb, Target, Users, Building2, Clock } from 'lucide-react';
+import { useContent } from '../context/ContentContext';
 
-const panels = [
+const panelDefaults = [
   {
     id: 'philosophy',
     prefix: 'Our',
@@ -45,6 +46,11 @@ const panels = [
 ];
 
 export default function AboutSection({ showBanner, isExiting: isExitingProp, onNavigate }) {
+  const { content } = useContent();
+  const ss = content?.siteSettings;
+  const aboutContent = content?.aboutContent;
+  const btnLearnMore = ss?.btnLearnMore || 'Learn more';
+
   const [hoveredSection, setHoveredSection] = useState(null);
   const [exiting, setExiting] = useState(false);
 
@@ -55,6 +61,17 @@ export default function AboutSection({ showBanner, isExiting: isExitingProp, onN
     setExiting(true);
     setTimeout(() => onNavigate(nav), 650);
   };
+
+  // Merge CMS landing panel data with local non-CMS data (icons, nav routes)
+  const panels = panelDefaults.map(p => {
+    const cmsPanel = aboutContent?.landingPanels?.find(cp => cp.id === p.id);
+    return {
+      ...p,
+      prefix: cmsPanel?.prefix || p.prefix,
+      italic: cmsPanel?.italic || p.italic,
+      desc: cmsPanel?.description || p.desc,
+    };
+  });
 
   return (
     <div className="w-full h-full relative">
@@ -124,7 +141,7 @@ export default function AboutSection({ showBanner, isExiting: isExitingProp, onN
                       className="text-sm font-medium text-[#F26219] flex items-center gap-1 hover:underline"
                       onClick={(e) => { e.stopPropagation(); handleNavigate(panel.nav); }}
                     >
-                      <span>Learn more</span>
+                      <span>{btnLearnMore}</span>
                       <ChevronRight className="w-4 h-4" />
                     </button>
                   </div>

@@ -2,17 +2,6 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { machines as fallbackMachines } from '../data/index';
 import { useContent } from '../context/ContentContext';
 
-const equipmentImages = {
-  'Gyrostim':              'https://raw.githubusercontent.com/stevebutton/Brainmoov-React/main/src/gyrostim.jpg',
-  'Vibramoov':             'https://raw.githubusercontent.com/stevebutton/Brainmoov-React/main/src/vibramoove.jpg.jpg',
-  'Force Platform':        'https://raw.githubusercontent.com/stevebutton/Brainmoov-React/main/src/force-platform.jpg.jpg',
-  'Interactive Metronome': 'https://raw.githubusercontent.com/stevebutton/Brainmoov-React/main/src/interactive-metronome.jpg',
-  'TOVA':                  'https://raw.githubusercontent.com/stevebutton/Brainmoov-React/main/src/TOVA.jpg',
-  'VNG':                   'https://raw.githubusercontent.com/stevebutton/Brainmoov-React/main/src/VNG.jpg',
-  'Brainport':             'https://raw.githubusercontent.com/stevebutton/Brainmoov-React/main/src/brainport.jpg',
-  'NeuroFeedBack':         'https://raw.githubusercontent.com/stevebutton/Brainmoov-React/main/src/neurofeedback.jpg',
-};
-
 const fallbackImage = 'https://images.unsplash.com/photo-1530026405186-ed1f139313f8?w=600&h=500&fit=crop&q=80';
 
 export default function AboutInfrastructureSection({
@@ -30,16 +19,51 @@ export default function AboutInfrastructureSection({
 }) {
   const { content } = useContent();
   const machines = content?.machines || fallbackMachines;
+  const about = content?.aboutContent;
+  const ss = content?.siteSettings;
+
+  // Heading parts: CMS aboutContent.infrastructure.heading, or split siteSettings fallback
+  const infraHeading = about?.infrastructure?.heading;
+  const uiOurEquipment = ss?.uiOurEquipment || 'Our Equipment';
+  const uiSelectEquipment = ss?.uiSelectEquipment || 'Select equipment to learn more';
+
+  const tabs = [
+    { key: 'tabWhatIs',       fallback: 'What is BrainMoove?', nav: 'about' },
+    { key: 'tabPhilosophy',   fallback: 'Our Philosophy',       nav: 'about-philosophy' },
+    { key: 'tabObjectives',   fallback: 'Our Objectives',       nav: 'about-objectives' },
+    { key: 'tabTeam',         fallback: 'Our Team',             nav: 'about-team' },
+    { key: 'tabInfrastructure', fallback: 'Our Infrastructure', nav: 'about-infrastructure' },
+    { key: 'tabHistory',      fallback: 'History',              nav: 'about-history' },
+  ];
+
   const introMachine = machines[0];
   const equipmentList = machines.slice(1);
 
   // selectedMachine === 0 means intro state; > 0 means a specific item
   const machine = selectedMachine > 0 ? machines[selectedMachine] : null;
   const isIntro = selectedMachine === 0 || selectedMachine === null;
-  const displayMachine = isClosingInfraVideo ? machines[lastMachine] : machine;
+  // Always show the current machine's image immediately when selected
+  const displayMachine = machine;
 
   return (
     <div className="w-full h-full relative">
+
+      {/* Tab Bar */}
+      {onNavigate && (
+        <div className="absolute left-0 right-0 border-b border-white/20 shadow-sm z-10" style={{top: '150px', height: '50px', backgroundColor: 'rgba(255,255,255,0.15)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)'}}>
+          <div className="flex items-center justify-center h-full gap-8 px-8">
+            {tabs.map(t => (
+              <button
+                key={t.nav}
+                onClick={() => onNavigate(t.nav)}
+                className={`text-sm transition-all ${t.nav === 'about-infrastructure' ? 'font-semibold text-white underline hover:opacity-70' : 'font-medium text-white/70 hover:text-white hover:underline'}`}
+              >
+                {about?.[t.key] || t.fallback}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* Main Panel — always visible */}
       <div
@@ -63,9 +87,18 @@ export default function AboutInfrastructureSection({
 
           {/* Top: Section Title */}
           <div className="px-5 pt-3 pb-2 border-b border-black/10 flex-shrink-0" style={{ animation: 'introTitleFromLeft 2s cubic-bezier(0.4, 0, 0.2, 1) 2s both' }}>
-            <h2 style={{ fontFamily: "'Instrument Serif', serif", fontSize: isIntro ? '60px' : '32px', lineHeight: 1, transition: 'font-size 0.5s ease-out' }} className="text-slate-900 text-right">
-              Our <span style={{ fontFamily: "'Instrument Serif', serif", fontStyle: 'italic', color: '#2C97BE' }}>Infrastructure</span>
-            </h2>
+            {infraHeading
+              ? (
+                <h2 style={{ fontFamily: "'Instrument Serif', serif", fontSize: isIntro ? '60px' : '32px', lineHeight: 1, transition: 'font-size 0.5s ease-out' }} className="text-slate-900 text-right">
+                  {infraHeading}
+                </h2>
+              )
+              : (
+                <h2 style={{ fontFamily: "'Instrument Serif', serif", fontSize: isIntro ? '60px' : '32px', lineHeight: 1, transition: 'font-size 0.5s ease-out' }} className="text-slate-900 text-right">
+                  Our <span style={{ fontFamily: "'Instrument Serif', serif", fontStyle: 'italic', color: '#2C97BE' }}>Infrastructure</span>
+                </h2>
+              )
+            }
           </div>
 
           {/* Body: Two Columns */}
@@ -73,7 +106,7 @@ export default function AboutInfrastructureSection({
 
             {/* Left Column: Equipment Buttons (intro item excluded) */}
             <div className="flex flex-col gap-2 p-4 items-stretch overflow-y-auto flex-shrink-0" style={{ width: '240px', animation: 'introButtonsUp 1s ease-out 5s both' }}>
-              <p className="text-xs font-light text-slate-500 text-right mb-1">Our Equipment</p>
+              <p className="text-xs font-light text-slate-500 text-right mb-1">{uiOurEquipment}</p>
               {equipmentList.map((m, i) => {
                 const originalIndex = i + 1;
                 const isSelected = selectedMachine === originalIndex;
@@ -106,7 +139,7 @@ export default function AboutInfrastructureSection({
                   <p className="text-slate-700 text-sm leading-relaxed text-right flex-1">
                     {introMachine.cards[0].description}
                   </p>
-                  <p className="text-xs text-slate-400 text-right mt-3">Select equipment to learn more</p>
+                  <p className="text-xs text-slate-400 text-right mt-3">{uiSelectEquipment}</p>
                 </div>
               )}
 
@@ -188,9 +221,9 @@ export default function AboutInfrastructureSection({
         </div>
       </div>
 
-      {/* Video Panel — shown when a machine is selected or closing */}
-      {(!isIntro || isClosingInfraVideo) && <div
-        key={isClosingInfraVideo ? 'closing' : machine?.title}
+      {/* Video Panel — shown when a machine is selected */}
+      {!isIntro && <div
+        key={selectedMachine}
         className="absolute overflow-hidden"
         style={{
           right: '88px',
@@ -203,14 +236,14 @@ export default function AboutInfrastructureSection({
           backdropFilter: 'blur(16px)',
           WebkitBackdropFilter: 'blur(16px)',
           boxShadow: '0 4px 24px rgba(0,0,0,0.3)',
-          animation: isExiting || isClosingInfraVideo ? 'slideOutDown 2s ease-in forwards' : 'slideInFromRight 3s cubic-bezier(0.4, 0, 0.2, 1) forwards',
+          animation: isExiting ? 'slideOutDown 2s ease-in forwards' : 'slideInFromRight 1.5s cubic-bezier(0.4, 0, 0.2, 1) forwards',
           zIndex: 15
         }}
       >
         <div className="h-full relative" style={{ padding: '10px' }}>
           <div className="absolute rounded-xl overflow-hidden" style={{ inset: '10px' }}>
             <div className="absolute inset-0" style={{
-              backgroundImage: `url(${displayMachine?.imageUrl || equipmentImages[displayMachine?.title] || fallbackImage})`,
+              backgroundImage: `url(${displayMachine?.imageUrl || fallbackImage})`,
               backgroundSize: 'cover',
               backgroundPosition: 'center',
             }} />

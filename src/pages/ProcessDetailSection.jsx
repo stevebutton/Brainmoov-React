@@ -2,8 +2,9 @@ import { useState } from 'react';
 import { X } from 'lucide-react';
 import { technicalServices as fallbackTechnicalServices } from '../data/index';
 import { useContent } from '../context/ContentContext';
+import RichText from '../components/RichText';
 
-const descriptions = {
+const descriptionFallbacks = {
   assessment: 'Comprehensive evaluation of your neurological health, medical history, and specific concerns to establish baseline function.',
   neurological: 'Advanced diagnostic testing to identify specific areas of dysfunction and create a detailed neurological profile.',
   treatment: 'Development of a personalized treatment protocol tailored to your unique neurological needs and goals.',
@@ -11,9 +12,17 @@ const descriptions = {
   followup: 'Ongoing support and maintenance protocols to ensure lasting results and prevent regression.',
 };
 
+const PROCESS_INTRO_FALLBACK = 'Our structured five-step process ensures every patient receives a thorough assessment, precise diagnosis, and a personalized treatment plan. We continuously monitor progress and adapt protocols to achieve optimal outcomes. From initial evaluation through to long-term follow-up, we are committed to lasting neurological health.';
+
 export default function ProcessDetailSection({ onNavigate, isExiting }) {
   const { content } = useContent();
   const technicalServices = content?.technicalServices || fallbackTechnicalServices;
+  const ps = content?.processSection;
+  const processHeading = ps?.heading || 'Our';
+  const processHeadingItalic = ps?.headingItalic || 'Treatment Process';
+  const processIntro = ps?.intro || PROCESS_INTRO_FALLBACK;
+  const ss = content?.siteSettings;
+  const btnWatchVideo = ss?.btnWatchVideo || 'Watch video';
   const [hoveredPanel, setHoveredPanel] = useState(null);
   const [selectedVideo, setSelectedVideo] = useState(null);
 
@@ -38,14 +47,12 @@ export default function ProcessDetailSection({ onNavigate, isExiting }) {
             <div className="flex items-center" style={{ gap: '0' }}>
               <div style={{ width: '50%', paddingRight: '32px' }}>
                 <h2 style={{ fontFamily: "'Instrument Serif', serif", fontSize: '52px', lineHeight: 1.0, textAlign: 'right' }} className="text-slate-900">
-                  Our<br />
-                  <span style={{ fontFamily: "'Instrument Serif', serif", fontStyle: 'italic', color: '#2C97BE' }}>Treatment Process</span>
+                  {processHeading}<br />
+                  <span style={{ fontFamily: "'Instrument Serif', serif", fontStyle: 'italic', color: '#2C97BE' }}>{processHeadingItalic}</span>
                 </h2>
               </div>
               <div style={{ width: '50%', paddingLeft: '32px', borderLeft: '1px solid rgba(0,0,0,0.1)' }}>
-                <p className="text-slate-700 text-sm leading-relaxed">
-                  Our structured five-step process ensures every patient receives a thorough assessment, precise diagnosis, and a personalized treatment plan. We continuously monitor progress and adapt protocols to achieve optimal outcomes. From initial evaluation through to long-term follow-up, we are committed to lasting neurological health.
-                </p>
+                <RichText value={processIntro} className="text-slate-700 text-sm leading-relaxed" />
               </div>
             </div>
           </div>
@@ -58,6 +65,8 @@ export default function ProcessDetailSection({ onNavigate, isExiting }) {
               const prefix = words.slice(0, -1).join(' ');
               const italicPart = words[words.length - 1];
               const delay = 0.3 + index * 0.15;
+              // Use CMS hoverDescription if available, fall back to hardcoded
+              const hoverDesc = service.hoverDescription || descriptionFallbacks[service.id];
 
               return (
                 <div
@@ -106,7 +115,7 @@ export default function ProcessDetailSection({ onNavigate, isExiting }) {
                           <source src="https://framerusercontent.com/assets/INsc3G5K2Tv80wdTWEjcLPSHR0.mp4" type="video/mp4" />
                         </video>
                         <div className="absolute inset-0 bg-black/20" />
-<div className="absolute bottom-3 left-3 right-3">
+                        <div className="absolute bottom-3 left-3 right-3">
                           <div className="flex items-center gap-2 bg-black/40 backdrop-blur-sm rounded-lg px-3 py-2">
                             <p className="text-xs font-medium text-white">Step {index + 1} — Video Overview</p>
                           </div>
@@ -154,7 +163,7 @@ export default function ProcessDetailSection({ onNavigate, isExiting }) {
                           transition: 'opacity 0.3s ease 0.15s',
                         }}
                       >
-                        <p className="text-sm text-slate-700 leading-snug mb-4">{descriptions[service.id]}</p>
+                        <RichText value={hoverDesc} className="text-sm text-slate-700 leading-snug mb-4" />
                         <button
                           className="text-sm font-medium text-[#F26219] flex items-center gap-1.5 hover:underline"
                           onClick={(e) => { e.stopPropagation(); setSelectedVideo(service.id); }}
@@ -162,7 +171,7 @@ export default function ProcessDetailSection({ onNavigate, isExiting }) {
                           <svg className="w-4 h-4 flex-shrink-0" fill="#F26219" viewBox="0 0 24 24">
                             <polygon points="5 3 19 12 5 21 5 3" />
                           </svg>
-                          <span>Watch video</span>
+                          <span>{btnWatchVideo}</span>
                         </button>
                       </div>
                     </>

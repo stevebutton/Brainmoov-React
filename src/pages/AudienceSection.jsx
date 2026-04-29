@@ -1,7 +1,8 @@
-import { ChevronLeft, ChevronRight, X } from 'lucide-react';
+import { ChevronLeft, ChevronRight, X, ChevronRight as DefaultServiceIcon } from 'lucide-react';
 import { technicalServices as fallbackTechnicalServices } from '../data/index';
 import { useAssets } from '../context/AssetContext';
 import { useContent } from '../context/ContentContext';
+import RichText from '../components/RichText';
 
 export default function AudienceSection({
   audience,
@@ -27,6 +28,12 @@ export default function AudienceSection({
   const { assets } = useAssets();
   const { content } = useContent();
   const technicalServices = content?.technicalServices || fallbackTechnicalServices;
+  const ss = content?.siteSettings;
+  const uiOurServices = ss?.uiOurServices || 'Our Services';
+  const uiSelectService = ss?.uiSelectService || 'Select a service to learn more';
+  const uiOurTreatmentProcess = ss?.uiOurTreatmentProcess || 'our treatment process';
+  const btnPauseVideo = ss?.btnPauseVideo || 'Pause Video';
+
   const Icon = audience.icon;
   const isPlaying = videoPlaying[audience.id];
 
@@ -43,7 +50,7 @@ export default function AudienceSection({
                 onClick={() => toggleVideo(audience.id)}
                 className="mt-2 text-[#F26219] hover:text-[#d4521a] underline text-sm font-medium"
               >
-                Pause Video
+                {btnPauseVideo}
               </button>
             </div>
           </div>
@@ -95,9 +102,9 @@ export default function AudienceSection({
                   className="flex flex-col gap-2 p-4 items-stretch overflow-y-auto flex-shrink-0"
                   style={{ width: '240px', animation: 'introButtonsUp 1s ease-out 5s both' }}
                 >
-                  <p style={{ fontFamily: "'Instrument Serif', serif", fontStyle: 'italic' }} className="text-xs text-slate-500 text-right mb-1">Our Services</p>
+                  <p style={{ fontFamily: "'Instrument Serif', serif", fontStyle: 'italic' }} className="text-xs text-slate-500 text-right mb-1">{uiOurServices}</p>
                   {audience.services.map((service) => {
-                    const ServiceIcon = service.icon;
+                    const ServiceIcon = service.icon || DefaultServiceIcon;
                     return (
                       <button
                         key={service.id}
@@ -124,10 +131,10 @@ export default function AudienceSection({
                       <span style={{ fontStyle: 'italic', color: '#2C97BE' }}>{audience.title.slice('Programme '.length)}</span>
                     ) : audience.title}
                   </h4>
-                  <p className="text-slate-700 text-sm leading-relaxed text-right flex-1 overflow-auto">
-                    {audience.intro}
-                  </p>
-                  <p className="text-xs text-slate-400 text-right mt-3">Select a service to learn more</p>
+                  <div className="text-slate-700 text-sm leading-relaxed text-right flex-1 overflow-auto">
+                    <RichText value={audience.intro} />
+                  </div>
+                  <p className="text-xs text-slate-400 text-right mt-3">{uiSelectService}</p>
                 </div>
 
               </div>
@@ -172,9 +179,9 @@ export default function AudienceSection({
 
                 {/* Left Column: Service Buttons */}
                 <div className="flex flex-col gap-2 p-4 items-stretch overflow-y-auto flex-shrink-0" style={{ width: '240px' }}>
-                  <p style={{ fontFamily: "'Instrument Serif', serif", fontStyle: 'italic' }} className="text-xs text-slate-500 text-right mb-1">Our Services</p>
+                  <p style={{ fontFamily: "'Instrument Serif', serif", fontStyle: 'italic' }} className="text-xs text-slate-500 text-right mb-1">{uiOurServices}</p>
                   {audience.services.map((service) => {
-                    const ServiceIcon = service.icon;
+                    const ServiceIcon = service.icon || DefaultServiceIcon;
                     const isSelected = selectedService?.id === service.id;
                     return (
                       <button
@@ -193,76 +200,93 @@ export default function AudienceSection({
                   })}
                 </div>
 
-                {/* Right Column: Carousel Content */}
+                {/* Right Column: Description or Card Carousel */}
                 <div className="flex-1 flex flex-col overflow-hidden border-l border-black/10">
-                  <div className="flex-1 relative overflow-hidden">
-                    <div
-                      className="h-full flex transition-transform duration-500 ease-in-out"
-                      style={{ transform: `translateX(-${carouselIndex * 100}%)` }}
-                    >
-                      {selectedService.cards.map((card, idx) => (
-                        <div key={idx} className="min-w-full h-full flex flex-col">
-                          <div className="p-5 flex-1 overflow-y-auto overflow-x-hidden">
-                            <h4
-                              key={`service-${idx}-${selectedService.title}`}
-                              className="mb-1 animate-slide-in-right-blur text-right"
-                              style={{ fontFamily: "'Instrument Serif', serif", fontSize: '42px', color: '#000', lineHeight: 1.0 }}
-                            >
-                              {selectedService.title}
-                            </h4>
-                            <div className="text-slate-400 text-xs mb-3 text-right">
-                              {carouselIndex + 1} / {selectedService.cards.length}
+                  {selectedService.description?.length > 0 ? (
+                    /* Rich-text description — shown when service has a description field */
+                    <div className="p-5 flex-1 overflow-y-auto overflow-x-hidden">
+                      <h4
+                        className="mb-3 animate-slide-in-right-blur text-right"
+                        style={{ fontFamily: "'Instrument Serif', serif", fontSize: '32px', color: '#000', lineHeight: 1.0 }}
+                      >
+                        {selectedService.title}
+                      </h4>
+                      <div className="text-slate-700 text-sm leading-relaxed text-right">
+                        <RichText value={selectedService.description} />
+                      </div>
+                    </div>
+                  ) : (
+                    /* Card carousel — fallback for services that use the cards model */
+                    <>
+                      <div className="flex-1 relative overflow-hidden">
+                        <div
+                          className="h-full flex transition-transform duration-500 ease-in-out"
+                          style={{ transform: `translateX(-${carouselIndex * 100}%)` }}
+                        >
+                          {(selectedService.cards || []).map((card, idx) => (
+                            <div key={idx} className="min-w-full h-full flex flex-col">
+                              <div className="p-5 flex-1 overflow-y-auto overflow-x-hidden">
+                                <h4
+                                  key={`service-${idx}-${selectedService.title}`}
+                                  className="mb-1 animate-slide-in-right-blur text-right"
+                                  style={{ fontFamily: "'Instrument Serif', serif", fontSize: '42px', color: '#000', lineHeight: 1.0 }}
+                                >
+                                  {selectedService.title}
+                                </h4>
+                                <div className="text-slate-400 text-xs mb-3 text-right">
+                                  {carouselIndex + 1} / {selectedService.cards.length}
+                                </div>
+                                <h5
+                                  key={`title-${idx}-${carouselIndex}`}
+                                  className="mb-2 animate-fade-in text-right"
+                                  style={{ fontFamily: "'Instrument Serif', serif", fontSize: '24px', color: '#000', lineHeight: 1.2 }}
+                                >
+                                  {card.title}
+                                </h5>
+                                <p
+                                  key={`desc-${idx}-${carouselIndex}`}
+                                  className="text-slate-700 text-sm leading-relaxed animate-fade-in-delay text-right"
+                                >
+                                  {card.description}
+                                </p>
+                              </div>
                             </div>
-                            <h5
-                              key={`title-${idx}-${carouselIndex}`}
-                              className="mb-2 animate-fade-in text-right"
-                              style={{ fontFamily: "'Instrument Serif', serif", fontSize: '24px', color: '#000', lineHeight: 1.2 }}
-                            >
-                              {card.title}
-                            </h5>
-                            <p
-                              key={`desc-${idx}-${carouselIndex}`}
-                              className="text-slate-700 text-sm leading-relaxed animate-fade-in-delay text-right"
-                            >
-                              {card.description}
-                            </p>
-                          </div>
+                          ))}
                         </div>
-                      ))}
-                    </div>
-
-                  </div>
-
-                  {/* Bottom bar: prev arrow | dots | next arrow */}
-                  <div className="flex items-center justify-between px-3 py-3 border-t border-black/10 flex-shrink-0">
-                    <button
-                      onClick={onCarouselPrev}
-                      disabled={carouselIndex === 0}
-                      className={`bg-white/80 border border-black/10 p-1.5 rounded-full shadow hover:scale-110 transition-transform ${carouselIndex === 0 ? 'opacity-20 cursor-not-allowed' : ''}`}
-                    >
-                      <ChevronLeft className="w-4 h-4 text-slate-700" />
-                    </button>
-                    <div className="flex justify-center gap-1.5">
-                      {selectedService.cards.map((_, idx) => (
-                        <button
-                          key={idx}
-                          onClick={() => setCarouselIndex(idx)}
-                          className={`rounded-full transition-all ${
-                            idx === carouselIndex
-                              ? 'w-5 h-1.5 bg-[#F26219]'
-                              : 'w-1.5 h-1.5 bg-black/20 hover:bg-black/40'
-                          }`}
-                        />
-                      ))}
-                    </div>
-                    <button
-                      onClick={onCarouselNext}
-                      disabled={carouselIndex >= selectedService.cards.length - 1}
-                      className={`bg-white/80 border border-black/10 p-1.5 rounded-full shadow hover:scale-110 transition-transform ${carouselIndex >= selectedService.cards.length - 1 ? 'opacity-20 cursor-not-allowed' : ''}`}
-                    >
-                      <ChevronRight className="w-4 h-4 text-slate-700" />
-                    </button>
-                  </div>
+                      </div>
+                      {(selectedService.cards?.length > 0) && (
+                        <div className="flex items-center justify-between px-3 py-3 border-t border-black/10 flex-shrink-0">
+                          <button
+                            onClick={onCarouselPrev}
+                            disabled={carouselIndex === 0}
+                            className={`bg-white/80 border border-black/10 p-1.5 rounded-full shadow hover:scale-110 transition-transform ${carouselIndex === 0 ? 'opacity-20 cursor-not-allowed' : ''}`}
+                          >
+                            <ChevronLeft className="w-4 h-4 text-slate-700" />
+                          </button>
+                          <div className="flex justify-center gap-1.5">
+                            {selectedService.cards.map((_, idx) => (
+                              <button
+                                key={idx}
+                                onClick={() => setCarouselIndex(idx)}
+                                className={`rounded-full transition-all ${
+                                  idx === carouselIndex
+                                    ? 'w-5 h-1.5 bg-[#F26219]'
+                                    : 'w-1.5 h-1.5 bg-black/20 hover:bg-black/40'
+                                }`}
+                              />
+                            ))}
+                          </div>
+                          <button
+                            onClick={onCarouselNext}
+                            disabled={carouselIndex >= selectedService.cards.length - 1}
+                            className={`bg-white/80 border border-black/10 p-1.5 rounded-full shadow hover:scale-110 transition-transform ${carouselIndex >= selectedService.cards.length - 1 ? 'opacity-20 cursor-not-allowed' : ''}`}
+                          >
+                            <ChevronRight className="w-4 h-4 text-slate-700" />
+                          </button>
+                        </div>
+                      )}
+                    </>
+                  )}
                 </div>
 
               </div>
@@ -282,7 +306,7 @@ export default function AudienceSection({
           >
             <div className="h-full flex items-center">
               <div className="flex items-center justify-end" style={{width: '304px', paddingRight: '32px'}}>
-                <h3 style={{ fontFamily: "'Instrument Serif', serif", fontSize: '22px' }} className="text-slate-900 whitespace-nowrap">our treatment process</h3>
+                <h3 style={{ fontFamily: "'Instrument Serif', serif", fontSize: '22px' }} className="text-slate-900 whitespace-nowrap">{uiOurTreatmentProcess}</h3>
               </div>
               <div className="self-stretch flex items-stretch">
                 {technicalServices.map((techService, index) => {

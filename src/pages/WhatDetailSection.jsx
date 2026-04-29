@@ -1,7 +1,8 @@
 import { useState, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { Activity, Zap, Brain, Sparkles, ChevronLeft, ChevronRight } from 'lucide-react';
-import { conditionsData } from '../data/index';
+import { useContent } from '../context/ContentContext';
+import RichText from '../components/RichText';
 
 const PANEL_W = 295;
 const GAP = 10;
@@ -15,7 +16,8 @@ const conditionIds = [
   'what-memorisation', 'what-fonctions-exec', 'what-equilibre',
 ];
 
-const titleParts = [
+// Fallback titles used only when CMS conditions are not yet populated
+const titlePartsFallback = [
   'Neurovisuel',
   'Visio spatial',
   'Travail de la Rythmicité',
@@ -28,16 +30,6 @@ const titleParts = [
   "Entraînement des fonctions et de l'équilibre Autonomique",
 ];
 
-const allPanels = [
-  ...conditionsData,
-  { category: 'Panel Five',  conditions: [] },
-  { category: 'Panel Six',   conditions: [] },
-  { category: 'Panel Seven', conditions: [] },
-  { category: 'Panel Eight', conditions: [] },
-  { category: 'Panel Nine',  conditions: [] },
-  { category: 'Panel Ten',   conditions: [] },
-];
-
 // Canvas geometry (must match index.css #root dimensions)
 const CANVAS_W = 1280;
 const CANVAS_H = 720;
@@ -45,11 +37,36 @@ const CANVAS_H = 720;
 const CAROUSEL_TOP = 268;
 const CAROUSEL_H = 340;
 
+const WHAT_INTRO_FALLBACK = 'BrainMoove addresses a broad range of neurological and developmental conditions across all ages. From neurodevelopmental challenges and acquired brain injuries to neurological diseases and performance goals, our evidence-based interventions target the root causes of dysfunction. Each condition is approached with precision, using advanced diagnostics to guide personalized treatment.';
+
 export default function WhatDetailSection({ showBanner, isExiting, onNavigate }) {
+  const { content } = useContent();
+  const wts = content?.whatSection;
+  const whatHeading = wts?.heading || 'What';
+  const whatHeadingItalic = wts?.headingItalic || 'We Treat';
+  const whatIntro = wts?.intro || WHAT_INTRO_FALLBACK;
+
+  // Build panels from CMS conditions (ordered by `order` field), falling back to hardcoded data
+  const cmsConditions = content?.conditions || [];
+  const conditionMap = {}
+  cmsConditions.forEach(c => { conditionMap[c.id] = c })
+
+  const allPanels = conditionIds.map((id, i) => {
+    const cms = conditionMap[id]
+    return {
+      id,
+      category: cms?.panelTitle || cms?.title || titlePartsFallback[i],
+      description: cms?.panelDescription || null,
+      image: cms?.panelImage || null,
+    }
+  })
+
+  const titleParts = allPanels.map(p => p.category);
+
   const [hoveredCategory, setHoveredCategory] = useState(null);
   const [offset, setOffset] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
-  const dragRef = useRef({ active: false, startX: 0, startOffset: 0 });
+  const dragRef = useRef({ active: false, startX: 0, startOffset: 0, moved: false });
 
   const maxOffset = (allPanels.length - 1) * STEP;
   const currentIndex = Math.round(offset / STEP);
@@ -62,8 +79,11 @@ export default function WhatDetailSection({ showBanner, isExiting, onNavigate })
 
   const handlePointerDown = (e) => {
     if (e.button !== 0) return;
+    // Record which panel was pressed before pointer capture redirects events
+    const panelEl = e.target.closest('[data-panel-idx]');
+    const panelIdx = panelEl ? parseInt(panelEl.dataset.panelIdx) : -1;
     e.currentTarget.setPointerCapture(e.pointerId);
-    dragRef.current = { active: true, startX: e.clientX, startOffset: offset };
+    dragRef.current = { active: true, startX: e.clientX, startOffset: offset, moved: false, panelIdx };
     setIsDragging(true);
   };
 
@@ -72,14 +92,20 @@ export default function WhatDetailSection({ showBanner, isExiting, onNavigate })
     // e.clientX is in viewport pixels; offset is in canvas pixels — divide by scale
     const scale = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--scale')) || 1;
     const delta = (dragRef.current.startX - e.clientX) / scale;
+    if (Math.abs(delta) > 4) dragRef.current.moved = true;
     setOffset(Math.max(0, Math.min(maxOffset, dragRef.current.startOffset + delta)));
   };
 
   const handlePointerUp = () => {
     if (!dragRef.current.active) return;
+    const { moved, panelIdx } = dragRef.current;
     dragRef.current.active = false;
     setIsDragging(false);
     snapTo(Math.round(offset / STEP));
+    // Treat as a tap/click if no significant drag movement
+    if (!moved && panelIdx >= 0) {
+      onNavigate(conditionIds[panelIdx]);
+    }
   };
 
   // Portal carousel: rendered into document.body so it escapes #root's overflow:hidden.
@@ -103,8 +129,7 @@ export default function WhatDetailSection({ showBanner, isExiting, onNavigate })
         style={{
           position: 'absolute',
           left: `calc(50vw - ${CANVAS_W / 2 - 8}px * var(--scale, 1))`,
-          top: '50%',
-          transform: 'translateY(-50%)',
+          top: `calc(100% + 12px * var(--scale, 1))`,
           zIndex: 10,
           opacity: canPrev ? 1 : 0,
           pointerEvents: canPrev ? 'auto' : 'none',
@@ -145,19 +170,20 @@ export default function WhatDetailSection({ showBanner, isExiting, onNavigate })
             height: '100%',
           }}
         >
-          {allPanels.map((category, idx) => {
+          {allPanels.map((panel, idx) => {
             const isHovered = hoveredCategory === idx;
             const Icon = categoryIcons[idx];
             const title = titleParts[idx];
+            const { image, description } = panel;
 
             return (
               // Outer: owns layout size + stagger animation (transform via keyframes)
               <div
                 key={idx}
+                data-panel-idx={idx}
                 className="flex-shrink-0"
-                onMouseEnter={() => !isDragging && setHoveredCategory(idx)}
+                onMouseEnter={() => !dragRef.current.active && setHoveredCategory(idx)}
                 onMouseLeave={() => setHoveredCategory(null)}
-                onClick={() => !isDragging && onNavigate(conditionIds[idx])}
                 style={{ cursor: 'pointer',
                   width: `calc(${PANEL_W}px * var(--scale, 1))`,
                   height: '100%',
@@ -174,60 +200,63 @@ export default function WhatDetailSection({ showBanner, isExiting, onNavigate })
                     width: '100%',
                     height: '100%',
                     backgroundColor: isHovered ? 'rgba(255,255,255,0.35)' : 'rgba(255,255,255,0.25)',
-                    backdropFilter: 'blur(16px)',
-                    WebkitBackdropFilter: 'blur(16px)',
+                    backdropFilter: image ? 'none' : 'blur(16px)',
+                    WebkitBackdropFilter: image ? 'none' : 'blur(16px)',
                     scale: isHovered ? '1.1' : '1',
                     transition: 'background-color 0.4s ease, scale 0.3s ease',
+                    ...(image && {
+                      backgroundImage: `url(${image})`,
+                      backgroundSize: 'cover',
+                      backgroundPosition: 'center',
+                    }),
                   }}
                 >
-                  {/* Icon + Title */}
+                  {/* Gradient overlay when image is present */}
+                  {image && <div className="absolute inset-0" style={{ background: 'linear-gradient(to bottom, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.6) 100%)' }} />}
+                  {/* Icon + Title — bottom anchored, slides up on hover */}
                   <div
                     style={{
                       position: 'absolute',
                       left: `calc(24px * var(--scale, 1))`,
                       right: `calc(24px * var(--scale, 1))`,
-                      top: '50%',
-                      transform: isHovered ? 'translateY(calc(-50% - 26%))' : 'translateY(-50%)',
+                      bottom: `calc(50px * var(--scale, 1))`,
+                      transform: isHovered ? `translateY(calc(-70px * var(--scale, 1)))` : 'translateY(0)',
                       transition: 'transform 0.4s ease',
                     }}
                   >
-                    <Icon style={{ width: `calc(32px * var(--scale, 1))`, height: `calc(32px * var(--scale, 1))`, marginBottom: `calc(12px * var(--scale, 1))` }} className="text-slate-600" />
+                    <Icon style={{ width: `calc(32px * var(--scale, 1))`, height: `calc(32px * var(--scale, 1))`, marginBottom: `calc(12px * var(--scale, 1))` }} className={image ? 'text-white/80' : 'text-slate-600'} />
                     <h2
                       style={{
                         fontFamily: "'Instrument Serif', serif",
                         fontStyle: 'italic',
                         fontSize: `calc(36px * var(--scale, 1))`,
                         lineHeight: 1.0,
-                        color: '#2C97BE',
+                        color: image ? '#ffffff' : '#2C97BE',
                       }}
                       className="text-left"
                     >
                       {title}
                     </h2>
-                  </div>
 
-                  {/* Conditions list */}
-                  {category.conditions.length > 0 && (
-                    <div
-                      style={{
-                        position: 'absolute',
-                        left: `calc(24px * var(--scale, 1))`,
-                        right: `calc(24px * var(--scale, 1))`,
-                        top: 'calc(50% - 7%)',
-                        opacity: isHovered ? 1 : 0,
-                        transition: 'opacity 0.3s ease 0.15s',
-                      }}
-                    >
-                      <div style={{ display: 'flex', flexDirection: 'column', gap: `calc(4px * var(--scale, 1))` }}>
-                        {category.conditions.map((condition, cidx) => (
-                          <div key={cidx} className="flex items-start">
-                            <span style={{ fontSize: `calc(12px * var(--scale, 1))`, color: '#F26219', marginRight: `calc(8px * var(--scale, 1))`, marginTop: `calc(2px * var(--scale, 1))`, flexShrink: 0 }}>•</span>
-                            <span style={{ fontSize: `calc(12px * var(--scale, 1))` }} className="text-slate-700 leading-tight">{condition}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
+                    {/* Description — absolutely positioned below the title so it doesn't affect the container's height */}
+                    {description && (
+                      <p
+                        style={{
+                          position: 'absolute',
+                          top: `calc(100% + 14px * var(--scale, 1))`,
+                          left: 0,
+                          right: 0,
+                          fontSize: `calc(12px * var(--scale, 1))`,
+                          lineHeight: 1.5,
+                          opacity: isHovered ? 1 : 0,
+                          transition: 'opacity 0.3s ease 0.15s',
+                        }}
+                        className={image ? 'text-white/90' : 'text-slate-700'}
+                      >
+                        {description}
+                      </p>
+                    )}
+                  </div>
                 </div>
               </div>
             );
@@ -241,8 +270,7 @@ export default function WhatDetailSection({ showBanner, isExiting, onNavigate })
         style={{
           position: 'absolute',
           right: `calc(50vw - ${CANVAS_W / 2 - 8}px * var(--scale, 1))`,
-          top: '50%',
-          transform: 'translateY(-50%)',
+          top: `calc(100% + 12px * var(--scale, 1))`,
           zIndex: 10,
           opacity: canNext ? 1 : 0,
           pointerEvents: canNext ? 'auto' : 'none',
@@ -266,7 +294,7 @@ export default function WhatDetailSection({ showBanner, isExiting, onNavigate })
         <div
           className="rounded-2xl border border-white/20 shadow-2xl"
           style={{
-            width: '1210px',
+            width: 'fit-content',
             backgroundColor: 'rgba(255,255,255,0.30)',
             backdropFilter: 'blur(16px)',
             WebkitBackdropFilter: 'blur(16px)',
@@ -277,16 +305,14 @@ export default function WhatDetailSection({ showBanner, isExiting, onNavigate })
           }}
         >
           <div className="flex items-center">
-            <div style={{ width: '50%', paddingRight: '32px' }}>
-              <h2 style={{ fontFamily: "'Instrument Serif', serif", fontSize: '52px', lineHeight: 1.0, textAlign: 'right' }} className="text-slate-900">
-                What<br />
-                <span style={{ fontFamily: "'Instrument Serif', serif", fontStyle: 'italic', color: '#2C97BE' }}>We Treat</span>
+            <div style={{ paddingRight: '32px', flexShrink: 0 }}>
+              <h2 style={{ fontFamily: "'Instrument Serif', serif", fontSize: '52px', lineHeight: 1.0, textAlign: 'right', whiteSpace: 'nowrap' }} className="text-slate-900">
+                {whatHeading}<br />
+                <span style={{ fontFamily: "'Instrument Serif', serif", fontStyle: 'italic', color: '#2C97BE' }}>{whatHeadingItalic}</span>
               </h2>
             </div>
-            <div style={{ width: '50%', paddingLeft: '32px', borderLeft: '1px solid rgba(0,0,0,0.1)' }}>
-              <p className="text-slate-700 text-sm leading-relaxed">
-                BrainMoove addresses a broad range of neurological and developmental conditions across all ages. From neurodevelopmental challenges and acquired brain injuries to neurological diseases and performance goals, our evidence-based interventions target the root causes of dysfunction. Each condition is approached with precision, using advanced diagnostics to guide personalized treatment.
-              </p>
+            <div style={{ width: '460px', paddingLeft: '32px', borderLeft: '1px solid rgba(0,0,0,0.1)' }}>
+              <RichText value={whatIntro} className="text-slate-700 text-sm leading-relaxed" />
             </div>
           </div>
         </div>
