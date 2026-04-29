@@ -228,8 +228,20 @@ export default function App() {
   const embedParam = new URLSearchParams(window.location.search).get('embed');
   if (embedParam === 'carousel') {
     document.body.style.background = 'white';
+    const root = document.getElementById('root');
+    if (root) {
+      root.style.width = '100vw';
+      root.style.height = '532px';
+      root.style.overflow = 'hidden';
+      root.style.position = 'static';
+      root.style.top = 'unset';
+      root.style.left = 'unset';
+      root.style.transform = 'none';
+      root.style.borderRadius = '0';
+      root.style.boxShadow = 'none';
+    }
     return (
-      <div style={{ width: '100vw', height: '100vh', background: 'white', overflow: 'hidden' }}>
+      <div style={{ width: '100%', height: '100%', background: 'white', overflow: 'hidden' }}>
         <EmbedCarousel />
       </div>
     );

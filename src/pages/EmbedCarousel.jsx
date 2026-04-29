@@ -2,8 +2,9 @@ import { useState, useRef } from 'react';
 import { Activity, Zap, Brain, Sparkles, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useContent } from '../context/ContentContext';
 
-const PANEL_W = 280;
-const GAP = 12;
+const PANEL_W = 400;
+const PANEL_H = 500;
+const GAP = 40;
 const STEP = PANEL_W + GAP;
 
 const categoryIcons = [Activity, Zap, Brain, Sparkles, Activity, Zap, Brain, Sparkles, Activity, Zap];
@@ -75,13 +76,13 @@ export default function EmbedCarousel() {
   };
 
   return (
-    <div style={{ position: 'relative', width: '100%', height: '100%', background: 'white' }}>
+    <div style={{ position: 'relative', width: '100%', height: `${PANEL_H + 32}px`, background: 'white' }}>
 
       {/* Prev arrow */}
       <button
         onClick={() => snapTo(currentIndex - 1)}
         style={{
-          position: 'absolute', left: '8px', top: '50%', transform: 'translateY(-50%)',
+          position: 'absolute', left: '8px', top: `${(PANEL_H + 32) / 2}px`, transform: 'translateY(-50%)',
           zIndex: 10, width: '36px', height: '36px',
           opacity: canPrev ? 1 : 0, pointerEvents: canPrev ? 'auto' : 'none',
           transition: 'opacity 0.3s ease',
@@ -96,7 +97,7 @@ export default function EmbedCarousel() {
 
       {/* Track */}
       <div
-        style={{ position: 'absolute', inset: 0, cursor: isDragging ? 'grabbing' : 'grab', clipPath: 'inset(0)' }}
+        style={{ position: 'absolute', inset: 0, cursor: isDragging ? 'grabbing' : 'grab', clipPath: 'inset(0)', height: `${PANEL_H + 32}px` }}
         onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}
         onPointerUp={handlePointerUp}
@@ -104,7 +105,7 @@ export default function EmbedCarousel() {
       >
         <div
           style={{
-            display: 'flex', gap: `${GAP}px`, height: '100%',
+            display: 'flex', gap: `${GAP}px`, height: `${PANEL_H}px`,
             padding: '16px 0',
             transform: `translateX(calc(48px - ${offset}px))`,
             transition: isDragging ? 'none' : 'transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
@@ -118,7 +119,7 @@ export default function EmbedCarousel() {
             return (
               <div
                 key={idx}
-                style={{ flexShrink: 0, width: `${PANEL_W}px`, height: '100%', cursor: 'pointer' }}
+                style={{ flexShrink: 0, width: `${PANEL_W}px`, height: `${PANEL_H - 32}px`, cursor: 'pointer' }}
                 onMouseEnter={() => !dragRef.current.active && setHoveredIdx(idx)}
                 onMouseLeave={() => setHoveredIdx(null)}
               >
@@ -127,12 +128,12 @@ export default function EmbedCarousel() {
                     width: '100%', height: '100%',
                     borderRadius: '16px',
                     border: '1px solid rgba(255,255,255,0.2)',
-                    boxShadow: '0 4px 24px rgba(0,0,0,0.15)',
+                    boxShadow: '0 8px 32px rgba(0,0,0,0.25)',
                     position: 'relative', overflow: 'hidden',
                     backgroundColor: isHovered ? 'rgba(255,255,255,0.2)' : 'rgba(255,255,255,0.1)',
                     backdropFilter: panel.image ? 'none' : 'blur(12px)',
                     WebkitBackdropFilter: panel.image ? 'none' : 'blur(12px)',
-                    scale: isHovered ? '1.05' : '1',
+                    scale: isHovered ? '1.2' : '1',
                     transition: 'background-color 0.3s ease, scale 0.3s ease',
                     ...(panel.image && {
                       backgroundImage: `url(${panel.image})`,
@@ -162,7 +163,7 @@ export default function EmbedCarousel() {
                     />
                     <h2 style={{
                       fontFamily: "'Instrument Serif', serif",
-                      fontStyle: 'italic', fontSize: '30px', lineHeight: 1.0,
+                      fontStyle: 'italic', fontSize: '42px', lineHeight: 1.0,
                       color: panel.image ? '#ffffff' : '#2C97BE',
                     }}>
                       {panel.category}
@@ -171,7 +172,7 @@ export default function EmbedCarousel() {
                     {panel.description && (
                       <p style={{
                         position: 'absolute', top: 'calc(100% + 12px)', left: 0, right: 0,
-                        fontSize: '12px', lineHeight: 1.5,
+                        fontSize: '15px', lineHeight: 1.5,
                         opacity: isHovered ? 1 : 0,
                         transition: 'opacity 0.3s ease 0.15s',
                         color: panel.image ? 'rgba(255,255,255,0.9)' : '#475569',
@@ -191,7 +192,7 @@ export default function EmbedCarousel() {
       <button
         onClick={() => snapTo(currentIndex + 1)}
         style={{
-          position: 'absolute', right: '8px', top: '50%', transform: 'translateY(-50%)',
+          position: 'absolute', right: '8px', top: `${(PANEL_H + 32) / 2}px`, transform: 'translateY(-50%)',
           zIndex: 10, width: '36px', height: '36px',
           opacity: canNext ? 1 : 0, pointerEvents: canNext ? 'auto' : 'none',
           transition: 'opacity 0.3s ease',
