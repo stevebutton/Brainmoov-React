@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useContent } from '../context/ContentContext';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
 import RichText from '../components/RichText';
 
 const GAP = 16;
@@ -21,10 +20,14 @@ export default function EmbedExpandingCards() {
   const [hoveredId, setHoveredId]   = useState(null);
   const [activeId, setActiveId] = useState(null);
 
-  // Read from audiences (Who We Work With programmes)
+  // Read from audiences in fixed order: children → adults → seniors
   const audiences = content?.audiences || [];
-  const cards = audiences.length >= 1
-    ? audiences.slice(0, 3).map((a, i) => ({
+  const AUDIENCE_ORDER = ['children', 'adults', 'seniors'];
+  const audienceMap = {};
+  audiences.forEach(a => { audienceMap[a.id] = a; });
+  const ordered = AUDIENCE_ORDER.map(id => audienceMap[id]).filter(Boolean);
+  const cards = ordered.length >= 1
+    ? ordered.map((a, i) => ({
         id: i + 1,
         title: a.title,
         subtitle: 'Who We Work With',
@@ -42,10 +45,8 @@ export default function EmbedExpandingCards() {
   };
 
   const handleCardClick = (id) => {
-    if (activeId === id) return; // already active — clicks handled by arrows/close
+    if (activeId === id) return;
     setActiveId(id);
-    setSlideIdx(0);
-    setSlideKey(k => k + 1);
   };
 
   const handleClose = (e) => {
@@ -55,11 +56,16 @@ export default function EmbedExpandingCards() {
 
   return (
     <div style={{ width: '100%', minHeight: `${CARD_H + 80}px`, display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '40px 0', background: 'white' }}>
+      <style>{`
+        @keyframes cardSlideIn {
+          from { opacity: 0; transform: translateY(60px); }
+          to   { opacity: 1; transform: translateY(0); }
+        }
+      `}</style>
       <div style={{ display: 'flex', gap: `${GAP}px` }}>
         {cards.map(card => {
-          const isExpanded  = hoveredId === card.id && activeId === null;
-          const isActive    = activeId === card.id;
-          const isCollapsed = !isActive && (hoveredId !== null || activeId !== null) && hoveredId !== card.id && activeId !== card.id;
+          const isExpanded = hoveredId === card.id && activeId === null;
+          const isActive   = activeId === card.id;
 
           return (
             <div
@@ -69,6 +75,7 @@ export default function EmbedExpandingCards() {
                 height: `${CARD_H}px`,
                 borderRadius: '20px',
                 background: card.image ? 'none' : 'linear-gradient(135deg, #2C97BE 0%, #1a6e8e 100%)',
+                animation: `cardSlideIn 2s cubic-bezier(0.4, 0, 0.2, 1) ${(card.id - 1) * 0.2}s both`,
                 transition: 'width 0.5s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease',
                 overflow: 'hidden',
                 cursor: isActive ? 'default' : 'pointer',
@@ -100,7 +107,7 @@ export default function EmbedExpandingCards() {
               {card.image && (
                 <div style={{
                   position: 'absolute', inset: 0,
-                  background: 'linear-gradient(to bottom, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.55) 100%)',
+                  background: 'linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.35) 100%)',
                 }} />
               )}
 
@@ -140,7 +147,7 @@ export default function EmbedExpandingCards() {
                     left: 0,
                     width: `${EXPANDED_W / 2}px`,
                     fontFamily: "'Inter', sans-serif",
-                    fontSize: '14px', lineHeight: 1.6,
+                    fontSize: '17px', lineHeight: 1.6,
                     color: 'rgba(255,255,255,0.85)',
                     opacity: isExpanded && !isActive ? 1 : 0,
                     transition: 'opacity 0.35s ease 0.3s',
@@ -159,7 +166,7 @@ export default function EmbedExpandingCards() {
                 transition: 'transform 0.45s cubic-bezier(0.4, 0, 0.2, 1) 0s',
                 zIndex: 3,
                 display: 'flex', flexDirection: 'column',
-                padding: '24px 28px 16px',
+                padding: '24px 68px 16px 28px',
               }}>
 
                 {/* Content — slides in from right */}
@@ -170,8 +177,8 @@ export default function EmbedExpandingCards() {
                   transition: 'opacity 0.4s ease 0.25s, transform 0.4s ease 0.25s',
                 }}>
                   {card.intro
-                    ? <RichText value={card.intro} className="text-white/90 text-sm leading-relaxed" />
-                    : <p style={{ fontFamily: "'Inter', sans-serif", fontSize: '14px', lineHeight: 1.7, color: 'rgba(255,255,255,0.7)' }}>Content coming soon.</p>
+                    ? <RichText value={card.intro} className="text-white/90 text-base leading-relaxed" />
+                    : <p style={{ fontFamily: "'Inter', sans-serif", fontSize: '17px', lineHeight: 1.7, color: 'rgba(255,255,255,0.7)' }}>Content coming soon.</p>
                   }
                 </div>
 
@@ -196,23 +203,6 @@ export default function EmbedExpandingCards() {
                 </div>
               </div>
 
-              {/* Vertical title — collapsed state */}
-              {isCollapsed && (
-                <div style={{
-                  position: 'absolute', inset: 0, zIndex: 2,
-                  display: 'flex', alignItems: 'flex-end', justifyContent: 'center',
-                  paddingBottom: '32px',
-                }}>
-                  <p style={{
-                    fontFamily: "'Instrument Serif', serif", fontStyle: 'italic',
-                    fontSize: '16px', color: 'rgba(255,255,255,0.7)',
-                    writingMode: 'vertical-rl', textOrientation: 'mixed',
-                    transform: 'rotate(180deg)', whiteSpace: 'nowrap',
-                  }}>
-                    {card.title}
-                  </p>
-                </div>
-              )}
             </div>
           );
         })}
