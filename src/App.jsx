@@ -228,7 +228,7 @@ export default function App() {
   // Embed mode — render just the carousel, no canvas/banner/nav
   const embedParam = new URLSearchParams(window.location.search).get('embed');
   if (embedParam === 'expanding-cards') {
-    document.body.style.background = 'white';
+    document.body.style.background = '#E8F9FF';
     const root = document.getElementById('root');
     if (root) {
       root.style.width = '100vw';

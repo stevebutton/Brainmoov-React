@@ -55,7 +55,7 @@ export default function EmbedExpandingCards() {
   };
 
   return (
-    <div style={{ width: '100%', minHeight: `${CARD_H + 80}px`, display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '40px 0', background: 'white' }}>
+    <div style={{ width: '100%', minHeight: `${CARD_H + 80}px`, display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '40px 0', background: '#E8F9FF' }}>
       <style>{`
         @keyframes cardSlideIn {
           from { opacity: 0; transform: translateY(60px); }
