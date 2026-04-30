@@ -4,6 +4,7 @@ import { Heart, Brain, Activity, Sparkles, Target, Zap, Shield, Users } from 'lu
 import { useAssets } from './context/AssetContext';
 import { useContent } from './context/ContentContext';
 import EmbedCarousel from './pages/EmbedCarousel';
+import EmbedExpandingCards from './pages/EmbedExpandingCards';
 import IntroPage from './pages/IntroPage';
 import AboutSection from './pages/AboutSection';
 import AboutPhilosophySection from './pages/AboutPhilosophySection';
@@ -226,6 +227,27 @@ export default function App() {
 
   // Embed mode — render just the carousel, no canvas/banner/nav
   const embedParam = new URLSearchParams(window.location.search).get('embed');
+  if (embedParam === 'expanding-cards') {
+    document.body.style.background = 'white';
+    const root = document.getElementById('root');
+    if (root) {
+      root.style.width = '100vw';
+      root.style.height = '620px';
+      root.style.overflow = 'hidden';
+      root.style.position = 'static';
+      root.style.top = 'unset';
+      root.style.left = 'unset';
+      root.style.transform = 'none';
+      root.style.borderRadius = '0';
+      root.style.boxShadow = 'none';
+    }
+    return (
+      <div style={{ width: '100%', height: '100%', background: 'white', overflow: 'hidden' }}>
+        <EmbedExpandingCards />
+      </div>
+    );
+  }
+
   if (embedParam === 'carousel') {
     document.body.style.background = 'white';
     const root = document.getElementById('root');

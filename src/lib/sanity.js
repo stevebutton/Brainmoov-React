@@ -17,7 +17,7 @@ export const queries = {
   }`,
 
   audiences: `*[_type == "audience"] | order(title asc) {
-    id, title,
+    id, title, overview,
     intro[] { ${ptProjection} },
     "backgroundImage": backgroundImage.asset->url, videoTitle,
     "services": services[] {
