@@ -3,10 +3,10 @@ import { useContent } from '../context/ContentContext';
 import RichText from '../components/RichText';
 
 const GAP = 16;
-const DEFAULT_W = 400;
-const EXPANDED_W = 600;
-const COLLAPSED_W = 300;
-const CARD_H = 500;
+const DEFAULT_W = 350;
+const EXPANDED_W = 550;
+const COLLAPSED_W = 250;
+const CARD_H = 450;
 const PANEL_H = CARD_H * 0.5; // blue panel = 50% card height
 
 const FALLBACK_CARDS = [
