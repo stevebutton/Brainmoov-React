@@ -1,6 +1,7 @@
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { useState, useEffect, useRef } from 'react';
 import { machines as fallbackMachines } from '../data/index';
 import { useContent } from '../context/ContentContext';
+import RichText from '../components/RichText';
 
 const fallbackImage = 'https://images.unsplash.com/photo-1530026405186-ed1f139313f8?w=600&h=500&fit=crop&q=80';
 
@@ -27,14 +28,6 @@ export default function AboutInfrastructureSection({
   const uiOurEquipment = ss?.uiOurEquipment || 'Our Equipment';
   const uiSelectEquipment = ss?.uiSelectEquipment || 'Select equipment to learn more';
 
-  const tabs = [
-    { key: 'tabWhatIs',       fallback: 'What is BrainMoove?', nav: 'about' },
-    { key: 'tabPhilosophy',   fallback: 'Our Philosophy',       nav: 'about-philosophy' },
-    { key: 'tabObjectives',   fallback: 'Our Objectives',       nav: 'about-objectives' },
-    { key: 'tabTeam',         fallback: 'Our Team',             nav: 'about-team' },
-    { key: 'tabInfrastructure', fallback: 'Our Infrastructure', nav: 'about-infrastructure' },
-    { key: 'tabHistory',      fallback: 'History',              nav: 'about-history' },
-  ];
 
   const introMachine = machines[0];
   const equipmentList = machines.slice(1);
@@ -42,28 +35,36 @@ export default function AboutInfrastructureSection({
   // selectedMachine === 0 means intro state; > 0 means a specific item
   const machine = selectedMachine > 0 ? machines[selectedMachine] : null;
   const isIntro = selectedMachine === 0 || selectedMachine === null;
-  // Always show the current machine's image immediately when selected
-  const displayMachine = machine;
+
+  // displayIdx lags behind selectedMachine during exit animation
+  const [displayIdx, setDisplayIdx] = useState(selectedMachine ?? 0);
+  const [panelExiting, setPanelExiting] = useState(false);
+  const exitTimer = useRef(null);
+
+  useEffect(() => {
+    if (selectedMachine === displayIdx) return;
+    clearTimeout(exitTimer.current);
+
+    if (displayIdx > 0) {
+      // Panel is visible — animate it out first
+      setPanelExiting(true);
+      exitTimer.current = setTimeout(() => {
+        setDisplayIdx(selectedMachine ?? 0);
+        setPanelExiting(false);
+      }, 450);
+    } else {
+      // Panel was hidden (intro) — just show new machine
+      setDisplayIdx(selectedMachine ?? 0);
+    }
+
+    return () => clearTimeout(exitTimer.current);
+  }, [selectedMachine]);
+
+  const displayMachine = displayIdx > 0 ? machines[displayIdx] : null;
+  const showPanel = displayIdx > 0;
 
   return (
     <div className="w-full h-full relative">
-
-      {/* Tab Bar */}
-      {onNavigate && (
-        <div className="absolute left-0 right-0 border-b border-white/20 shadow-sm z-10" style={{top: '150px', height: '50px', backgroundColor: 'rgba(255,255,255,0.15)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)'}}>
-          <div className="flex items-center justify-center h-full gap-8 px-8">
-            {tabs.map(t => (
-              <button
-                key={t.nav}
-                onClick={() => onNavigate(t.nav)}
-                className={`text-sm transition-all ${t.nav === 'about-infrastructure' ? 'font-semibold text-white underline hover:opacity-70' : 'font-medium text-white/70 hover:text-white hover:underline'}`}
-              >
-                {about?.[t.key] || t.fallback}
-              </button>
-            ))}
-          </div>
-        </div>
-      )}
 
       {/* Main Panel — always visible */}
       <div
@@ -137,7 +138,7 @@ export default function AboutInfrastructureSection({
                     <span style={{ fontStyle: 'italic', color: '#2C97BE' }}>Infrastructure</span>
                   </h4>
                   <p className="text-slate-700 text-sm leading-relaxed text-right flex-1">
-                    {introMachine.cards[0].description}
+                    {introMachine.overview}
                   </p>
                   <p className="text-xs text-slate-400 text-right mt-3">{uiSelectEquipment}</p>
                 </div>
@@ -145,75 +146,24 @@ export default function AboutInfrastructureSection({
 
               {/* Machine selected state */}
               {!isIntro && machine && (
-                <>
-                  <div className="flex-1 relative overflow-hidden">
-                    <div
-                      className="h-full flex transition-transform duration-500 ease-in-out"
-                      style={{ transform: `translateX(-${carouselIndex * 100}%)` }}
-                    >
-                      {machine.cards.map((card, idx) => (
-                        <div key={idx} className="min-w-full h-full flex flex-col">
-                          <div className="p-5 flex-1 overflow-y-auto overflow-x-hidden">
-                            <h4
-                              key={`machine-${idx}-${machine.title}`}
-                              className="mb-1 animate-slide-in-right-blur text-right"
-                              style={{ fontFamily: "'Instrument Serif', serif", fontSize: '42px', color: '#000', lineHeight: 1.0 }}
-                            >
-                              {machine.title}
-                            </h4>
-                            <div className="text-slate-400 text-xs mb-3 text-right">
-                              {carouselIndex + 1} / {machine.cards.length}
-                            </div>
-                            <h5
-                              key={`title-${idx}-${carouselIndex}`}
-                              className="mb-2 animate-fade-in text-right"
-                              style={{ fontFamily: "'Instrument Serif', serif", fontSize: '24px', color: '#000', lineHeight: 1.2 }}
-                            >
-                              {card.title}
-                            </h5>
-                            <p
-                              key={`desc-${idx}-${carouselIndex}`}
-                              className="text-slate-700 text-sm leading-relaxed animate-fade-in-delay text-right"
-                            >
-                              {card.description}
-                            </p>
-                          </div>
-                        </div>
-                      ))}
+                <div className="p-5 flex-1 overflow-y-auto overflow-x-hidden">
+                  <h4
+                    className="mb-3 animate-slide-in-right-blur text-right"
+                    style={{ fontFamily: "'Instrument Serif', serif", fontSize: '42px', color: '#000', lineHeight: 1.0 }}
+                  >
+                    {machine.title}
+                  </h4>
+                  {machine.overview && (
+                    <p className="text-slate-600 text-sm leading-relaxed text-right mb-4">
+                      {machine.overview}
+                    </p>
+                  )}
+                  {machine.content && (
+                    <div className="text-right">
+                      <RichText value={machine.content} className="text-slate-700 text-sm leading-relaxed" />
                     </div>
-                  </div>
-
-                  {/* Bottom bar: prev | dots | next */}
-                  <div className="flex items-center justify-between px-3 py-3 border-t border-black/10 flex-shrink-0">
-                    <button
-                      onClick={onCarouselPrev}
-                      disabled={carouselIndex === 0}
-                      className={`bg-white/80 border border-black/10 p-1.5 rounded-full shadow hover:scale-110 transition-transform ${carouselIndex === 0 ? 'opacity-20 cursor-not-allowed' : ''}`}
-                    >
-                      <ChevronLeft className="w-4 h-4 text-slate-700" />
-                    </button>
-                    <div className="flex justify-center gap-1.5">
-                      {machine.cards.map((_, idx) => (
-                        <button
-                          key={idx}
-                          onClick={() => setCarouselIndex(idx)}
-                          className={`rounded-full transition-all ${
-                            idx === carouselIndex
-                              ? 'w-5 h-1.5 bg-[#F26219]'
-                              : 'w-1.5 h-1.5 bg-black/20 hover:bg-black/40'
-                          }`}
-                        />
-                      ))}
-                    </div>
-                    <button
-                      onClick={onCarouselNext}
-                      disabled={carouselIndex >= machine.cards.length - 1}
-                      className={`bg-white/80 border border-black/10 p-1.5 rounded-full shadow hover:scale-110 transition-transform ${carouselIndex >= machine.cards.length - 1 ? 'opacity-20 cursor-not-allowed' : ''}`}
-                    >
-                      <ChevronRight className="w-4 h-4 text-slate-700" />
-                    </button>
-                  </div>
-                </>
+                  )}
+                </div>
               )}
 
             </div>
@@ -222,8 +172,8 @@ export default function AboutInfrastructureSection({
       </div>
 
       {/* Video Panel — shown when a machine is selected */}
-      {!isIntro && <div
-        key={selectedMachine}
+      {showPanel && <div
+        key={displayIdx}
         className="absolute overflow-hidden"
         style={{
           right: '88px',
@@ -236,7 +186,9 @@ export default function AboutInfrastructureSection({
           backdropFilter: 'blur(16px)',
           WebkitBackdropFilter: 'blur(16px)',
           boxShadow: '0 4px 24px rgba(0,0,0,0.3)',
-          animation: isExiting ? 'slideOutDown 2s ease-in forwards' : 'slideInFromRight 1.5s cubic-bezier(0.4, 0, 0.2, 1) forwards',
+          animation: (panelExiting || isExiting)
+            ? 'slideOutDown 0.45s ease-in forwards'
+            : 'slideInFromRight 1.5s cubic-bezier(0.4, 0, 0.2, 1) forwards',
           zIndex: 15
         }}
       >
@@ -265,3 +217,4 @@ export default function AboutInfrastructureSection({
     </div>
   );
 }
+
