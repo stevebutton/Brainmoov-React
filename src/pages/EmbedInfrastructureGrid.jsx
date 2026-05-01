@@ -4,10 +4,10 @@ import RichText from '../components/RichText';
 import { machines as fallbackMachines } from '../data/index';
 
 const GAP = 16;
-const DEFAULT_W = 350;
-const EXPANDED_W = 550;
-const COLLAPSED_W = 250;
-const CARD_H = 350;
+const DEFAULT_W = 250;
+const EXPANDED_W = 450;
+const COLLAPSED_W = 150;
+const CARD_H = 250;
 const PANEL_H = Math.round(CARD_H * 0.5);
 
 export default function EmbedInfrastructureGrid() {
@@ -72,39 +72,11 @@ export default function EmbedInfrastructureGrid() {
                     style={{
                       width: `${getWidth('intro', rowSlots)}px`,
                       height: `${CARD_H}px`,
-                      borderRadius: '20px',
-                      background: 'white',
-                      boxShadow: '0 8px 24px rgba(0,0,0,0.08)',
                       animation: `gridCardIn 2s cubic-bezier(0.4,0,0.2,1) ${delay} both`,
                       transition: 'width 0.5s cubic-bezier(0.4,0,0.2,1)',
                       flexShrink: 0,
-                      padding: '32px 28px',
-                      display: 'flex',
-                      flexDirection: 'column',
-                      justifyContent: 'flex-end',
-                      overflow: 'hidden',
                     }}
-                  >
-                    {introMachine && (
-                      <>
-                        <h2 style={{
-                          fontFamily: "'Instrument Serif', serif", fontStyle: 'italic',
-                          fontSize: '36px', lineHeight: 1.05, color: '#2C97BE',
-                          marginBottom: '12px',
-                        }}>
-                          {introMachine.title}
-                        </h2>
-                        {introMachine.overview && (
-                          <p style={{
-                            fontFamily: "'Inter', sans-serif",
-                            fontSize: '15px', lineHeight: 1.7, color: '#475569',
-                          }}>
-                            {introMachine.overview}
-                          </p>
-                        )}
-                      </>
-                    )}
-                  </div>
+                  />
                 );
               }
 
