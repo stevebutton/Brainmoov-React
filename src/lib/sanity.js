@@ -31,7 +31,8 @@ export const queries = {
 
   machines: `*[_type == "machine"] | order(order asc) {
     title, "imageUrl": imageUrl.asset->url, videoUrl, order,
-    "cards": cards[] { title, description }
+    overview,
+    content[] { ${ptProjection} }
   }`,
 
   technicalServices: `*[_type == "technicalService"] | order(order asc) {

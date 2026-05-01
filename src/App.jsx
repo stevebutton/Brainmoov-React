@@ -5,6 +5,7 @@ import { useAssets } from './context/AssetContext';
 import { useContent } from './context/ContentContext';
 import EmbedCarousel from './pages/EmbedCarousel';
 import EmbedExpandingCards from './pages/EmbedExpandingCards';
+import EmbedInfrastructureGrid from './pages/EmbedInfrastructureGrid';
 import IntroPage from './pages/IntroPage';
 import AboutSection from './pages/AboutSection';
 import AboutPhilosophySection from './pages/AboutPhilosophySection';
@@ -227,6 +228,24 @@ export default function App() {
 
   // Embed mode — render just the carousel, no canvas/banner/nav
   const embedParam = new URLSearchParams(window.location.search).get('embed');
+  if (embedParam === 'infrastructure-grid') {
+    document.body.style.background = 'white';
+    const root = document.getElementById('root');
+    if (root) {
+      root.style.width = '100vw';
+      root.style.height = 'auto';
+      root.style.minHeight = '1200px';
+      root.style.overflow = 'visible';
+      root.style.position = 'static';
+      root.style.top = 'unset';
+      root.style.left = 'unset';
+      root.style.transform = 'none';
+      root.style.borderRadius = '0';
+      root.style.boxShadow = 'none';
+    }
+    return <EmbedInfrastructureGrid />;
+  }
+
   if (embedParam === 'expanding-cards') {
     document.body.style.background = '#E8F9FF';
     const root = document.getElementById('root');

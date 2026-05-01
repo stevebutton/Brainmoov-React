@@ -85,7 +85,10 @@ export default function EmbedExpandingCards() {
                   ? '0 20px 60px rgba(0,0,0,0.25)'
                   : '0 8px 24px rgba(0,0,0,0.15)',
               }}
-              onMouseEnter={() => !isActive && setHoveredId(card.id)}
+              onMouseEnter={() => {
+                if (activeId !== null && activeId !== card.id) setActiveId(null);
+                setHoveredId(card.id);
+              }}
               onMouseLeave={() => setHoveredId(null)}
               onClick={() => handleCardClick(card.id)}
             >
