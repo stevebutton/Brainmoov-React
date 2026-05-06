@@ -3,6 +3,13 @@ import { machines as fallbackMachines } from '../data/index';
 import { useContent } from '../context/ContentContext';
 import RichText from '../components/RichText';
 
+const GAP = 16;
+const DEFAULT_W = 150;
+const SIDE_ROW_EXPANDED_W = 194; // rows with empty: 300-GAP-COLLAPSED_W
+const EXPANDED_W = 270;          // full row: 450/250*150
+const COLLAPSED_W = 90;
+const CARD_H = 150;
+
 const fallbackImage = 'https://images.unsplash.com/photo-1530026405186-ed1f139313f8?w=600&h=500&fit=crop&q=80';
 
 export default function AboutInfrastructureSection({
@@ -20,40 +27,30 @@ export default function AboutInfrastructureSection({
 }) {
   const { content } = useContent();
   const machines = content?.machines || fallbackMachines;
-  const about = content?.aboutContent;
-  const ss = content?.siteSettings;
-
-  // Heading parts: CMS aboutContent.infrastructure.heading, or split siteSettings fallback
-  const infraHeading = about?.infrastructure?.heading;
-  const uiOurEquipment = ss?.uiOurEquipment || 'Our Equipment';
-  const uiSelectEquipment = ss?.uiSelectEquipment || 'Select equipment to learn more';
-
 
   const introMachine = machines[0];
-  const equipmentList = machines.slice(1);
+  const instruments = machines.slice(1, 8); // up to 7 instruments
 
-  // selectedMachine === 0 means intro state; > 0 means a specific item
-  const machine = selectedMachine > 0 ? machines[selectedMachine] : null;
   const isIntro = selectedMachine === 0 || selectedMachine === null;
+  const machine = selectedMachine > 0 ? machines[selectedMachine] : null;
 
-  // displayIdx lags behind selectedMachine during exit animation
+  // displayIdx lags behind selectedMachine during image panel exit animation
   const [displayIdx, setDisplayIdx] = useState(selectedMachine ?? 0);
   const [panelExiting, setPanelExiting] = useState(false);
   const exitTimer = useRef(null);
+  const [hoveredId, setHoveredId] = useState(null);
 
   useEffect(() => {
     if (selectedMachine === displayIdx) return;
     clearTimeout(exitTimer.current);
 
     if (displayIdx > 0) {
-      // Panel is visible — animate it out first
       setPanelExiting(true);
       exitTimer.current = setTimeout(() => {
         setDisplayIdx(selectedMachine ?? 0);
         setPanelExiting(false);
       }, 450);
     } else {
-      // Panel was hidden (intro) — just show new machine
       setDisplayIdx(selectedMachine ?? 0);
     }
 
@@ -63,158 +60,285 @@ export default function AboutInfrastructureSection({
   const displayMachine = displayIdx > 0 ? machines[displayIdx] : null;
   const showPanel = displayIdx > 0;
 
+  // Row 1: empty + 2 cards, Row 2: 3 cards, Row 3: empty + 2 cards
+  const rows = [
+    ['empty', 0, 1],
+    [2, 3, 4],
+    ['empty', 5, 6],
+  ];
+
+  const getWidth = (slotId, rowSlots) => {
+    if (slotId === 'empty') return DEFAULT_W;
+
+    const hasEmpty = rowSlots.includes('empty');
+    const expandedW = hasEmpty ? SIDE_ROW_EXPANDED_W : EXPANDED_W;
+
+    const instrInRow = rowSlots.filter(s => s !== 'empty');
+    const hoveredInRow = instrInRow.includes(hoveredId);
+    if (!hoveredInRow) return DEFAULT_W;
+    return hoveredId === slotId ? expandedW : COLLAPSED_W;
+  };
+
+  let animIdx = 0;
+
   return (
     <div className="w-full h-full relative">
 
-      {/* Main Panel — always visible */}
+      {/* Grid container — left:10px */}
       <div
-        className="absolute z-10"
         style={{
-          left: '96px',
-          top: '100px',
-          width: '624px',
+          position: 'absolute',
+          left: '10px',
+          top: '150px',
+          width: '482px',
           bottom: '28px',
-          borderRadius: '12px',
-          border: '1px solid rgba(255,255,255,0.2)',
-          backgroundColor: 'rgba(255,255,255,0.30)',
-          backdropFilter: 'blur(16px)',
-          WebkitBackdropFilter: 'blur(16px)',
-          overflow: 'hidden',
-          boxShadow: '0 4px 24px rgba(0,0,0,0.3)',
-          animation: isExiting ? 'slideOutDown 0.5s ease-in both' : 'introPanelUp 2s cubic-bezier(0.4, 0, 0.2, 1) 0s both'
+          overflowY: 'auto',
+          overflowX: 'hidden',
         }}
       >
-        <div className="h-full flex flex-col">
+        <div style={{ display: 'flex', flexDirection: 'column', gap: `${GAP}px` }}>
+          {rows.map((rowSlots, rowIdx) => (
+            <div key={rowIdx} style={{ display: 'flex', gap: `${GAP}px` }}>
+              {rowSlots.map((slotId) => {
+                const delay = `${animIdx++ * 0.08}s`;
+                const cardAnim = `gridCardIn 2s cubic-bezier(0.4,0,0.2,1) ${delay} both`;
 
-          {/* Top: Section Title */}
-          <div className="px-5 pt-3 pb-2 border-b border-black/10 flex-shrink-0" style={{ animation: 'introTitleFromLeft 2s cubic-bezier(0.4, 0, 0.2, 1) 2s both' }}>
-            {infraHeading
-              ? (
-                <h2 style={{ fontFamily: "'Instrument Serif', serif", fontSize: isIntro ? '60px' : '32px', lineHeight: 1, transition: 'font-size 0.5s ease-out' }} className="text-slate-900 text-right">
-                  {infraHeading}
-                </h2>
-              )
-              : (
-                <h2 style={{ fontFamily: "'Instrument Serif', serif", fontSize: isIntro ? '60px' : '32px', lineHeight: 1, transition: 'font-size 0.5s ease-out' }} className="text-slate-900 text-right">
-                  Our <span style={{ fontFamily: "'Instrument Serif', serif", fontStyle: 'italic', color: '#2C97BE' }}>Infrastructure</span>
-                </h2>
-              )
-            }
-          </div>
+                // ── Empty slot ──
+                if (slotId === 'empty') {
+                  return (
+                    <div
+                      key={`empty-${rowIdx}`}
+                      style={{
+                        width: `${DEFAULT_W}px`,
+                        height: `${CARD_H}px`,
+                        flexShrink: 0,
+                      }}
+                    />
+                  );
+                }
 
-          {/* Body: Two Columns */}
-          <div className="flex flex-1 overflow-hidden">
-
-            {/* Left Column: Equipment Buttons (intro item excluded) */}
-            <div className="flex flex-col gap-2 p-4 items-stretch overflow-y-auto flex-shrink-0" style={{ width: '240px', animation: 'introButtonsUp 1s ease-out 5s both' }}>
-              <p className="text-xs font-light text-slate-500 text-right mb-1">{uiOurEquipment}</p>
-              {equipmentList.map((m, i) => {
-                const originalIndex = i + 1;
+                // ── Instrument card ──
+                const instr = instruments[slotId];
+                if (!instr) return null;
+                const isHovered = hoveredId === slotId;
+                const originalIndex = slotId + 1; // instruments[0] = machines[1]
                 const isSelected = selectedMachine === originalIndex;
+
                 return (
-                  <button
-                    key={originalIndex}
-                    onClick={() => setSelectedMachine(originalIndex)}
-                    className={`group rounded-xl px-4 py-2.5 transition-all flex items-center justify-end backdrop-blur-sm ${
-                      isSelected ? 'bg-[#F26219]/70' : 'bg-black/40 hover:bg-black/55'
-                    }`}
+                  <div
+                    key={slotId}
+                    style={{ animation: cardAnim, flexShrink: 0 }}
                   >
-                    <h4 className="text-xs font-semibold text-right leading-tight text-white">{m.title}</h4>
-                  </button>
+                    <div
+                      style={{
+                        width: `${getWidth(slotId, rowSlots)}px`,
+                        height: `${CARD_H}px`,
+                        borderRadius: '20px',
+                        background: instr.imageUrl ? 'none' : 'linear-gradient(135deg, #2C97BE 0%, #1a6e8e 100%)',
+                        overflow: 'hidden',
+                        cursor: 'pointer',
+                        position: 'relative',
+                        transition: 'width 0.5s cubic-bezier(0.4,0,0.2,1), box-shadow 0.3s ease',
+                        boxShadow: (isHovered || isSelected)
+                          ? '0 20px 60px rgba(0,0,0,0.25)'
+                          : '0 8px 24px rgba(0,0,0,0.15)',
+                        outline: isSelected ? '2px solid rgba(255,255,255,0.6)' : 'none',
+                        outlineOffset: '-2px',
+                      }}
+                      onMouseEnter={() => setHoveredId(slotId)}
+                      onMouseLeave={() => setHoveredId(null)}
+                      onClick={() => setSelectedMachine(originalIndex)}
+                    >
+                      {/* Background image */}
+                      {instr.imageUrl && (
+                        <div style={{
+                          position: 'absolute', top: 0, left: '50%',
+                          width: `${EXPANDED_W}px`, height: '100%',
+                          backgroundImage: `url(${instr.imageUrl})`,
+                          backgroundSize: 'cover', backgroundPosition: 'center',
+                          transform: isHovered ? 'translateX(-50%) scale(1.08)' : 'translateX(-50%) scale(1)',
+                          transition: 'transform 0.5s cubic-bezier(0.4,0,0.2,1)',
+                        }} />
+                      )}
+
+                      {/* Gradient overlay */}
+                      {instr.imageUrl && (
+                        <div style={{
+                          position: 'absolute', inset: 0,
+                          background: 'linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.45) 100%)',
+                        }} />
+                      )}
+
+                      {/* Selected tint */}
+                      {isSelected && (
+                        <div style={{ position: 'absolute', inset: 0, background: 'rgba(44,151,190,0.18)' }} />
+                      )}
+
+                      {/* Title + overview (hover lift) */}
+                      <div style={{
+                        position: 'absolute',
+                        left: '14px', right: '14px',
+                        bottom: '16px',
+                        transform: isHovered ? 'translateY(-55px)' : 'translateY(0)',
+                        transition: 'transform 0.4s ease',
+                        zIndex: 2,
+                      }}>
+                        <h2 style={{
+                          fontFamily: "'Instrument Serif', serif", fontStyle: 'italic',
+                          fontSize: '22px', lineHeight: 1.05, color: '#ffffff',
+                          wordBreak: 'break-word', overflowWrap: 'break-word',
+                          margin: 0,
+                        }}>
+                          {instr.title}
+                        </h2>
+
+                        {instr.overview && (
+                          <p style={{
+                            position: 'absolute',
+                            top: 'calc(100% + 8px)',
+                            left: 0, right: 0,
+                            fontFamily: "'Inter', sans-serif",
+                            fontSize: '11px', lineHeight: 1.5,
+                            color: 'rgba(255,255,255,0.85)',
+                            opacity: isHovered ? 1 : 0,
+                            transition: 'opacity 0.35s ease 0.2s',
+                            margin: 0,
+                          }}>
+                            {instr.overview}
+                          </p>
+                        )}
+                      </div>
+                    </div>
+                  </div>
                 );
               })}
             </div>
-
-            {/* Right Column */}
-            <div className="flex-1 flex flex-col overflow-hidden border-l border-black/10" style={{ animation: 'introTextRise 1s ease-out 4s both' }}>
-
-              {/* Intro state */}
-              {isIntro && (
-                <div className="flex-1 flex flex-col p-5 overflow-auto">
-                  <h4
-                    className="mb-3 text-right"
-                    style={{ fontFamily: "'Instrument Serif', serif", fontSize: '28px', color: '#000', lineHeight: 1.1 }}
-                  >
-                    <span style={{ fontStyle: 'italic', color: '#2C97BE' }}>Infrastructure</span>
-                  </h4>
-                  <p className="text-slate-700 text-sm leading-relaxed text-right flex-1">
-                    {introMachine.overview}
-                  </p>
-                  <p className="text-xs text-slate-400 text-right mt-3">{uiSelectEquipment}</p>
-                </div>
-              )}
-
-              {/* Machine selected state */}
-              {!isIntro && machine && (
-                <div className="p-5 flex-1 overflow-y-auto overflow-x-hidden">
-                  <h4
-                    className="mb-3 animate-slide-in-right-blur text-right"
-                    style={{ fontFamily: "'Instrument Serif', serif", fontSize: '42px', color: '#000', lineHeight: 1.0 }}
-                  >
-                    {machine.title}
-                  </h4>
-                  {machine.overview && (
-                    <p className="text-slate-600 text-sm leading-relaxed text-right mb-4">
-                      {machine.overview}
-                    </p>
-                  )}
-                  {machine.content && (
-                    <div className="text-right">
-                      <RichText value={machine.content} className="text-slate-700 text-sm leading-relaxed" />
-                    </div>
-                  )}
-                </div>
-              )}
-
-            </div>
-          </div>
+          ))}
         </div>
       </div>
 
-      {/* Video Panel — shown when a machine is selected */}
-      {showPanel && <div
-        key={displayIdx}
-        className="absolute overflow-hidden"
+      {/* Glass text panel — right of grid, floats over video panel */}
+      <div
         style={{
-          right: '88px',
-          top: '100px',
-          width: '415px',
-          bottom: '28px',
-          borderRadius: '12px',
-          border: '1px solid rgba(255,255,255,0.2)',
-          backgroundColor: 'rgba(255,255,255,0.30)',
+          position: 'absolute',
+          left: '558px',
+          top: '150px',
+          width: '336px',
+          bottom: '128px',
+          zIndex: 20,
+          borderRadius: '20px',
+          border: '1px solid rgba(255,255,255,0.3)',
+          backgroundColor: 'rgba(255,255,255,0.25)',
           backdropFilter: 'blur(16px)',
           WebkitBackdropFilter: 'blur(16px)',
-          boxShadow: '0 4px 24px rgba(0,0,0,0.3)',
-          animation: (panelExiting || isExiting)
-            ? 'slideOutDown 0.45s ease-in forwards'
-            : 'slideInFromRight 1.5s cubic-bezier(0.4, 0, 0.2, 1) forwards',
-          zIndex: 15
+          overflow: 'hidden',
+          padding: '24px',
+          display: 'flex',
+          flexDirection: 'column',
+          animation: isExiting ? 'slideOutDown 0.5s ease-in both' : 'gridCardIn 2s cubic-bezier(0.4,0,0.2,1) 0.6s both',
         }}
       >
-        <div className="h-full relative" style={{ padding: '10px' }}>
-          <div className="absolute rounded-xl overflow-hidden" style={{ inset: '10px' }}>
-            <div className="absolute inset-0" style={{
-              backgroundImage: `url(${displayMachine?.imageUrl || fallbackImage})`,
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-            }} />
-            <div className="absolute inset-0 bg-black/20" />
-            <div className="absolute inset-0 flex items-end justify-start p-4">
-              <div className="flex items-center gap-3 bg-black/40 backdrop-blur-sm rounded-xl px-5 py-3">
-                <svg className="w-7 h-7 flex-shrink-0" fill="#F26219" stroke="none" viewBox="0 0 24 24">
-                  <polygon points="5 3 19 12 5 21 5 3" />
-                </svg>
-                <p className="text-base font-semibold text-white">
-                  {displayMachine?.title} — Video Overview
-                </p>
+        {isIntro ? (
+          <div style={{ flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+            <h3 style={{
+              fontFamily: "'Instrument Serif', serif",
+              fontStyle: 'italic',
+              fontSize: '28px',
+              lineHeight: 1.1,
+              color: '#000',
+              margin: 0,
+            }}>
+              Our <span style={{ color: '#2C97BE' }}>Infrastructure</span>
+            </h3>
+            <p style={{
+              fontFamily: "'Inter', sans-serif",
+              fontSize: '13px',
+              lineHeight: 1.7,
+              color: 'rgba(0,0,0,0.7)',
+              margin: 0,
+            }}>
+              {introMachine?.overview}
+            </p>
+          </div>
+        ) : machine ? (
+          <div style={{ flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+            <h3 style={{
+              fontFamily: "'Instrument Serif', serif",
+              fontStyle: 'italic',
+              fontSize: '24px',
+              lineHeight: 1.1,
+              color: '#000',
+              margin: 0,
+              flexShrink: 0,
+            }}>
+              {machine.title}
+            </h3>
+            {machine.overview && (
+              <p style={{
+                fontFamily: "'Inter', sans-serif",
+                fontSize: '12px',
+                lineHeight: 1.6,
+                color: 'rgba(0,0,0,0.65)',
+                margin: 0,
+                flexShrink: 0,
+              }}>
+                {machine.overview}
+              </p>
+            )}
+            {machine.content && (
+              <div style={{ fontSize: '12px', color: 'rgba(0,0,0,0.6)', overflowY: 'auto' }}>
+                <RichText value={machine.content} />
+              </div>
+            )}
+          </div>
+        ) : null}
+      </div>
+
+      {/* Image panel — shown when a machine is selected */}
+      {showPanel && (
+        <div
+          key={displayIdx}
+          className="absolute overflow-hidden"
+          style={{
+            left: '508px',
+            right: '60px',
+            top: '100px',
+            bottom: '28px',
+            borderRadius: '12px',
+            border: '1px solid rgba(255,255,255,0.2)',
+            backgroundColor: 'rgba(255,255,255,0.30)',
+            backdropFilter: 'blur(16px)',
+            WebkitBackdropFilter: 'blur(16px)',
+            boxShadow: '0 4px 24px rgba(0,0,0,0.3)',
+            animation: (panelExiting || isExiting)
+              ? 'slideOutDown 0.45s ease-in forwards'
+              : 'slideInFromRight 1.5s cubic-bezier(0.4, 0, 0.2, 1) forwards',
+            zIndex: 15,
+          }}
+        >
+          <div className="h-full relative" style={{ padding: '10px' }}>
+            <div className="absolute rounded-xl overflow-hidden" style={{ inset: '10px' }}>
+              <div className="absolute inset-0" style={{
+                backgroundImage: `url(${displayMachine?.imageUrl || fallbackImage})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+              }} />
+              <div className="absolute inset-0 bg-black/20" />
+              <div className="absolute inset-0 flex items-end justify-start p-4">
+                <div className="flex items-center gap-3 bg-black/40 backdrop-blur-sm rounded-xl px-5 py-3">
+                  <svg className="w-7 h-7 flex-shrink-0" fill="#F26219" stroke="none" viewBox="0 0 24 24">
+                    <polygon points="5 3 19 12 5 21 5 3" />
+                  </svg>
+                  <p className="text-base font-semibold text-white">
+                    {displayMachine?.title} — Video Overview
+                  </p>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>}
+      )}
 
     </div>
   );
 }
-

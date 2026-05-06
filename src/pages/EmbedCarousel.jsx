@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react';
-import { Activity, Zap, Brain, Sparkles, ChevronLeft, ChevronRight, RotateCcw } from 'lucide-react';
+import { Activity, Zap, Brain, Sparkles, ChevronLeft, ChevronRight, X } from 'lucide-react';
 import { useContent } from '../context/ContentContext';
 import RichText from '../components/RichText';
 
@@ -43,7 +43,7 @@ export default function EmbedCarousel() {
   });
 
   const [hoveredIdx, setHoveredIdx] = useState(null);
-  const [flippedIdx, setFlippedIdx] = useState(null);
+  const [expandedIdx, setExpandedIdx] = useState(null);
   const [offset, setOffset] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
   const dragRef = useRef({ active: false, startX: 0, startOffset: 0, moved: false, panelIdx: -1 });
@@ -53,7 +53,9 @@ export default function EmbedCarousel() {
   const canPrev = offset > 0;
   const canNext = offset < maxOffset;
 
+  // Collapse expanded card when navigating
   const snapTo = (index) => {
+    setExpandedIdx(null);
     setOffset(Math.max(0, Math.min(panels.length - 1, index)) * STEP);
   };
 
@@ -80,18 +82,26 @@ export default function EmbedCarousel() {
     setIsDragging(false);
     snapTo(Math.round(offset / STEP));
     if (!moved && panelIdx >= 0) {
-      setFlippedIdx(prev => prev === panelIdx ? null : panelIdx);
+      setExpandedIdx(prev => prev === panelIdx ? null : panelIdx);
+      // Snap to this card so it's left-aligned and fully visible
+      setOffset(panelIdx * STEP);
     }
   };
 
   const FACE_H = PANEL_H - 32;
 
   return (
-    <div style={{ width: '100%', background: 'white' }}>
+    <div style={{ width: '100%', background: 'transparent' }}>
 
       {/* Track */}
       <div
-        style={{ position: 'relative', cursor: isDragging ? 'grabbing' : 'grab', clipPath: 'inset(-80px 0)', height: `${PANEL_H + 32}px`, overflow: 'hidden' }}
+        style={{
+          position: 'relative',
+          cursor: isDragging ? 'grabbing' : 'grab',
+          clipPath: 'inset(-80px 0)',
+          height: `${PANEL_H + 32}px`,
+          overflow: 'hidden',
+        }}
         onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}
         onPointerUp={handlePointerUp}
@@ -99,7 +109,9 @@ export default function EmbedCarousel() {
       >
         <div
           style={{
-            display: 'flex', gap: `${GAP}px`, height: `${PANEL_H}px`,
+            display: 'flex',
+            gap: `${GAP}px`,
+            height: `${PANEL_H}px`,
             padding: '40px 0 16px 0',
             transform: `translateX(calc(48px - ${offset}px))`,
             transition: isDragging ? 'none' : 'transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
@@ -107,147 +119,157 @@ export default function EmbedCarousel() {
           }}
         >
           {panels.map((panel, idx) => {
-            const isHovered = hoveredIdx === idx;
-            const isFlipped = flippedIdx === idx;
+            const isHovered = hoveredIdx === idx && expandedIdx !== idx;
+            const isExpanded = expandedIdx === idx;
             const Icon = categoryIcons[idx];
 
             return (
               <div
                 key={idx}
                 data-panel-idx={idx}
-                style={{ flexShrink: 0, width: `${PANEL_W}px`, height: `${FACE_H}px`, cursor: 'pointer', perspective: '1200px' }}
-                onMouseEnter={() => !dragRef.current.active && !isFlipped && setHoveredIdx(idx)}
+                style={{
+                  flexShrink: 0,
+                  width: `${isExpanded ? PANEL_W * 2 : PANEL_W}px`,
+                  height: `${FACE_H}px`,
+                  cursor: 'pointer',
+                  borderRadius: '16px',
+                  overflow: 'hidden',
+                  display: 'flex',
+                  boxShadow: (isHovered || isExpanded)
+                    ? '0 16px 48px rgba(0,0,0,0.3)'
+                    : '0 8px 32px rgba(0,0,0,0.25)',
+                  transform: isHovered && !isExpanded ? 'scale(1.05)' : 'scale(1)',
+                  transition: 'width 0.5s cubic-bezier(0.4,0,0.2,1), transform 0.3s ease, box-shadow 0.3s ease',
+                }}
+                onMouseEnter={() => {
+                  if (!dragRef.current.active) {
+                    if (expandedIdx !== null && expandedIdx !== idx) setExpandedIdx(null);
+                    setHoveredIdx(idx);
+                  }
+                }}
                 onMouseLeave={() => setHoveredIdx(null)}
               >
-                {/* Flip container */}
+                {/* LEFT — image + title (always PANEL_W wide) */}
                 <div style={{
-                  width: '100%', height: '100%',
+                  width: `${PANEL_W}px`,
+                  flexShrink: 0,
                   position: 'relative',
-                  transformStyle: 'preserve-3d',
-                  transform: isFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)',
-                  transition: 'transform 0.6s cubic-bezier(0.4, 0, 0.2, 1)',
-                  scale: isHovered ? '1.1' : '1',
-                  transitionProperty: 'transform, scale',
-                  transitionDuration: '0.6s, 0.3s',
-                  transitionTimingFunction: 'cubic-bezier(0.4,0,0.2,1), ease',
+                  overflow: 'hidden',
+                  backgroundColor: isHovered ? 'rgba(255,255,255,0.2)' : 'rgba(255,255,255,0.1)',
+                  backdropFilter: panel.image ? 'none' : 'blur(12px)',
+                  WebkitBackdropFilter: panel.image ? 'none' : 'blur(12px)',
+                  transition: 'background-color 0.3s ease',
+                  ...(panel.image && {
+                    backgroundImage: `url(${panel.image})`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                  }),
                 }}>
-
-                  {/* FRONT FACE */}
-                  <div style={{
-                    position: 'absolute', inset: 0,
-                    borderRadius: '16px',
-                    border: '1px solid rgba(255,255,255,0.2)',
-                    boxShadow: '0 8px 32px rgba(0,0,0,0.25)',
-                    overflow: 'hidden',
-                    backfaceVisibility: 'hidden',
-                    WebkitBackfaceVisibility: 'hidden',
-                    backgroundColor: isHovered ? 'rgba(255,255,255,0.2)' : 'rgba(255,255,255,0.1)',
-                    backdropFilter: panel.image ? 'none' : 'blur(12px)',
-                    WebkitBackdropFilter: panel.image ? 'none' : 'blur(12px)',
-                    transition: 'background-color 0.3s ease',
-                    ...(panel.image && {
-                      backgroundImage: `url(${panel.image})`,
-                      backgroundSize: 'cover',
-                      backgroundPosition: 'center',
-                    }),
-                  }}>
-                    {panel.image && (
-                      <div style={{
-                        position: 'absolute', inset: 0,
-                        background: 'linear-gradient(to bottom, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.6) 100%)',
-                      }} />
-                    )}
-
-                    {/* Icon + title */}
+                  {panel.image && (
                     <div style={{
-                      position: 'absolute', left: '20px', right: '20px', bottom: '40px',
-                      transform: isHovered ? 'translateY(-60px)' : 'translateY(0)',
-                      transition: 'transform 0.4s ease',
+                      position: 'absolute', inset: 0,
+                      background: 'linear-gradient(to bottom, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.6) 100%)',
+                    }} />
+                  )}
+
+                  {/* Icon + title */}
+                  <div style={{
+                    position: 'absolute', left: '20px', right: '20px', bottom: '90px',
+                    transform: isHovered ? 'translateY(-60px)' : 'translateY(0)',
+                    transition: 'transform 0.4s ease',
+                  }}>
+                    <Icon
+                      style={{ width: '28px', height: '28px', marginBottom: '10px' }}
+                      className={panel.image ? 'text-white/80' : 'text-slate-500'}
+                    />
+                    <h2 style={{
+                      fontFamily: "'Instrument Serif', serif",
+                      fontStyle: 'italic', fontSize: '42px', lineHeight: 1.0,
+                      color: panel.image ? '#ffffff' : '#2C97BE',
                     }}>
-                      <Icon
-                        style={{ width: '28px', height: '28px', marginBottom: '10px' }}
-                        className={panel.image ? 'text-white/80' : 'text-slate-500'}
-                      />
-                      <h2 style={{
-                        fontFamily: "'Instrument Serif', serif",
-                        fontStyle: 'italic', fontSize: '42px', lineHeight: 1.0,
-                        color: panel.image ? '#ffffff' : '#2C97BE',
+                      {panel.category}
+                    </h2>
+
+                    {panel.description && (
+                      <p style={{
+                        position: 'absolute', top: 'calc(100% + 12px)', left: 0, right: 0,
+                        fontSize: '18px', lineHeight: 1.5,
+                        opacity: isHovered ? 1 : 0,
+                        transition: 'opacity 0.3s ease 0.15s',
+                        color: panel.image ? 'rgba(255,255,255,0.9)' : '#475569',
                       }}>
-                        {panel.category}
-                      </h2>
+                        {panel.description}
+                      </p>
+                    )}
+                  </div>
 
-                      {panel.description && (
-                        <p style={{
-                          position: 'absolute', top: 'calc(100% + 12px)', left: 0, right: 0,
-                          fontSize: '15px', lineHeight: 1.5,
-                          opacity: isHovered ? 1 : 0,
-                          transition: 'opacity 0.3s ease 0.15s',
-                          color: panel.image ? 'rgba(255,255,255,0.9)' : '#475569',
-                        }}>
-                          {panel.description}
-                        </p>
-                      )}
-                    </div>
-
-                    {/* Tap hint */}
+                  {/* Tap hint */}
+                  {!isExpanded && (
                     <div style={{
                       position: 'absolute', bottom: '14px', right: '16px',
                       opacity: isHovered ? 0.5 : 0,
                       transition: 'opacity 0.3s ease',
                       fontSize: '11px', color: panel.image ? 'white' : '#64748b',
-                      display: 'flex', alignItems: 'center', gap: '4px',
                     }}>
                       tap to learn more
                     </div>
-                  </div>
-
-                  {/* BACK FACE */}
-                  <div style={{
-                    position: 'absolute', inset: 0,
-                    borderRadius: '16px',
-                    boxShadow: '0 8px 32px rgba(0,0,0,0.25)',
-                    backfaceVisibility: 'hidden',
-                    WebkitBackfaceVisibility: 'hidden',
-                    transform: 'rotateY(180deg)',
-                    backgroundColor: '#2C97BE',
-                    overflow: 'hidden',
-                    display: 'flex', flexDirection: 'column',
-                  }}>
-                    {/* Back header */}
-                    <div style={{ padding: '28px 28px 16px', borderBottom: '1px solid rgba(255,255,255,0.2)', flexShrink: 0 }}>
-                      <h2 style={{
-                        fontFamily: "'Instrument Serif', serif",
-                        fontStyle: 'italic', fontSize: '32px', lineHeight: 1.0,
-                        color: '#ffffff',
-                      }}>
-                        {panel.category}
-                      </h2>
-                    </div>
-
-                    {/* Intro text */}
-                    <div style={{ padding: '20px 28px', flex: 1, overflowY: 'auto' }}>
-                      {panel.intro
-                        ? <RichText value={panel.intro} className="text-white/90 text-sm leading-relaxed" />
-                        : <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: '14px', lineHeight: 1.6 }}>No description available.</p>
-                      }
-                    </div>
-
-                    {/* Flip back button */}
-                    <div style={{ padding: '12px 28px 20px', flexShrink: 0 }}>
-                      <button
-                        style={{
-                          display: 'flex', alignItems: 'center', gap: '6px',
-                          color: 'rgba(255,255,255,0.7)', fontSize: '12px', cursor: 'pointer',
-                          background: 'none', border: 'none', padding: 0,
-                        }}
-                      >
-                        <RotateCcw style={{ width: '14px', height: '14px' }} />
-                        tap to flip back
-                      </button>
-                    </div>
-                  </div>
-
+                  )}
                 </div>
+
+                {/* RIGHT — blue content panel */}
+                <div style={{
+                  width: `${PANEL_W}px`,
+                  flexShrink: 0,
+                  backgroundColor: '#2C97BE',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  overflow: 'hidden',
+                }}>
+                  {/* Header */}
+                  <div style={{
+                    padding: '28px 28px 16px',
+                    borderBottom: '1px solid rgba(255,255,255,0.2)',
+                    flexShrink: 0,
+                    display: 'flex',
+                    alignItems: 'flex-start',
+                    justifyContent: 'space-between',
+                    opacity: isExpanded ? 1 : 0,
+                    transform: isExpanded ? 'translateX(0)' : 'translateX(20px)',
+                    transition: 'opacity 0.35s ease 0.25s, transform 0.35s ease 0.25s',
+                  }}>
+                    <h2 style={{
+                      fontFamily: "'Instrument Serif', serif",
+                      fontStyle: 'italic', fontSize: '32px', lineHeight: 1.0,
+                      color: '#ffffff',
+                    }}>
+                      {panel.category}
+                    </h2>
+                    <button
+                      style={{
+                        background: 'none', border: 'none', cursor: 'pointer',
+                        color: 'rgba(255,255,255,0.6)', padding: '4px', flexShrink: 0,
+                      }}
+                    >
+                      <X style={{ width: '18px', height: '18px' }} />
+                    </button>
+                  </div>
+
+                  {/* Intro text */}
+                  <div style={{
+                    padding: '20px 28px',
+                    flex: 1,
+                    overflowY: 'auto',
+                    opacity: isExpanded ? 1 : 0,
+                    transform: isExpanded ? 'translateX(0)' : 'translateX(20px)',
+                    transition: 'opacity 0.35s ease 0.35s, transform 0.35s ease 0.35s',
+                  }}>
+                    {panel.intro
+                      ? <RichText value={panel.intro} className="text-white/90 text-lg leading-relaxed" />
+                      : <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: '17px', lineHeight: 1.6 }}>No description available.</p>
+                    }
+                  </div>
+                </div>
+
               </div>
             );
           })}
