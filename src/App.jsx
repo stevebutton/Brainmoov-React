@@ -269,6 +269,7 @@ export default function App() {
 
   if (embedParam === 'carousel') {
     document.body.style.background = 'transparent';
+    document.documentElement.style.background = 'transparent';
     const root = document.getElementById('root');
     if (root) {
       root.style.width = '100vw';
