@@ -268,7 +268,7 @@ export default function App() {
   }
 
   if (embedParam === 'carousel') {
-    document.body.style.background = 'white';
+    document.body.style.background = 'transparent';
     const root = document.getElementById('root');
     if (root) {
       root.style.width = '100vw';
@@ -282,7 +282,7 @@ export default function App() {
       root.style.boxShadow = 'none';
     }
     return (
-      <div style={{ width: '100%', height: '100%', background: 'white', overflow: 'hidden' }}>
+      <div style={{ width: '100%', height: '100%', background: 'transparent', overflow: 'hidden' }}>
         <EmbedCarousel />
       </div>
     );
