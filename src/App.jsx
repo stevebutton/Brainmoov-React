@@ -273,8 +273,8 @@ export default function App() {
     const root = document.getElementById('root');
     if (root) {
       root.style.width = '100vw';
-      root.style.height = '600px';
-      root.style.overflow = 'hidden';
+      root.style.height = '640px';
+      root.style.overflow = 'visible';
       root.style.position = 'static';
       root.style.top = 'unset';
       root.style.left = 'unset';
@@ -283,7 +283,7 @@ export default function App() {
       root.style.boxShadow = 'none';
     }
     return (
-      <div style={{ width: '100%', height: '100%', background: 'transparent', overflow: 'hidden' }}>
+      <div style={{ width: '100%', height: '100%', background: 'transparent' }}>
         <EmbedCarousel />
       </div>
     );

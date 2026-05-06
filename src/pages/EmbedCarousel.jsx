@@ -100,7 +100,6 @@ export default function EmbedCarousel() {
           cursor: isDragging ? 'grabbing' : 'grab',
           clipPath: 'inset(-80px 0)',
           height: `${PANEL_H + 32}px`,
-          overflow: 'hidden',
         }}
         onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}
