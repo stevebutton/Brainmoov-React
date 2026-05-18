@@ -290,7 +290,7 @@ export default function WhatDetailSection({ showBanner, isExiting, onNavigate })
     <div className="w-full h-full relative">
 
       {/* Intro Panel */}
-      <div className="flex flex-col items-center gap-4 px-12" style={{ paddingTop: '100px' }}>
+      <div className="flex flex-col items-center gap-4 px-12" style={{ paddingTop: '100px', position: 'relative', zIndex: 1 }}>
         <div
           className="rounded-2xl border border-white/20 shadow-2xl"
           style={{

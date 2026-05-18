@@ -1,5 +1,4 @@
-import { ChevronLeft, ChevronRight, X, ChevronRight as DefaultServiceIcon } from 'lucide-react';
-import { technicalServices as fallbackTechnicalServices } from '../data/index';
+import { ChevronLeft, ChevronRight, ChevronRight as DefaultServiceIcon } from 'lucide-react';
 import { useContent } from '../context/ContentContext';
 import RichText from '../components/RichText';
 
@@ -23,7 +22,6 @@ export default function ConditionSection({
   allConditionIds,
 }) {
   const { content } = useContent();
-  const technicalServices = content?.technicalServices || fallbackTechnicalServices;
   const ss = content?.siteSettings;
 
   const conditionIdx = allConditionIds ? allConditionIds.indexOf(condition.id) : -1;
@@ -31,14 +29,28 @@ export default function ConditionSection({
   const nextConditionId = conditionIdx >= 0 && conditionIdx < allConditionIds.length - 1 ? allConditionIds[conditionIdx + 1] : null;
   const uiApproaches = ss?.uiApproaches || 'Approches';
   const uiSelectApproach = ss?.uiSelectApproach || 'Sélectionnez une approche';
-  const uiOurProcess = ss?.uiOurProcess || 'notre processus';
 
   return (
     <div className="w-full h-full relative">
 
+      {/* Full-canvas background video */}
+      <div
+        className="absolute overflow-hidden"
+        style={{
+          top: 0, left: 0, right: 0, bottom: 0,
+          borderRadius: 0,
+          animation: isExiting ? 'dissolveOut 0.6s ease-in forwards' : 'dissolveIn 0.6s ease-out forwards',
+          zIndex: 2,
+        }}
+      >
+        <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full" style={{ objectFit: 'fill' }}>
+          <source src="http://brainmoove.flywheelsites.com/wp-content/uploads/2026/05/greenscreen.mp4" type="video/mp4" />
+        </video>
+      </div>
+
       {/* Floating Content */}
       <div
-        className={`absolute inset-0 z-10 flex ${(selectedService || selectedTechService) ? 'pb-20' : 'pb-8'}`}
+        className="absolute inset-0 z-10 flex pb-8"
         style={{ paddingTop: '100px' }}
       >
 
@@ -50,7 +62,7 @@ export default function ConditionSection({
               left: '96px',
               top: '100px',
               width: '624px',
-              bottom: '108px',
+              bottom: '28px',
               borderRadius: '12px',
               border: '1px solid rgba(255,255,255,0.2)',
               backgroundColor: 'rgba(255,255,255,0.30)',
@@ -153,7 +165,7 @@ export default function ConditionSection({
               left: '96px',
               top: '100px',
               width: '624px',
-              bottom: '108px',
+              bottom: '28px',
               borderRadius: '12px',
               border: '1px solid rgba(255,255,255,0.2)',
               backgroundColor: 'rgba(255,255,255,0.30)',
@@ -298,100 +310,6 @@ export default function ConditionSection({
           </div>
         )}
 
-        {/* Footer Bar — appears when a service or tech service is active */}
-        {(selectedService || selectedTechService) && (
-          <div
-            className="absolute bottom-0 left-0 right-0 bg-white z-20"
-            style={{
-              height: '80px',
-              animation: isExiting
-                ? 'slideOutDown 0.5s ease-in forwards'
-                : 'slideInUp 0.4s ease-out forwards',
-              boxShadow: '0 -2px 8px rgba(0, 0, 0, 0.1)',
-            }}
-          >
-            <div className="h-full flex items-center">
-              <div className="flex items-center justify-end" style={{ width: '304px', paddingRight: '32px' }}>
-                <h3
-                  style={{ fontFamily: "'Instrument Serif', serif", fontSize: '22px' }}
-                  className="text-slate-900 whitespace-nowrap"
-                >
-                  {uiOurProcess}
-                </h3>
-              </div>
-              <div className="self-stretch flex items-stretch">
-                {technicalServices.map((techService, index) => {
-                  const isSelected = selectedTechService?.id === techService.id;
-                  return (
-                    <button
-                      key={techService.id}
-                      onClick={() => onTechServiceSelect(techService)}
-                      className={`group flex items-center gap-3 px-6 border transition-colors justify-center ${
-                        isSelected
-                          ? 'bg-[#F26219] border-[#F26219]'
-                          : 'bg-white border-black/10 hover:bg-black hover:border-black'
-                      }`}
-                    >
-                      <span className="w-8 h-8 rounded-full bg-[#F26219]/50 group-hover:bg-[#F26219] flex items-center justify-center text-base font-bold text-white flex-shrink-0 transition-colors">
-                        {index + 1}
-                      </span>
-                      <span className={`text-sm font-semibold text-left transition-colors ${
-                        isSelected ? 'text-white' : 'text-slate-800 group-hover:text-white'
-                      }`}>
-                        {techService.title}
-                      </span>
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* Video Panel */}
-        {(selectedTechService || isClosingVideo) && (
-          <div
-            key={selectedTechService?.id || 'closing'}
-            className="absolute overflow-hidden"
-            style={{
-              left: '730px',
-              top: '100px',
-              width: '500px',
-              bottom: '108px',
-              borderRadius: '12px',
-              border: '1px solid rgba(255,255,255,0.2)',
-              boxShadow: '0 4px 24px rgba(0,0,0,0.3)',
-              animation: isExiting || isClosingVideo
-                ? 'slideOutDown 2s ease-in forwards'
-                : 'slideInFromRight 3s cubic-bezier(0.4, 0, 0.2, 1) forwards',
-              zIndex: 15,
-            }}
-          >
-            <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover">
-              <source src="https://framerusercontent.com/assets/INsc3G5K2Tv80wdTWEjcLPSHR0.mp4" type="video/mp4" />
-            </video>
-            <div className="absolute inset-0 bg-black/20" />
-            <button
-              onClick={() => onTechServiceSelect(null)}
-              className="absolute top-3 right-3 text-white/70 hover:text-white transition-colors z-10"
-            >
-              <X className="w-4 h-4" />
-            </button>
-            <div className="absolute inset-0 flex items-end justify-start p-4 z-10">
-              <div
-                className="flex items-center gap-3 bg-black/40 backdrop-blur-sm rounded-xl px-5 py-3"
-                style={{ animation: isClosingVideo ? 'none' : 'slideInUp 2s ease-out 3s both' }}
-              >
-                <svg className="w-7 h-7 flex-shrink-0" fill="#F26219" stroke="none" viewBox="0 0 24 24">
-                  <polygon points="5 3 19 12 5 21 5 3" />
-                </svg>
-                <p className="text-base font-semibold text-white">
-                  {isClosingVideo ? lastTechService?.title : selectedTechService?.title} — Video Overview
-                </p>
-              </div>
-            </div>
-          </div>
-        )}
 
       {/* Condition prev / next navigation — center left / right edges */}
       {onNavigate && (

@@ -339,17 +339,12 @@ export default function AudienceSection({
             key={selectedTechService?.id || 'closing'}
             className="absolute overflow-hidden"
             style={{
-              left: '730px',
-              top: '100px',
-              width: '500px',
-              bottom: '108px',
-              borderRadius: '12px',
-              border: '1px solid rgba(255,255,255,0.2)',
-              boxShadow: '0 4px 24px rgba(0,0,0,0.3)',
+              top: 0, left: 0, right: 0, bottom: 0,
+              borderRadius: 0,
               animation: isExiting || isClosingVideo
-                ? 'slideOutDown 2s ease-in forwards'
-                : 'slideInFromRight 3s cubic-bezier(0.4, 0, 0.2, 1) forwards',
-              zIndex: 15
+                ? 'dissolveOut 0.6s ease-in forwards'
+                : 'dissolveIn 0.6s ease-out forwards',
+              zIndex: 2,
             }}
           >
             {/* Full-panel video */}
@@ -358,9 +353,10 @@ export default function AudienceSection({
               loop
               muted
               playsInline
-              className="absolute inset-0 w-full h-full object-cover"
+              className="absolute inset-0 w-full h-full"
+              style={{ objectFit: 'fill' }}
             >
-              <source src="https://framerusercontent.com/assets/INsc3G5K2Tv80wdTWEjcLPSHR0.mp4" type="video/mp4" />
+              <source src="http://brainmoove.flywheelsites.com/wp-content/uploads/2026/05/greenscreen.mp4" type="video/mp4" />
             </video>
             <div className="absolute inset-0 bg-black/20" />
 
