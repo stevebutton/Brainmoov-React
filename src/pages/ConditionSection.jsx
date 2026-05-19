@@ -44,7 +44,7 @@ export default function ConditionSection({
         }}
       >
         <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full" style={{ objectFit: 'fill' }}>
-          <source src="http://brainmoove.flywheelsites.com/wp-content/uploads/2026/05/greenscreen.mp4" type="video/mp4" />
+          <source src="http://brainmoove.flywheelsites.com/wp-content/uploads/2026/05/greenscreen_1.mp4" type="video/mp4" />
         </video>
       </div>
 
